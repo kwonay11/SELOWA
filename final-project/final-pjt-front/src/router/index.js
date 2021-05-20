@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import CommunityList from '@/views/communitys/CommunityList'
-import CreateCommunity from '@/views/communitys/CreateCommunity'
+import Community from '@/views/communitys/Community'
 import Signup from '@/views/accounts/Signup'
 import Login from '@/views/accounts/Login'
 
@@ -10,13 +9,8 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/communitys',
-    name: 'CommunityList',
-    component: CommunityList,
-  },
-  {
-    path: '/communitys/create',
-    name: 'Createcommunity',
-    component: CreateCommunity,
+    name: 'Community',
+    component: Community,
   },
   {
     path: '/accounts/signup',

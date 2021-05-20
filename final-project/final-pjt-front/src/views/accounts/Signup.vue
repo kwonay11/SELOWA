@@ -1,7 +1,7 @@
 <template>
-<div class="row d-flex justify-content-center align-items-center h-150" >
-  <div class="card text-white bg-dark m-3" style="width: 40%; ">
-    <img src="../../assets/logo1.png" class="card-img-top" alt="logo">
+  <div class="row d-flex justify-content-center align-items-center h-150" >
+      <div class="card text-white bg-dark m-3 p-5 row d-flex justify-content-center align-items-center" style="width: 40%; ">
+        <img src="../../assets/clapperboard.png" style="width: 40%;" class="card-img-top" alt="logo">
    
     <!-- <img alt="selowa" src="../../assets/selowa.png" width="300"> -->
     <!-- <img alt="selowa" src="@/assets/selowa.png" width="200"> -->
@@ -57,7 +57,7 @@ export default {
     signup: function (credentials) {
       console.log(credentials)
       // 회원 가입 시켜주세요 -> Django (jwt)
-      axios.post(`${SERVER_URL}/accounts/signup/`, this.credentials)
+      axios.post(`${SERVER_URL}accounts/signup/`, this.credentials)
       .then((res) => {
         console.log(res)
         this.$router.push({ name: 'Login'})

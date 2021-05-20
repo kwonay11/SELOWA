@@ -1,9 +1,11 @@
 <template>
   <div id="app">
+    <br>
+    <img @click="main" src="@/assets/logo1.png" alt="logo" style="width: 300px">
+    <!-- 로고 클릭하면 메인페이지로 -->
     <div id="nav">
       <span v-if="login">
-        <router-link :to="{ name: 'ComList' }">Community List</router-link> | 
-        <router-link :to="{ name: 'CreateCom' }">Create </router-link> |
+        <router-link :to="{ name: 'Community' }">Community</router-link> | 
         <router-link :to="{ name: 'Login' }" @click.native="logout">LOGOUT</router-link> 
         <!-- 로그아웃하면 클릭시 로그인화면으로 보내기 -->
       </span>
@@ -13,6 +15,8 @@
       </span>
     </div>
     <router-view @login="login = true"/>
+
+    
   </div>
 </template>
 
@@ -25,6 +29,10 @@ export default {
     }
   },
   methods: {
+    main: function () {
+      console.log('MainPage')
+      this.$router.push({ name: 'App' })
+    },
     logout: function() {
       console.log('logout 됨')
       // 로그아웃 처리
@@ -51,7 +59,8 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: white;
+  
 }
 
 #nav {
@@ -60,7 +69,7 @@ export default {
 
 #nav a {
   font-weight: bold;
-  color: #2c3e50;
+  color: white;
 }
 
 #nav a.router-link-exact-active {

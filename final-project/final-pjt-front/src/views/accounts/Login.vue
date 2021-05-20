@@ -1,9 +1,9 @@
 <template>
     <div class="row d-flex justify-content-center align-items-center h-150" >
-  <div class="card text-white bg-dark m-3" style="width: 40%; ">
-    <img src="../../assets/logo1.png" class="card-img-top" alt="logo">
+      <div class="card text-white bg-dark m-3 p-5 row d-flex justify-content-center align-items-center" style="width: 40%; ">
+        <img src="../../assets/clapperboard.png" style="width: 40%;" class="card-img-top" alt="logo">
    
-    <h1>Login</h1>
+    <h1 style="color:#e0435e;">Login</h1>
     <div>
       <br>
       <label for="username" style="color:#e0435e;">아이디: </label>
@@ -48,7 +48,7 @@ export default {
   },
   methods: {
     login: function () {
-      axios.post(`${SERVER_URL}/accounts/api-token-auth/`, this.credentials)
+      axios.post(`${SERVER_URL}accounts/api-token-auth/`, this.credentials)
       .then((res) => {
         console.log(res.data.token)
         // localstorage에 jwt 토큰 저장
