@@ -5,10 +5,11 @@ class CommunitySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Community
-        fields = ('id', 'title', 'content', 'created_at', 'updated_at')
-
+        exclude = ('user', 'like')  
+       
 class CommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comment
-        fields = ('id', 'content')
+        fields = '__all__'
+        read_only_fields = ('community',)

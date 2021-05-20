@@ -160,7 +160,7 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'accounts.User'
 
-
+SITE_ID = 1
 # JWT setting override 해서 만료기간 5분 -> 1일
 import datetime
 JWT_AUTH = {
