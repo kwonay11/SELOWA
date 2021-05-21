@@ -2,20 +2,18 @@
   <div>
     <section class="page-section" id="contact">
         <div class="container">
-            <!-- Contact Section Heading-->
             <h2 >Community</h2>
-            <!-- Contact Section Form-->
             <div class="row">
                 <div class="col-lg-8 mx-auto">
                     <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19.-->
-                  <div class="control-group">
+                  <div>
                       <div class="st-font form-group floating-label-form-group controls mb-0 pb-2">
                           <label>Title</label>
                           <input style="font-size: 30px" v-model.trim="title" class="form-control" id="title" type="text" placeholder="Title" required="required" data-validation-required-message="Please enter your title." />
                           <p class="help-block text-danger"></p>
                       </div>
                   </div>
-                  <div class="control-group">
+                  <div >
                       <div class="st-font form-group floating-label-form-group controls mb-0 pb-2">
                           <label>Content</label>
                           <textarea style="font-size: 30px" v-model.trim="content" class="form-control" id="content" rows="5" placeholder="Content" required="required" data-validation-required-message="Please enter a message."></textarea>
@@ -23,8 +21,7 @@
                       </div>
                   </div>
                   <br />
-                  <div id="success"></div>
-                  <div class="text-white st-font form-group"><button @click="createCommunity" class ="btn btn-outline-danger" id="sendMessageButton" type="submit">Add</button></div>
+                  <div class="text-white st-font form-group"><button @click="createCommunity" class ="btn btn-outline-danger" type="submit">Add</button></div>
                 </div>
             </div>
         </div>
@@ -63,10 +60,10 @@ export default {
       }
       if (communityItem.title) {
         // axios post 요청을 장고에 데이터와 함께 보내줍니다.
-        axios.post(`${SERVER_URL}/community/`, communityItem, config)
+        axios.post(`${SERVER_URL}community/`, communityItem, config)
           .then(() => {
             // console.log(res)
-            // this.$router.push({ name: 'Community' })
+            //this.$router.push({ name: 'Community' })
             // 위의 router 요청은 게시글 작성직후 바로 해당 컴퍼넌트로 이동시켜 작성된 게시물을 바로 보여주게끔 해주는 도구이나,
             // 우리는 현재 community 페이지 내에서 작성과 글의 제목을 보는것을 모두 가능하게 하고 싶어 위 처럼 해줬을시 
             // Uncaught (in promise) NavigationDuplicated: Avoided redundant navigation to current location 이라는 에러가 발생합니다.

@@ -1,26 +1,24 @@
 <template>
+
   <div class="row d-flex justify-content-center align-items-center " >
-  
-  <div class="container">
-    <h2 class="st-font" style="margin-bottom:30px">제목을 눌러 상세페이지로, 유저를 눌러 프로필로 넘어가보세요</h2>
+  <div>
+    <h2 style="margin-bottom:30px">제목을 옆 버튼을 눌러 상세페이지로, 유저를 눌러 프로필로 넘어가보세요</h2>
     <div class="row d-flex justify-content-center align-items-center " >
+      <div class="card text-white bg-dark m-3 p-5 row d-flex justify-content-center align-items-center" style="width: 40%; ">
       <div class="col-lg-8 col-md-10 mx-auto">
-        <div class="post-preview" style="cursor:pointer;" v-for="(community, idx) in communities" :key="idx">
+        <div style="cursor:pointer;" v-for="(community, idx) in communities" :key="idx">
             <h3 @click="DetailCommunity(community)">{{community.id}}번 글</h3>
-            <h2 @click="DetailCommunity(community)">
-              {{community.title}}
-            </h2>
-            <h4 class="content-font">
-              {{community.content}}
-            </h4>
-          <p class="st-font" @click="moveToProfile(community.user, community.userName)">Written by
+            <h2>{{community.title}}</h2>
+            <button  @click="DetailCommunity(community)" class ="btn btn-outline-danger">Detail</button>
+            <h4>{{community.content}}</h4>
+          <p  @click="moveToProfile(community.user, community.userName)">Written by
               {{community.userName}}
           </p>
         <hr>
         </div>
       </div>
     </div>
-  
+    </div>
   </div>
 
 </div>
