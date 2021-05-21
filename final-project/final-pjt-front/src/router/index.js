@@ -8,7 +8,7 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/communitys',
+    path: '/community',
     name: 'Community',
     component: Community,
   },
