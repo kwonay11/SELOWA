@@ -1,6 +1,7 @@
 from rest_framework import serializers
 # from allauth.account.adapter import get_adapter
 from django.contrib.auth import get_user_model
+from .models import UserMovie
 # from rest_auth.registration.serializers import RegisterSerializer
 
 User = get_user_model()
@@ -13,3 +14,11 @@ class UserSerializer(serializers.ModelSerializer): # ModelSerializer
     class Meta:
         model = User # 어떤 DB랑 Serializer랑 연결할지 설정
         fields = ('id','username', 'password', 'age') 
+
+
+class UserMovieSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = UserMovie
+        fields = '__all__'
+        read_only_fields = '__all__'
