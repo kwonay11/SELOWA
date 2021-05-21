@@ -3,6 +3,7 @@
     <br>
     <img @click="main" src="@/assets/logo1.png" alt="logo" style="width: 300px">
     <!-- 로고 클릭하면 메인페이지로 -->
+    <Menu style="position:fixed; top:0; z-index:3;"></Menu>
     <div id="nav">
       <span v-if="login">
         <router-link :to="{ name: 'Community' }">Community</router-link> | 
@@ -21,14 +22,33 @@
 </template>
 
 <script>
+import axios from 'axios'
+import Menu from '@/components/Menu'
+const SERVER_URL = process.env.VUE_APP_SERVER_URL
+
 export default {
   name: 'App',
+  components: {
+    Menu,
+  },
+
   data: function () {
     return {
       login: false, //flag
     }
   },
   methods: {
+    getMovies: function () {
+      axios.get(`${SERVER_URL}/movies/`)
+      .then( (res) => {
+        if (this.$store.state.movies.length === 0) {
+          this.$store.state.movies = res.data
+        }
+      })
+      .catch( (err) => {
+        console.log(err)
+      })
+    },
     main: function () {
       console.log('MainPage')
       this.$router.push({ name: 'App' })

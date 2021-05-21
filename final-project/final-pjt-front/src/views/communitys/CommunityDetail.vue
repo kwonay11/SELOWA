@@ -3,9 +3,9 @@
     <div>
       <div>
 
-        {{ community }}
+        {{ community.userName }}
     
-        <h2>{{ community.userName  }}님의 게시글</h2>
+        <h2>{{ community.userName }}님의 게시글</h2>
         <hr>
         <div class="st-font" style="margin-bottom:30px">
           {{ community }}
@@ -113,19 +113,19 @@ export default {
       const config = this.getToken()
       const hash = localStorage.getItem('jwt')
       const info = VueJwtDecode.decode(hash)
-      axios.post(`${SERVER_URL}accounts/profile/`, info, config)
+      console.log(this.userName)
+      axios.post(`${SERVER_URL}accounts/${this.community.userName}`, info, config)
       .then( (res) => {
         this.user = res.data
-        // console.log(this.user)
       })
       .catch( (err) => {
         console.log(err)
       })
     },
-    getComments: function () {
+    getComments: function () { //댓글 가져오기
       const config = this.getToken()
       const community_pk = this.$route.params.community_pk
-      axios.get(`${SERVER_URL}movies/comments/${community_pk}`, config)
+      axios.get(`${SERVER_URL}community/${community_pk}/comments/`, config)
         .then((res) => {
           this.comments = res.data
           // console.log(res)
@@ -134,13 +134,13 @@ export default {
           console.log(err)
         })
     },
-    createComment: function () {
+    createComment: function () { //댓글생성
       const config = this.getToken()
       const commentItem = {
         content: this.comment_content,
       }
       if (commentItem.content) {
-        axios.post(`${SERVER_URL}movies/${this.community.id}/comment/`, commentItem, config)
+        axios.post(`${SERVER_URL}community/${this.community.id}/comments/`, commentItem, config)
           .then( () => {
             // console.log(res)
           this.getComments()
@@ -150,7 +150,7 @@ export default {
     },
     deleteCommunity: function (community) {
       const config = this.getToken()
-      axios.delete(`${SERVER_URL}movies/community/${community.id}/`, config)
+      axios.delete(`${SERVER_URL}community/${community.id}/`, config)
         .then((res) => {
           // console.log(res)
           if (res.data.message) {
@@ -163,7 +163,7 @@ export default {
     },
     deleteComment: function (community, comment) {
       const config = this.getToken()
-      axios.delete(`${SERVER_URL}movies/comment/${community.id}/${comment.id}/`, config)
+      axios.delete(`${SERVER_URL}community/${community.id}/comments/${comment.id}/`, config)
         .then((res) => {
           // console.log(res)
           if (res.data.message) {
