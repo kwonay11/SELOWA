@@ -3,7 +3,9 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializers import UserSerializer, UserMovieSerializer
+from django.contrib.auth import get_user_model
 from .models import UserMovie
+
 
 @api_view(['POST'])
 def signup(request):
@@ -27,7 +29,7 @@ def signup(request):
     # password는 직렬화 과정에는 포함 되지만 → 표현(response)할 때는 나타나지 않는다.
     return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-@api_view(['GET'])
+@api_view(['POST'])
 def profile(request, username):
     person = get_object_or_404(UserMovie, username=username)
     person_info = person.movie_set.all()
