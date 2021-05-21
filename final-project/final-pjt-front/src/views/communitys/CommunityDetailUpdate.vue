@@ -61,7 +61,7 @@ export default {
         const config = this.getToken()
         const community_pk = this.$route.params.community_pk
         // 장고 서버에 get 요청을 보내 전체 게시글 데이터를 가져온다.
-        axios.get(`${SERVER_URL}/movies/detail/${community_pk}/`, config)
+        axios.get(`${SERVER_URL}/detail/${community_pk}/`, config)
             .then((res) => {
             // console.log(res)
             this.community = res.data
@@ -77,7 +77,7 @@ export default {
             title: community.title,
             content: community.content
         }
-        axios.put(`${SERVER_URL}/movies/community/${community.id}/`, communityItem, config)
+        axios.put(`${SERVER_URL}community/${community.id}/`, communityItem, config)
             .then((res) => {
                 if (res.data.message) {
                     alert("본인이 작성한 글만 수정 가능합니다!")

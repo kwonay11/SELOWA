@@ -48,8 +48,17 @@ def kakao_callback(request):
 
 
 
-# @api_view(['GET'])
-# def profile(request, username):
-#     user = get_object_or_404(UserMovie, pk=request.data.get('user_pk'))
-#     serializer = UserMovieSerializer(user)
-#     return Response(serializer.data)
+@api_view(['GET'])
+def profile(request, username):
+    user = get_object_or_404(UserMovie, pk=request.data.get('user_pk'))
+    serializer = UserMovieSerializer(user)
+    return Response(serializer.data)
+
+
+@api_view(['POST'])
+def my_profile(request):
+
+    user = get_object_or_404(get_user_model(), pk=request.data.get('user_id'))
+    serializer = UserSerializer(user)
+
+    return Response(serializer.data)

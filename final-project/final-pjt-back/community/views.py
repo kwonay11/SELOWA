@@ -53,8 +53,6 @@ def community_detail(request, community_pk):
         
 
 @api_view(['GET', 'POST'])
-@authentication_classes([JSONWebTokenAuthentication])
-@permission_classes([IsAuthenticated])
 def comments(request, community_pk):
     community = get_object_or_404(Community, pk=community_pk)
     if request.method == 'POST':
