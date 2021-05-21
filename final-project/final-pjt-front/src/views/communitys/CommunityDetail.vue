@@ -2,14 +2,19 @@
   <div>
     <div>
       <div>
-        <h2>{{community.userName}}님의 게시글</h2>
+
+        {{ community }}
+    
+        <h2>{{ community.userName  }}님의 게시글</h2>
         <hr>
         <div class="st-font" style="margin-bottom:30px">
+          {{ community }}
           <span @click="moveToProfile(community)" style="cursor:pointer;">작성자: {{ community.userName }} | </span>  
           <span>글 생성시간: {{ community.created_at }} | </span>
           <span>글 수정시간: {{ community.updated_at }}</span>  
         </div>
         <div>
+      
           <p class="title-font" style="font-size: 40px">제목: {{ community.title }}</p>
           <p class="content-font" style="font-size: 50px">내용: {{ community.content }}</p>
         </div>
@@ -95,7 +100,7 @@ export default {
       const config = this.getToken()
       const community_pk = this.$route.params.community_pk
       // 장고 서버에 get 요청을 보내 전체 게시글 데이터를 가져온다.
-      axios.get(`${SERVER_URL}/movies/detail/${community_pk}/`, config)
+      axios.get(`${SERVER_URL}community/${community_pk}/`, config)
         .then((res) => {
           // console.log(res)
           this.community = res.data
@@ -108,7 +113,7 @@ export default {
       const config = this.getToken()
       const hash = localStorage.getItem('jwt')
       const info = VueJwtDecode.decode(hash)
-      axios.post(`${SERVER_URL}/accounts/profile/`, info, config)
+      axios.post(`${SERVER_URL}accounts/profile/`, info, config)
       .then( (res) => {
         this.user = res.data
         // console.log(this.user)
@@ -120,7 +125,7 @@ export default {
     getComments: function () {
       const config = this.getToken()
       const community_pk = this.$route.params.community_pk
-      axios.get(`${SERVER_URL}/movies/comments/${community_pk}`, config)
+      axios.get(`${SERVER_URL}movies/comments/${community_pk}`, config)
         .then((res) => {
           this.comments = res.data
           // console.log(res)
@@ -135,7 +140,7 @@ export default {
         content: this.comment_content,
       }
       if (commentItem.content) {
-        axios.post(`${SERVER_URL}/movies/${this.community.id}/comment/`, commentItem, config)
+        axios.post(`${SERVER_URL}movies/${this.community.id}/comment/`, commentItem, config)
           .then( () => {
             // console.log(res)
           this.getComments()
@@ -145,7 +150,7 @@ export default {
     },
     deleteCommunity: function (community) {
       const config = this.getToken()
-      axios.delete(`${SERVER_URL}/movies/community/${community.id}/`, config)
+      axios.delete(`${SERVER_URL}movies/community/${community.id}/`, config)
         .then((res) => {
           // console.log(res)
           if (res.data.message) {
@@ -158,7 +163,7 @@ export default {
     },
     deleteComment: function (community, comment) {
       const config = this.getToken()
-      axios.delete(`${SERVER_URL}/movies/comment/${community.id}/${comment.id}/`, config)
+      axios.delete(`${SERVER_URL}movies/comment/${community.id}/${comment.id}/`, config)
         .then((res) => {
           // console.log(res)
           if (res.data.message) {

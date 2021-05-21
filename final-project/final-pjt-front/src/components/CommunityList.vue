@@ -3,16 +3,17 @@
   <div class="row d-flex justify-content-center align-items-center " >
   <div>
     <h2 style="margin-bottom:30px">제목을 옆 버튼을 눌러 상세페이지로, 유저를 눌러 프로필로 넘어가보세요</h2>
-    <div class="row d-flex justify-content-center align-items-center " >
-      <div class="card text-white bg-dark m-3 p-5 row d-flex justify-content-center align-items-center" style="width: 40%; ">
+    <div class="row d-flex justify-content-center align-items-center  " >
+      <div class="card bg-dark row d-flex justify-content-center align-items-center" style="width: 50%; ">
       <div class="col-lg-8 col-md-10 mx-auto">
         <div style="cursor:pointer;" v-for="(community, idx) in communities" :key="idx">
+          <br>
             <h3 @click="DetailCommunity(community)">{{community.id}}번 글</h3>
             <h2>{{community.title}}</h2>
-            <button  @click="DetailCommunity(community)" class ="btn btn-outline-danger">Detail</button>
+            <button @click="DetailCommunity(community)" class ="btn btn-outline-danger">Detail</button>
             <h4>{{community.content}}</h4>
           <p  @click="moveToProfile(community.user, community.userName)">Written by
-              {{community.userName}}
+              {{ community.userName }} 번 유저
           </p>
         <hr>
         </div>
@@ -34,8 +35,9 @@ export default {
   },
   methods: {
     DetailCommunity: function (community) {
-      // console.log(community)
+      console.log(community)
       // this.$store.dispatch('createDetailCommunity', community)
+      console.log('디테일로 넘김')
       this.$router.push({ name: 'CommunityDetail', params: { community_pk: `${community.id}` }})
     },
     moveToProfile: function (user, username) {
