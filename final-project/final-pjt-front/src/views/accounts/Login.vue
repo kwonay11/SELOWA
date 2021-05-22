@@ -48,7 +48,7 @@ export default {
   },
   methods: {
     login: function () {
-      axios.post(`${SERVER_URL}accounts/api-token-auth/`, this.credentials)
+      axios.post(`${SERVER_URL}/accounts/api-token-auth/`, this.credentials)
       .then((res) => {
         console.log(res.data.token)
         // localstorage에 jwt 토큰 저장
@@ -62,7 +62,7 @@ export default {
       })
     },
     kakao_login: function () {
-      axios.post(`${SERVER_URL}/accounts/api-token-auth/`)
+      axios.post(`${SERVER_URL}accounts/api-token-auth/`)
       .then((res) => {
         console.log(res.data.token)
         // localstorage에 jwt 토큰 저장
