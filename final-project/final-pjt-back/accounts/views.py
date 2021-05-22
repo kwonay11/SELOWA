@@ -1,12 +1,9 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, get_object_or_404
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializers import UserSerializer, UserMovieSerializer
-from django.contrib.auth import get_user_model
 from .models import UserMovie
-import urllib
-
 
 @api_view(['POST'])
 def signup(request):
@@ -30,26 +27,9 @@ def signup(request):
     # password는 직렬화 과정에는 포함 되지만 → 표현(response)할 때는 나타나지 않는다.
     return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-# code 요청
 @api_view(['GET'])
-def kakao_login(request):
-    app_rest_api_key = '061f19a9da5e194addf7f3d05a16f64c'
-    redirect_uri = "http://127.0.0.1:8000/accounts/login/kakao/callback"
-    return redirect(
-        f"https://kauth.kakao.com/oauth/authorize?client_id={app_rest_api_key}&redirect_uri={redirect_uri}&response_type=code"
-    )
-    
-    
-# access token 요청
-@api_view(['GET'])
-def kakao_callback(request):                                                                  
-    params = urllib.parse.urlencode(request.GET)                                      
-    return redirect(f'http://127.0.0.1:8000/accounts/login/kakao/callback?{params}') 
-
-
-
-# @api_view(['GET'])
-# def profile(request, username):
-#     user = get_object_or_404(UserMovie, pk=request.data.get('user_pk'))
-#     serializer = UserMovieSerializer(user)
-#     return Response(serializer.data)
+def profile(request, username):
+    person = get_object_or_404(UserMovie, username=username)
+    person_info = person.movie_set.all()
+    serializer = UserMovieSerializer(person_info, many=True)
+    return Response(serializer.data)

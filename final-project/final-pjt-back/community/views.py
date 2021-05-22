@@ -25,10 +25,8 @@ def community_list_create(request):
             serializer.save(user=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-# get보다 먼저 나와야 함
+
 @api_view(['PUT', 'DELETE'])
-@authentication_classes([JSONWebTokenAuthentication])
-@permission_classes([IsAuthenticated])
 def community_detail(request, community_pk):
     community = get_object_or_404(Community, pk=community_pk)
 
@@ -43,18 +41,7 @@ def community_detail(request, community_pk):
             serializer.save()
             return Response(serializer.data)
 
-@api_view(['GET'])
-@authentication_classes([JSONWebTokenAuthentication])
-@permission_classes([IsAuthenticated])
-def community_detail(request, community_pk):
-        community = get_object_or_404(Community, pk=community_pk)
-        serializer = CommunitySerializer(community)
-        return Response(serializer.data)
-        
-
 @api_view(['GET', 'POST'])
-@authentication_classes([JSONWebTokenAuthentication])
-@permission_classes([IsAuthenticated])
 def comments(request, community_pk):
     community = get_object_or_404(Community, pk=community_pk)
     if request.method == 'POST':
@@ -69,8 +56,6 @@ def comments(request, community_pk):
 
 
 @api_view(['PUT', 'DELETE'])
-@authentication_classes([JSONWebTokenAuthentication])
-@permission_classes([IsAuthenticated])
 def comment_detail(request, community_pk, comment_pk):
     community = get_object_or_404(Community, pk=community_pk)
     comment = get_object_or_404(Comment, pk=comment_pk)
