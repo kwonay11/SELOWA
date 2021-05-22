@@ -22,6 +22,7 @@
 
 <script>
 import { Glide, GlideSlide } from 'vue-glide-js'
+//npm i vue-glide-js
 import MovieDetail from "@/components/MovieDetail"
 export default {
   name: "MovieCard",

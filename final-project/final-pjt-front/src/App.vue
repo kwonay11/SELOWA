@@ -5,6 +5,7 @@
     <!-- 로고 클릭하면 메인페이지로 -->
     <Menu style="position:fixed; top:0; z-index:3;"></Menu>
     <div id="nav">
+      
       <span v-if="login">
         <router-link :to="{ name: 'Community' }">Community</router-link> | 
         <router-link :to="{ name: 'Login' }" @click.native="logout">LOGOUT</router-link> 
@@ -16,6 +17,7 @@
       </span>
     </div>
     <router-view @login="login = true"/>
+    <MovieCard />
 
     
   </div>
@@ -24,12 +26,15 @@
 <script>
 import axios from 'axios'
 import Menu from '@/components/Menu'
+import MovieCard from '@/components/MovieCard'
+
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 export default {
   name: 'App',
   components: {
     Menu,
+    MovieCard,
   },
 
   data: function () {

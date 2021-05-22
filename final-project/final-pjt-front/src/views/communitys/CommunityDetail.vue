@@ -2,13 +2,9 @@
   <div>
     <div>
       <div>
-
-        {{ community.userName }}
-    
         <h2>{{ community.userName }}님의 게시글</h2>
         <hr>
-        <div class="st-font" style="margin-bottom:30px">
-          {{ community }}
+        <div style="margin-bottom:30px">
           <span @click="moveToProfile(community)" style="cursor:pointer;">작성자: {{ community.userName }} | </span>  
           <span>글 생성시간: {{ community.created_at }} | </span>
           <span>글 수정시간: {{ community.updated_at }}</span>  
