@@ -35,7 +35,7 @@ export default {
     getCommunities: function () {
       const config = this.getToken()
       // 장고 서버에 get 요청을 보내 전체 게시글 데이터를 가져온다.
-      axios.get(`${SERVER_URL}/communitys/`, config)
+      axios.get(`${SERVER_URL}community/`, config)
         .then((res) => {
           this.communities = res.data
         })

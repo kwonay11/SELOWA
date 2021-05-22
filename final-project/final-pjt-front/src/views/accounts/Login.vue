@@ -55,7 +55,7 @@ export default {
         localStorage.setItem('jwt', res.data.token)
         // App 컴포넌트한테 로그인 됐습니다를 알려야 함.
         this.$emit('login') // 데이터는 안 담아서 보내도됨 (이벤트(신호)만 알리면 됨)
-        this.$router.push({ name: 'CommunityList' })
+        this.$router.push({ name: 'Community' })
       })
       .catch((err) => {
         console.log(err)
@@ -69,7 +69,7 @@ export default {
         localStorage.setItem('jwt', res.data.token)
         // App 컴포넌트한테 로그인 됐습니다를 알려야 함.
         this.$emit('login') // 데이터는 안 담아서 보내도됨 (이벤트(신호)만 알리면 됨)
-        this.$router.push({ name: 'CommunityList' })
+        this.$router.push({ name: 'Community' })
       })
       .catch((err) => {
         console.log(err)
