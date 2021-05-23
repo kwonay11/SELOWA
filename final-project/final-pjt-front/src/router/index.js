@@ -1,13 +1,20 @@
+  
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Community from '@/views/communitys/Community'
 import CommunityDetail from '@/views/communitys/CommunityDetail'
 import Signup from '@/views/accounts/Signup'
 import Login from '@/views/accounts/Login'
+import Movie from '@/views/movies/Movie'
 
 Vue.use(VueRouter)
 
 const routes = [
+  {
+    path: '/movies',
+    name: 'Movie',
+    component: Movie,
+  },
   {
     path: '/community',
     name: 'Community',

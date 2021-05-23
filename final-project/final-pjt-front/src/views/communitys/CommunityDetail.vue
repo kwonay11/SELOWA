@@ -40,13 +40,15 @@
     </section>
     <br>
     <!-- 글씨 색 바꿔주세요~!!!  -->
-    <div class="container" v-for="(comment, idx) in commentsList" :key="idx">
-        <div class="row">
+    <div class="row d-flex justify-content-center align-items-center h-150" >
+    <div class="card text- bg-dark m-3 p-5 row d-flex justify-content-center align-items-center" style="width: 50%; ">
+    <div class="d-flex justify-content-center align-items-center" v-for="(comment, idx) in commentsList" :key="idx">
+        <div class="rowrow d-flex justify-content-center align-items-center h-150">
             <div class="col-8">
-                <div class="card post">
-                    <div class="post-heading">
-                        <div class="float-left image">
-                            <img style="margin-right:10px" src="@/assets/apeach.png" alt="user profile image">
+                <div class="card m-1" style="width:100%;">
+                    <div >
+                        <div>
+                            <img src="@/assets/apeach.png" alt="user profile image" style="width:50%">
                         </div>
                         <div class="float-left meta" style="color:black">
                             <div class="title h5 st-font">
@@ -56,14 +58,16 @@
                             <h6 class="title-font text-muted time">{{comment.created_at}}</h6>
                         </div>
                     </div> 
-                    <div style="font-size:30px; color:black" class="content-font post-description "> 
+                    <div style="font-size:30px; color:black"> 
                         <p>{{comment.content}}</p>
                     </div>
-                <button class="st-font button1" style="cursor:pointer;" @click="deleteComment(community, comment)">삭제</button>
+                <button class ="btn btn-outline-danger" style="cursor:pointer;" @click="deleteComment(community, comment)">삭제</button>
                 </div>
             </div>
         </div>
     </div>
+  </div>
+  </div>
   </div>
 </template>
 
@@ -105,7 +109,7 @@ export default {
           // const time = res.data.created_at.split('')
           this.time = res.data.created_at.split('')
           // 시간 포맷 수정
-          this.community_time = this.time.slice(0, 14).join('')
+          this.community_time = this.time.slice(0, 16).join('')
           this.community = res.data
         })
         .catch((err) => {
