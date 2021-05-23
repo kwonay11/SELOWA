@@ -2,9 +2,11 @@
   <div>
     <div>
       <div>
+
+    
         <h2>{{ community.userName }}님의 게시글</h2>
         <hr>
-        <div style="margin-bottom:30px">
+        <div class="st-font" style="margin-bottom:30px">
           <span @click="moveToProfile(community)" style="cursor:pointer;">작성자: {{ community.userName }} | </span>  
           <span>글 생성시간: {{ community.created_at }} | </span>
           <span>글 수정시간: {{ community.updated_at }}</span>  
@@ -109,8 +111,7 @@ export default {
       const config = this.getToken()
       const hash = localStorage.getItem('jwt')
       const info = VueJwtDecode.decode(hash)
-      console.log(this.userName)
-      axios.post(`${SERVER_URL}accounts/${this.community.userName}`, info, config)
+      axios.post(`${SERVER_URL}accounts/myprofile/`, info, config)
       .then( (res) => {
         this.user = res.data
       })
@@ -136,11 +137,15 @@ export default {
         content: this.comment_content,
       }
       if (commentItem.content) {
-        axios.post(`${SERVER_URL}community/${this.community.id}/comments/`, commentItem, config)
-          .then( () => {
-            // console.log(res)
-          this.getComments()
-          this.comment_content = ''
+         console.log('댓글생성')
+          axios.post(`${SERVER_URL}/community/${this.$route.params.community_pk}/comments/`, commentItem, config)
+          .then( (res) => {
+            console.log(res+"dddd")
+            this.getComments()
+            this.comment_content = ''
+          })
+          .catch((err) => {
+            console.log(err+"eeeee")
           })
         }
     },
