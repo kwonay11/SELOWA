@@ -1,120 +1,47 @@
 <template>
-  <div>
-    <vue-glide v-if="movies.length"
-      class="glide__track"
-      data-glide-el="track"
-      ref="slider"
-      type="carousel"
-      :breakpoints="{3000: {perView: 7}, 1100: {perView: 5}, 600: {perView: 3}}"
-    >
-      <vue-glide-slide
-        v-for="(movie, idx) in movies"
-        :key="idx">
-        <MovieDetail 
-          :movie="movie"
-        />
-        <!-- <p>{{ movie.title }}</p> -->
-      </vue-glide-slide>
-    </vue-glide>
-    
+<div class="col" >
+  <div class="card m-1 " style="width: 20rem;">
+      <img @click="movieDetail" :src="movieImage" alt="poster_path" >
+        <button @click="movieDetail()" class ="btn btn-outline-danger">See more info</button>
   </div>
+</div>
 </template>
 
 <script>
 import { Glide, GlideSlide } from 'vue-glide-js'
-//npm i vue-glide-js
-import MovieDetail from "@/components/MovieDetail"
+// import MovieDetail from '@/components/MovieDetail'
+
 export default {
-  name: "MovieCard",
-  data: function () {
-    return {
-      show: false,
-      variants: ["light", "dark"],
-      headerBgVariant: "dark",
-      headerTextVariant: "light",
-      bodyBgVariant: "dark",
-      bodyTextVariant: "light",
-      footerBgVariant: "dark",
-      footerTextVariant: "dark",
-    }
-  },
-  props: {
-    movies: {
-      type: Array,
-    }
-  },
-  components: {
-    [Glide.name]: Glide,
-    [GlideSlide.name]: GlideSlide,
-    MovieDetail,
-  },
-  methods: {
-    movieDetail: function () {
-      this.show = true
+    name:'MovieCard',
+    components: {
+        [Glide.name]: Glide,
+        [GlideSlide.name]: GlideSlide,
+        // MovieDetail
     },
-    close: function () {
-      this.show = false
+    props: {
+        movie:{
+            type: Object,
+        }
+    },
+    computed:{
+       movieImage: function () {
+           return `https://image.tmdb.org/t/p/w500/${this.movie.poster_path}`
+           //https://image.tmdb.org/t/p/w500/를 붙여서 리턴
+       }
+    },
+    methods:{
+    movieDetail: function () {
+        // 여기서 각 무비 id에 해당하는 object데이터를 디테일로 넘겨줘야할듯?.?
+      
     }
-  },
+
+    
+    
+  }
+
 }
 </script>
 
-
 <style>
-.w3-myfont {
-  font-family: 'Luminari', fantasy;
-}
-.w2-myfont {
-  font-family: 'Avantgarde', 'TeX Gyre Adventor', 'URW Gothic L', sans-serif;
-}
-#main {
-padding: 4em 0 2em 0;
-}
-@media screen and (max-width: 736px) {
-#main {
-padding: 3em 0 1em 0;
-}
-}
-#main .inner {
-width: 90%;
-max-width: 80em;
-margin: 0 auto;
-}
-@media screen and (max-width: 480px) {
-#main .inner {
-width: 95%;
-}
-}
-.thumbnails {
-display: -moz-flex;
-display: -webkit-flex;
-display: -ms-flex;
-display: flex;
--moz-align-items: stretch;
--webkit-align-items: stretch;
--ms-align-items: stretch;
-align-items: stretch;
--moz-justify-content: center;
--webkit-justify-content: center;
--ms-justify-content: center;
-justify-content: center;
--moz-flex-wrap: wrap;
--webkit-flex-wrap: wrap;
--ms-flex-wrap: wrap;
-flex-wrap: wrap;
-}
-.thumbnails .box {
-margin: 0 1em 2em 1em;
-width: 30%;
-}
-@media screen and (max-width: 1280px) {
-.thumbnails .box {
-width: 45%;
-}
-}
-@media screen and (max-width: 736px) {
-.thumbnails .box {
-width: 100%;
-}
-}
+
 </style>

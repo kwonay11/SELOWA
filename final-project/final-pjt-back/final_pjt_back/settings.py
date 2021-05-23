@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     # myapp
     'accounts',
     'community',
+    'movies',
 ]
 
 MIDDLEWARE = [
@@ -142,10 +143,6 @@ LANGUAGE_CODE = 'ko-kr'
 
 TIME_ZONE = 'Asia/Seoul'
 
-USE_I18N = True
-
-USE_L10N = True
-
 USE_TZ = True
 
 
@@ -160,7 +157,7 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'accounts.User'
 
-
+SITE_ID = 1
 # JWT setting override 해서 만료기간 5분 -> 1일
 import datetime
 JWT_AUTH = {
