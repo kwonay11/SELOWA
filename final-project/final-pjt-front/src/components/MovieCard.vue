@@ -1,6 +1,6 @@
 <template>
   <div>
-    <vue-glide v-if="movies.length"
+    <vue-glide v-if="movies"
       class="glide__track"
       data-glide-el="track"
       ref="slider"

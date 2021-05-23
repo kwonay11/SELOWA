@@ -60,7 +60,7 @@ export default {
       }
       if (communityItem.title) {
         // axios post 요청을 장고에 데이터와 함께 보내줍니다.
-        axios.post(`${SERVER_URL}community/`, communityItem, config)
+        axios.post(`${SERVER_URL}/community/`, communityItem, config)
           .then(() => {
             // console.log(res)
             //this.$router.push({ name: 'Community' })

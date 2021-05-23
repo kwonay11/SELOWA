@@ -30,30 +30,3 @@ def reviews(request, movie_pk):
         if serializer.is_valid(raise_exception=True):
             serializer.save(movie=movie)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-def recommend(request):
-    # 인기순
-    # favorite_movies = Movie.objects.all().order_by('-rating')[:10]
-    # 리뷰 기반 장르기반 추천
-    user_movies_genre = []
-    # 배우기반 추천
-    user_movies_actor = []
-    # 감독기반 추천
-    user_movies_director = []
-    # 개봉년도
-    # 제작 국가
-    # 연령대
-    user_movies_age = []
-    # 리뷰 기반 장름별
-    reviews = Review.objects.all()
-    for review in reviews:
-        movie = Movie.objects.get(pk=review.movie_id)
-        if not movie in user_movies_genre:
-            user_movies_genre.append(movie)
-    genre_movies = Movie.objects.all().order_by('-genres')[:10]
-    # 배우별
-    
-    # 감독별
-    # 개봉년도별
-    # 제작 국가별
-    # 연령대 
