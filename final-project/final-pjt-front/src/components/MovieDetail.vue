@@ -11,5 +11,4 @@ name: MovieDetail,
 </script>
 
 <style>
-
 </style>
