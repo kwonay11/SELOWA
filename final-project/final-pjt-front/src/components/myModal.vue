@@ -1,16 +1,19 @@
 <template>
-  <div class="my-modal"
+<transition name="modal" appear>
+  <div class="my-modal" 
     v-if="visible" @click.self="handleWrapperClick">
     <div class="my-modal__dialog">
       <header class="my-modal__header">
         <span>{{title}}</span>
-        <button @click="$emit('update:visible', !visible)">Close</button>
+        <!-- update:visible', !visible 모달 바깥을 클릭해서 모달을 닫음 -->
+        <button @click="$emit('update:visible', !visible)" class ="btn btn-outline-danger m-4">X</button>
       </header>
       <div class="my-modal__body">
         <slot></slot>
       </div>
     </div>
   </div>
+</transition>
 </template>
 
 <script>
@@ -39,6 +42,12 @@ export default {
 $module: 'my-modal';
 .#{$module} {
   // This is modal bg
+  align-items: center;
+  justify-content: center;
+  // 모달이 맨 위로 나오게 하기
+  z-index: 30;
+    top: 0;
+    left: 0;
   background-color: rgba(0,0,0,.7);
   top: 0; right: 0; bottom: 0; left: 0;
   position: fixed;
@@ -46,11 +55,11 @@ $module: 'my-modal';
   margin: 0;
   //This is modal layer
   &__dialog{
-    left: 50%;
+    left: 35%;
     top: 75px;
     width: 600px;
     position: absolute;
-    background: #fff;
+    background: rgb(170, 130, 130);
     margin-bottom: 50px;
   }
 
