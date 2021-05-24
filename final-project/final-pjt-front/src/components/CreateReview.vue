@@ -84,7 +84,7 @@ export default {
       }
       console.log(reviewItem)
       if (reviewItem.title) {
-        axios.post(`${SERVER_URL}/movies/${this.movie.id}/review_list_create/`, reviewItem, config)
+        axios.post(`${SERVER_URL}/movies/${this.movie.id}/reviews/`, reviewItem, config)
           .then(() => {
             this.$emit('reviews-updated')
             this.title = ""
@@ -108,13 +108,13 @@ export default {
   border: 2px solid white;
 } */
 #reviewRate {
-  color: white;
+  color: black;
 }
 #reviewContent {
-  color: white;
-  border: 2px solid white;
+  color: black;
+  border: 2px solid black;
 }
 #movieRate {
-  color: white;
+  color: black;
 }
 </style>
