@@ -1,24 +1,40 @@
 <template>
-  <div>
-
+  <div id="app">
     <h2 style="margin-bottom:60px">SELOWA 알고리즘이 {{user.username}}님에게 추천하는 영화 페이지</h2>
-    <h3 class="content-font" v-if="my_users_like_movies.length > 0">{{user.username}} 님의 취향저격 베스트 콘텐츠</h3>
-    <hr>
-    <MovieCard :movies="my_users_like_movies"/>
-    <h3 class="content-font">랜덤 영화 추천{{ movies }}</h3>
-    <MovieCard :movies="movies"/>
-    <h3 class="content-font" v-if="favorite_movies.length === 30">높은 평점을 받은 영화</h3>
-    <MovieCard :movies="favorite_movies"/>
-
-
+    <vue-glide v-if="movies.length"
+      class="glide__track"
+      data-glide-el="track"
+      ref="slider"
+      type="carousel"
+      :breakpoints="{3000: {perView: 7}, 1100: {perView: 5}, 600: {perView: 3}}"
+    >
+      <h3 class="content-font">랜덤 영화 추천{{ movies }}</h3>
+      <vue-glide-slide
+        v-for = "(movie, idx) in movies"
+        :key="idx">
+        <MovieCard
+          :movie="movie"
+        />
+        
+      </vue-glide-slide>
+    </vue-glide>
+      <!--<h3 class="content-font" v-if="my_users_like_movies.length > 0">{{user.username}} 님의 취향저격 베스트 콘텐츠</h3>
+      <hr>
+      <MovieCard :movies="my_users_like_movies"/>
+      <MovieCard :movies="movies"/>
+      <h3 class="content-font" v-if="favorite_movies.length === 30">높은 평점을 받은 영화</h3>
+      <MovieCard :movies="favorite_movies"/> -->
   </div>
 </template>
 
 <script>
 import axios from 'axios'
 import _ from 'lodash'
+import { Glide, GlideSlide } from 'vue-glide-js'
 import MovieCard from "@/components/MovieCard"
+
 import VueJwtDecode from "vue-jwt-decode"
+
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
 export default {
   name: "Recommend",
@@ -36,6 +52,8 @@ export default {
   },
   components: {
     MovieCard,
+    [Glide.name]: Glide,
+    [GlideSlide.name]: GlideSlide
   },
   methods: {
     getToken: function () {
@@ -59,7 +77,7 @@ export default {
         for (const key in sampleNums) {
           this.movies.push(res.data[sampleNums[key]])
         }
-        console.log(this.movies)
+        // console.log(this.movies)
       })
       .catch( (err) => {
         console.log(err)
@@ -136,7 +154,6 @@ export default {
   created: function () {
     this.getMovieDatas()
     this.getMyName()
-    // this.getRecommend()
   },
 }
 </script>
