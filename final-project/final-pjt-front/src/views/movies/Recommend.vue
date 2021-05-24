@@ -5,7 +5,7 @@
     <h3 class="content-font" v-if="my_users_like_movies.length > 0">{{user.username}} 님의 취향저격 베스트 콘텐츠</h3>
     <hr>
     <MovieCard :movies="my_users_like_movies"/>
-    <h3 class="content-font">랜덤 영화 추천</h3>
+    <h3 class="content-font">랜덤 영화 추천{{ movies }}</h3>
     <MovieCard :movies="movies"/>
     <h3 class="content-font" v-if="favorite_movies.length === 30">높은 평점을 받은 영화</h3>
     <MovieCard :movies="favorite_movies"/>
@@ -50,9 +50,7 @@ export default {
     getMovieDatas: function () {
       axios.get(`${SERVER_URL}/movies/`)
       .then( (res) => {
-        if (this.$store.state.movies.length === 0) {
-          this.$store.state.movies = res.data
-        }
+       
         const randomIdx = _.random(res.data.length-1)
         this.movie = res.data[randomIdx]
         const numbers = _.range(1, res.data.length);
@@ -61,6 +59,7 @@ export default {
         for (const key in sampleNums) {
           this.movies.push(res.data[sampleNums[key]])
         }
+        console.log(this.movies)
       })
       .catch( (err) => {
         console.log(err)
@@ -68,45 +67,56 @@ export default {
     },
     getRecommend: function () {
       const config = this.getToken()
-      const item = {
-        movies: this.user.like_movies,
-      }
-      // 내가 좋아하는 영화 좋아하는 사람 찾기
-      axios.post(`${SERVER_URL}/movies/${this.user.id}/like/users/`,item , config)
-      .then( (res) => {
-        // console.log(res)
-        // this.my_like_users = res.data
-        const item = {
-          users: res.data,
-        }
-        // 그 사람들이 좋아하는 영화 찾기
-        axios.post(`${SERVER_URL}/accounts/info/`, item, config)
+      // const item = {
+      //   movies: this.user.like_movies,
+      // }
+       axios.post(`${SERVER_URL}/movies/recommend/`, config)
         .then( (res) => {
-          // console.log(res)
-          this.my_like_users_movies = res.data
-          // 일반적인 추천 받기
-          const item2 = {
-            like_movies: this.my_like_users_movies
-          }
-          axios.post(`${SERVER_URL}/movies/recommend/`, item2, config)
-          .then( (res) => {
-            // console.log(res)
-            this.favorite_movies = res.data[0]
-            this.shortest_movies = res.data[1]
-            this.users_movies = res.data[2]
-            this.my_users_like_movies = res.data[3]
-          })
-          .catch( (err) => {
-            console.log(err)
-          })
+          console.log(res)
+          this.favorite_movies = res.data[0]
+          this.shortest_movies = res.data[1]
+          this.users_movies = res.data[2]
+          this.my_users_like_movies = res.data[3]
         })
         .catch( (err) => {
           console.log(err)
         })
-      })
-      .catch( (err) => {
-        console.log(err)
-      })
+      // 내가 좋아하는 영화 좋아하는 사람 찾기
+      // axios.post(`${SERVER_URL}/movies/${this.user.id}/like/users/`,item , config)
+      // .then( (res) => {
+      //   // console.log(res)
+      //   // this.my_like_users = res.data
+      //   const item = {
+      //     users: res.data,
+      //   }
+      //   // 그 사람들이 좋아하는 영화 찾기
+      //   axios.post(`${SERVER_URL}/accounts/info/`, item, config)
+      //   .then( (res) => {
+      //     // console.log(res)
+      //     this.my_like_users_movies = res.data
+      //     // 일반적인 추천 받기
+      //     const item2 = {
+      //       like_movies: this.my_like_users_movies
+      //     }
+      //     axios.post(`${SERVER_URL}/movies/recommend/`, item2, config)
+      //     .then( (res) => {
+      //       console.log(res)
+      //       this.favorite_movies = res.data[0]
+      //       this.shortest_movies = res.data[1]
+      //       this.users_movies = res.data[2]
+      //       this.my_users_like_movies = res.data[3]
+      //     })
+      //     .catch( (err) => {
+      //       console.log(err)
+      //     })
+      //   })
+      //   .catch( (err) => {
+      //     console.log(err)
+      //   })
+      // })
+      // .catch( (err) => {
+      //   console.log(err)
+      // })
     },
     getMyName: function () {
       const config = this.getToken()

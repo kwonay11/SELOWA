@@ -78,7 +78,7 @@ export default {
       }
       console.log(reviewItem)
       if (reviewItem.title) {
-        axios.post(`${SERVER_URL}/movies/${this.movie.id}/review`, reviewItem, config)
+        axios.post(`${SERVER_URL}/movies/${this.movie.id}/reviews/`, reviewItem, config)
           .then(() => {
             this.$emit('reviews-updated')
             this.title = ""
