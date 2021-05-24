@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button @click="handleClickButton" class ="btn btn-outline-danger">More Info</button>
+    <button @click="handleClickButton" class ="btn btn-outline-danger" style="width: 70%;">More Info</button>
     <app-my-modal title="More Info" :visible.sync="visible">
       <div>
         <h2 style="font-weight: bold;">{{ movie.title }} </h2>

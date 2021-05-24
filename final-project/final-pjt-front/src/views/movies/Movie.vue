@@ -3,11 +3,14 @@
     <button  @click="onClickBtn" class ="btn btn-outline-danger m-1">Total Movie</button> 
     <!-- <button @click="onRecommend" class ="btn btn-outline-danger m-1" >Recomended Movie</button> -->
     <hr>
-    <div class="row row-cols-1 row-cols-md-4 ms-5">
+    
+    <div class="row row-cols-1 row-cols-md-4 ms-5 ">
       <!-- 그리드 카드 형태로  -->
       <MovieCard v-for="(movie,idx) in movies" :key="idx" :movie="movie"/>
+
       <MovieDetail />
     </div>
+    
   </div>
 </template>
 
@@ -15,6 +18,10 @@
 import MovieCard from '@/components/MovieCard'
 import MovieDetail from '@/components/MovieDetail'
 import axios from 'axios'
+// import SequentialEntrance from 'vue-sequential-entrance'
+// import 'vue-sequential-entrance/vue-sequential-entrance.css'
+
+
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
 // @ is an alias to /src
 
@@ -23,11 +30,14 @@ export default {
   data: function(){
     return{
       movies: [],
+      
     }
   },
   components: {
     MovieCard,
     MovieDetail,
+    // SequentialEntrance,
+    
   },
   methods:{
     onClickBtn: function (){
@@ -59,3 +69,7 @@ export default {
   }
 }
 </script>
+<style>
+
+
+</style>
