@@ -1,22 +1,22 @@
 <template>
   <div class="home ms-5">
     <button  @click="onClickBtn" class ="btn btn-outline-danger m-1">Total Movie</button> 
-    <button class ="btn btn-outline-danger m-1" >Recomanded Movie</button>
+    <!-- <button @click="onRecommend" class ="btn btn-outline-danger m-1" >Recomended Movie</button> -->
     <hr>
     <div class="row row-cols-1 row-cols-md-4 ms-5">
       <!-- 그리드 카드 형태로  -->
       <MovieCard v-for="(movie,idx) in movies" :key="idx" :movie="movie"/>
-      <!-- <MovieDetail /> -->
+      <MovieDetail />
     </div>
   </div>
 </template>
 
 <script>
 import MovieCard from '@/components/MovieCard'
-// import MovieDetail from '@/components/MovieDetail'
+import MovieDetail from '@/components/MovieDetail'
 import axios from 'axios'
+const SERVER_URL = process.env.VUE_APP_SERVER_URL
 // @ is an alias to /src
-const API_URL = 'C:\Users\yunniee\Desktop\ssafy\selowa\final-project\getData\movies.json'
 
 export default {
   name: 'Movie',
@@ -27,11 +27,11 @@ export default {
   },
   components: {
     MovieCard,
-    // MovieDetail,
+    MovieDetail,
   },
   methods:{
     onClickBtn: function (){
-      axios.get(API_URL, {})
+      axios.get(`${SERVER_URL}/movies/`, {})
       .then((res) => {
         this.movies = res.data
       })
@@ -41,6 +41,18 @@ export default {
     
 
     },
+    // onRecommend: function (){
+    //   axios.get(`${SERVER_URL}/movies/recommend/`, {})
+    //   .then((res) => {
+    //     this.movies = res.data
+    //     this.$router.push({ name: 'Recommend' })
+    //   })
+    //   .catch((err) => {
+    //     console.log(err)
+    //   })
+    
+
+    // },  
 
     
     
