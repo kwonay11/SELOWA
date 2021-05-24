@@ -5,6 +5,7 @@
       :movie="movie"
       style="margin-bottom:30px"
     />
+    <hr>
     <ReviewList 
       :reviews="reviews"
       :movie="movie"
@@ -50,7 +51,6 @@ export default {
       console.log(this.movie.id)
       axios.get(`${SERVER_URL}/movies/${this.movie.id}/reviews/`, config)
       .then((res) => {
-        alert(res)
         console.log('리뷰받아옴')
         this.reviews = res.data
       })

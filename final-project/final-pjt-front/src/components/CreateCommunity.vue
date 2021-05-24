@@ -2,7 +2,6 @@
   <div>
     <section class="page-section" id="contact">
         <div class="container">
-              fjdkfjdkjfkdkfjdkfdfdjkf
             <h2 >Community</h2>
             <div class="row">
                 <div class="col-lg-8 mx-auto">
@@ -60,7 +59,6 @@ export default {
         content: this.content,
       }
       if (communityItem.title) {
-        console.log('디테일들어감?')
         // axios post 요청을 장고에 데이터와 함께 보내줍니다.
         axios.post(`${SERVER_URL}/community/`, communityItem, config)
           .then(() => {
