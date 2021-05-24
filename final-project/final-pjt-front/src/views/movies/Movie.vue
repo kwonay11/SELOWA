@@ -5,13 +5,15 @@
     <hr>
     <div class="row row-cols-1 row-cols-md-4 ms-5">
       <!-- 그리드 카드 형태로  -->
-    <MovieCard v-for="(movie,idx) in movies" :key="idx" :movie="movie"/>
+      <MovieCard v-for="(movie,idx) in movies" :key="idx" :movie="movie"/>
+      <!-- <MovieDetail /> -->
     </div>
   </div>
 </template>
 
 <script>
 import MovieCard from '@/components/MovieCard'
+// import MovieDetail from '@/components/MovieDetail'
 import axios from 'axios'
 // @ is an alias to /src
 const API_URL = 'https://gist.githubusercontent.com/eduChange-hphk/d9acb9fcfaa6ece53c9e8bcddd64131b/raw/9c8bc58a99e2ea77d42abd41376e5e1becabea69/movies.json'
@@ -25,16 +27,13 @@ export default {
   },
   components: {
     MovieCard,
+    // MovieDetail,
   },
   methods:{
     onClickBtn: function (){
-      this.movies
       axios.get(API_URL, {})
       .then((res) => {
-        console.log(res)
         this.movies = res.data
-        console.log(this.movies)
-        
       })
       .catch((err) => {
         console.log(err)

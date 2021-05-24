@@ -5,7 +5,6 @@
     <!-- 로고 클릭하면 메인페이지로 -->
 
     <Menu style="position:fixed; top:0; z-index:3;"></Menu>
-
     <div id="nav">
       <span v-if="login">
         <router-link :to="{ name: 'Movie' }">Movie</router-link> |
@@ -21,15 +20,17 @@
     <router-view @login="login = true"/>
 
     <!-- <button @click="onClickBtn">전체 영화 불러오기</button>
-    <div class="row row-cols-1 row-cols-md-4 ms-5">
-    <MovieCard /> -->
+    <div class="row row-cols-1 row-cols-md-4 ms-5">-->
+    <MovieCard /> 
+    <MovieDetail />
     <!-- </div> -->
   </div>
 </template>
 
 <script>
 import Menu from '@/components/Menu'
-// import MovieCard from '@/components/MovieCard'
+import MovieCard from '@/components/MovieCard'
+import MovieDetail from '@/components/MovieDetail'
 // import axios from 'axios'
 // const API_URL = 'https://gist.githubusercontent.com/eduChange-hphk/d9acb9fcfaa6ece53c9e8bcddd64131b/raw/9c8bc58a99e2ea77d42abd41376e5e1becabea69/movies.json'
 
@@ -38,7 +39,8 @@ export default {
   name: 'App',
   components: {
     Menu,
-    // MovieCard,
+    MovieCard,
+    MovieDetail,
   },
   data: function () {
     return {
@@ -93,7 +95,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: white;
+  /* color: white; */
   
 }
 

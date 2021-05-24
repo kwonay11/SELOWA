@@ -35,7 +35,7 @@ export default {
   },
   methods: {
     DetailCommunity: function (community) {
-      console.log('디테일' + community.id)
+      // console.log('디테일' + community.id)
       // this.$store.dispatch('createDetailCommunity', community)
       // console.log('디테일로 넘김')
       this.$router.push({ name: 'CommunityDetail', params: { community_pk: `${community.id}` }})
