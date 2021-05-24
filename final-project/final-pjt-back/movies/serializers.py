@@ -13,6 +13,7 @@ class MovieListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Movie
         fields = '__all__'
+        
 
 class MovieSerializer(serializers.ModelSerializer):
     review_set = ReviewSerializer(many=True, read_only=True)
@@ -20,3 +21,4 @@ class MovieSerializer(serializers.ModelSerializer):
     class Meta:
         model = Movie
         fields = '__all__'
+        read_only_fields = ('like_users',)
