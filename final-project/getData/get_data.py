@@ -37,7 +37,7 @@ for data in genre_data:
     genre_list.append(my_genre)
 
 
-for i in range(1, 50):
+for i in range(1, 5):
     request = (f'{HOST}{MOVIE_LIST_URI}?api_key={API_KEY}&language=ko&page={i}')
     response = urllib.request.urlopen(request)
     json_str = response.read().decode('utf-8')
@@ -94,8 +94,8 @@ for idx, movie_Id in enumerate(movie_Ids):
         movie_list.append(my_object)
 
 
-# with open('movies.json', 'w', encoding='UTF-8') as file:
-#     file.write(json.dumps(movie_list, ensure_ascii=False))
+with open('movies.json', 'w', encoding='UTF-8') as file:
+    file.write(json.dumps(movie_list, ensure_ascii=False))
 
-# with open('genres.json', 'w', encoding='UTF-8') as file:
-#     file.write(json.dumps(genre_list, ensure_ascii=False))
+with open('genres.json', 'w', encoding='UTF-8') as file:
+    file.write(json.dumps(genre_list, ensure_ascii=False))
