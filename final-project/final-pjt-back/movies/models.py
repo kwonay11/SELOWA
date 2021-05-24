@@ -26,10 +26,9 @@ class Movie(models.Model):
     # nations = models.CharField(max_length=200)
     
 
-
 class Review(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     content = models.TextField()
-    vote_average = models.PositiveIntegerField(default=0, validators=[MinValueValidator(1), MaxValueValidator(5)])
+    rank = models.PositiveIntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(10)])
 

@@ -3,6 +3,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Community from '@/views/communitys/Community'
 import CommunityDetail from '@/views/communitys/CommunityDetail'
+import CommunityDetailUpdate from '@/views/communitys/CommunityDetailUpdate'
 import Signup from '@/views/accounts/Signup'
 import Login from '@/views/accounts/Login'
 import Movie from '@/views/movies/Movie'
@@ -24,6 +25,11 @@ const routes = [
     path: '/communitydetail/:community_pk',
     name: 'CommunityDetail',
     component: CommunityDetail,
+  },
+  {
+    path: '/CommunityDetailUpdate/:community_pk',
+    name: 'CommunityDetailUpdate',
+    component: CommunityDetailUpdate,
   },
   {
     path: '/accounts/signup',

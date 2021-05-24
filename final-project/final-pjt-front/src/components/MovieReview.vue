@@ -47,9 +47,11 @@ export default {
     },
     getReviews: function () {
       const config = this.getToken()
-      axios.get(`${SERVER_URL}/movies/${this.movie.id}/review_list_create/`, config)
+      console.log(this.movie.id)
+      axios.get(`${SERVER_URL}/movies/${this.movie.id}/reviews/`, config)
       .then((res) => {
-        // console.log(res)
+        alert(res)
+        console.log('리뷰받아옴')
         this.reviews = res.data
       })
       .catch((err) => {

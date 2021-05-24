@@ -77,7 +77,7 @@ export default {
             title: community.title,
             content: community.content
         }
-        axios.put(`${SERVER_URL}community/${community.id}/`, communityItem, config)
+        axios.put(`${SERVER_URL}/community/${community.id}/`, communityItem, config)
             .then((res) => {
                 if (res.data.message) {
                     alert("본인이 작성한 글만 수정 가능합니다!")

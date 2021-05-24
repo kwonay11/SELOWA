@@ -120,6 +120,7 @@ export default {
       const config = this.getToken()
       const hash = localStorage.getItem('jwt')
       const info = VueJwtDecode.decode(hash)
+      console.log(`${SERVER_URL}/accounts/myprofile/`)
       axios.post(`${SERVER_URL}/accounts/myprofile/`, info, config)
       .then( (res) => {
         this.user = res.data
@@ -184,7 +185,8 @@ export default {
     },
     // 커뮤니티 글 수정
     moveToDetailUpdate: function (community) {
-      // console.log(this.user.username) -- undefined 뜸!
+      alert(community)
+      console.log(this.user.username)
       if (this.user.username === community.userName) {
         this.$router.push({ name: 'CommunityDetailUpdate', params: { community_pk: `${community.id}` }})
       } else {
