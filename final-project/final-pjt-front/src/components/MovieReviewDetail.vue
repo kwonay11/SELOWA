@@ -39,10 +39,9 @@
       <button class="btn btn-secondary m-1" @click="reviewModify(review)">수정</button>
       <button class="btn btn-secondary m-1" @click="reviewDelete(review)">삭제</button>
     </div>
-  <hr>
 <!-- 리뷰 수정 -->
-  <!-- <div class="container">
-      <b-modal
+  <div>
+      <!-- <b-modal
         hide-footer
         v-model="show2"
         id="review-modal"
@@ -54,10 +53,11 @@
         :body-text-variant="bodyTextVariant"
         :footer-bg-variant="footerBgVariant"
         :footer-text-variant="footerTextVariant"
-      >
+      > -->
+      <app-my-modal v-if="reviewModify(review)" title="리뷰 수정" :visible.sync="visible">
         <hr>
         <!-- <section class="page-section" id="contact"> -->
-          <div class="container">
+          <!-- <div class="container"> -->
               <!-- Contact Section Heading-->
               <h2>리뷰 수정</h2>
               <!-- Contact Section Form-->
@@ -83,39 +83,44 @@
                         <option>3</option>
                         <option>2</option>
                         <option>1</option>
-                      </select>s
+                      </select>
 
                         <div>
                             <label>리뷰 내용</label>
                             <textarea v-model.trim="content" class="form-control" id="content" rows="5" :placeholder="review.content" required="required" data-validation-required-message="Please enter a content."></textarea>
-                            <p class="help-block text-danger"></p>
+                            <!-- <p class="help-block text-danger"></p> -->
                         </div>
                     <br />
                     <div id="success"></div>
                     <div class="text-white st-font form-group"><button @click="update(review)" class="btn btn-secondary btn-xl" id="sendMessageButton" type="submit">수정 !</button></div>
                   </div>
               </div>
-          </div>
+          <!-- </div> -->
         <!-- </section> -->
-        <div class="text-white st-font form-group">
-          <button @click="close2" class="btn btn-secondary btn-xl" id="sendMessageButton" type="submit">창 닫기</button>
-        </div>
-      </b-modal>
+        <!-- <div class="text-white st-font form-group">
+          <button @click="close2" class="btn btn-secondary m-1" id="sendMessageButton" type="submit">수정 창 닫기</button>
+        </div> -->
+      <!-- </b-modal> -->
+      </app-my-modal>
       <hr>
-    </div> -->
+    </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import myModal from './myModal'
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
 export default {
   name: 'MovieReviewDetail',
-  data: function () {
-    return {
-      show2:false,
-    }
+  components: {
+    appMyModal: myModal,
   },
+  // data: function () {
+  //   return {
+  //     show2:false,
+  //   }
+  // },
   props: {
     review: {
       type: Object,
@@ -125,13 +130,23 @@ export default {
     }
   },
   methods: {
-    close2:function () {
-      this.show2 = false
+    getToken: function () {
+      const token = localStorage.getItem('jwt')
+      const config = {
+        headers: {
+          Authorization: `JWT ${token}`
+        },
+      }
+      return config
     },
+    // close2:function () {
+    //   this.show2 = false
+    // },
     // 리뷰수정
     reviewModify: function() {
-        this.show2 = true
-        console.log('리뷰수정!!!!')
+      this.visible = !this.visible
+        // this.show2 = true
+        console.log(this.visible)
     },
     update: function (review) {
     const config = this.getToken()
@@ -147,7 +162,7 @@ export default {
         alert("본인이 작성한 글만 수정 가능합니다!")
       }
       else {
-        this.close2()
+        // this.close2()
         this.$emit("reviews-updated")
       }
     })
@@ -157,22 +172,22 @@ export default {
     },
    // 리뷰 삭제
     reviewDelete: function(review) {
+      console.log('삭제된다')
       const config = this.getToken()
       axios.delete(`${SERVER_URL}/movies/review/${review.id}/`, config)
         .then((res) => {
-          // console.log(res)
           if (res.data.message) {
             alert("본인이 작성한 글만 삭제 가능합니다!")
           }
           else {
-            this.$emit('deleteReview')
+            this.$emit('reviewDelete')
           }
         })
     },
 
-    created: function () {
-      this.close2()
-    },
+    // created: function () {
+    //   this.close2()
+    // },
   }
 }
 </script>

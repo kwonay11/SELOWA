@@ -8,7 +8,7 @@
         <MovieReviewDetail v-for="(review, idx) in reviews" :key="idx"
           :review="review"
           :movie="movie"
-          @deleteReview="deleteReview"
+          @reviewDelete="deleteReview"
           @reviews-updated="updateRiview"
         />
        
