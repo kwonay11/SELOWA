@@ -23,6 +23,18 @@
         <!-- <select name="rate" id="rate" v-model="myMovieRate" class="content-font">
           <option style="color: black;" class="content-font" :value="rate" v-for="(rate, idx) in this.$store.state.reviewRate" :key="idx">{{ rate }}</option>
         </select> -->
+        <h4 id="reviews">Reviews</h4>
+          <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+          <span>평점</span>
+          <!-- reset수정  -->
+          <!-- <input type="number" v-model="score" max="5" min="0" id="score" /> -->
+          <select v-model="myMovieRate" id="myMovieRate">
+            <option>5</option>
+            <option>4</option>
+            <option>3</option>
+            <option>2</option>
+            <option>1</option>
+          </select>
       </div>
 
       <div class="control-group">
@@ -82,7 +94,7 @@ export default {
           .then(() => {
             this.$emit('reviews-updated')
             this.title = ""
-            this.rank = 0
+            this.rank = ""
             this.content = "" 
           })
           .catch((err) => {

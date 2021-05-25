@@ -5,6 +5,7 @@
     <div v-if="movies.length === 0"     class="spinner-border" role="status">
     <span class="visually-hidden">Loading...</span>
     </div>
+    <h3 class="content-font">랜덤 영화 추천</h3>
     <vue-glide v-if="movies.length"
       class="glide__track"
       data-glide-el="track"
@@ -12,7 +13,6 @@
       type="carousel"
       :breakpoints="{3000: {perView: 7}, 1100: {perView: 5}, 600: {perView: 3}}"
     >
-      <h3 class="content-font">랜덤 영화 추천{{ movies }}</h3>
       <vue-glide-slide
         v-for = "(movie, idx) in movies"
         :key="idx">
@@ -23,6 +23,47 @@
         
       </vue-glide-slide>
     </vue-glide>
+
+    
+    <h3 class="content-font" v-if="my_users_like_movies.length > 0"> 
+      {{ user.username }} 님이 좋아하는 영화 기반추천</h3>
+    <vue-glide v-if="my_users_like_movies.length"
+      class="glide__track"
+      data-glide-el="track"
+      ref="slider"
+      type="carousel"
+      :breakpoints="{3000: {perView: 7}, 1100: {perView: 5}, 600: {perView: 3}}"
+    >
+      <vue-glide-slide
+        v-for = "(movie, idx) in my_users_like_movies"
+        :key="idx">
+        
+        <MovieCard
+          :movie="movie"
+        />
+        
+      </vue-glide-slide>
+    </vue-glide>
+
+    <h3 class="content-font" v-if="favorite_movies.length === 10">높은 평점을 받은 영화</h3>
+    <vue-glide v-if="favorite_movies.length"
+      class="glide__track"
+      data-glide-el="track"
+      ref="slider"
+      type="carousel"
+      :breakpoints="{3000: {perView: 7}, 1100: {perView: 5}, 600: {perView: 3}}"
+    >
+      <vue-glide-slide
+        v-for = "(movie, idx) in favorite_movies"
+        :key="idx">
+        
+        <MovieCard
+          :movie="movie"
+        />
+        
+      </vue-glide-slide>
+    </vue-glide>
+
       <!--<h3 class="content-font" v-if="my_users_like_movies.length > 0">{{user.username}} 님의 취향저격 베스트 콘텐츠</h3>
       <hr>
       <MovieCard :movies="my_users_like_movies"/>
@@ -73,7 +114,7 @@ export default {
     getMovieDatas: function () {
       axios.get(`${SERVER_URL}/movies/`)
       .then( (res) => {
-       
+        //랜덤추천 
         const randomIdx = _.random(res.data.length-1)
         this.movie = res.data[randomIdx]
         const numbers = _.range(1, res.data.length);
@@ -82,7 +123,6 @@ export default {
         for (const key in sampleNums) {
           this.movies.push(res.data[sampleNums[key]])
         }
-        // console.log(this.movies)
       })
       .catch( (err) => {
         console.log(err)
@@ -90,64 +130,61 @@ export default {
     },
     getRecommend: function () {
       const config = this.getToken()
-      // const item = {
-      //   movies: this.user.like_movies,
-      // }
-       axios.post(`${SERVER_URL}/movies/recommend/`, config)
+      const item = {
+        movies: this.user.like_movies,
+      }
+      axios.post(`${SERVER_URL}/movies/${this.user.id}/like/users/`, item, config)
+      .then( (res) => {
+        this.favorite_movies = res.data[0]
+        this.users_movies = res.data[1]
+        this.my_users_like_movies = res.data[2]
+      })
+      .catch( (err) => {
+        console.log("추천" + err)
+      })
+      // 내가 좋아하는 영화 좋아하는 사람 찾기
+      axios.post(`${SERVER_URL}/movies/${this.user.id}/like/users/`,item , config)
+      .then( (res) => {
+        // console.log(res)
+        // this.my_like_users = res.data
+        const item = {
+          users: res.data,
+        }
+        // 그 사람들이 좋아하는 영화 찾기
+        axios.post(`${SERVER_URL}/accounts/info/`, item, config)
         .then( (res) => {
-          console.log(res)
-          this.favorite_movies = res.data[0]
-          this.shortest_movies = res.data[1]
-          this.users_movies = res.data[2]
-          this.my_users_like_movies = res.data[3]
+          // console.log(res)
+          this.my_like_users_movies = res.data
+          // 일반적인 추천 받기
+          const item2 = {
+            like_movies: this.my_like_users_movies
+          }
+          axios.post(`${SERVER_URL}/movies/recommend/`, item2, config)
+          .then( (res) => {
+          
+            this.favorite_movies = res.data[0]
+            this.users_movies = res.data[1]
+            this.my_users_like_movies = res.data[2]
+            alert(this.favorite_movies.length)
+          })
+          .catch( (err) => {
+            console.log(err)
+          })
         })
         .catch( (err) => {
           console.log(err)
         })
-      // 내가 좋아하는 영화 좋아하는 사람 찾기
-      // axios.post(`${SERVER_URL}/movies/${this.user.id}/like/users/`,item , config)
-      // .then( (res) => {
-      //   // console.log(res)
-      //   // this.my_like_users = res.data
-      //   const item = {
-      //     users: res.data,
-      //   }
-      //   // 그 사람들이 좋아하는 영화 찾기
-      //   axios.post(`${SERVER_URL}/accounts/info/`, item, config)
-      //   .then( (res) => {
-      //     // console.log(res)
-      //     this.my_like_users_movies = res.data
-      //     // 일반적인 추천 받기
-      //     const item2 = {
-      //       like_movies: this.my_like_users_movies
-      //     }
-      //     axios.post(`${SERVER_URL}/movies/recommend/`, item2, config)
-      //     .then( (res) => {
-      //       console.log(res)
-      //       this.favorite_movies = res.data[0]
-      //       this.shortest_movies = res.data[1]
-      //       this.users_movies = res.data[2]
-      //       this.my_users_like_movies = res.data[3]
-      //     })
-      //     .catch( (err) => {
-      //       console.log(err)
-      //     })
-      //   })
-      //   .catch( (err) => {
-      //     console.log(err)
-      //   })
-      // })
-      // .catch( (err) => {
-      //   console.log(err)
-      // })
-    },
+      })
+      .catch( (err) => {
+        console.log(err)
+      })
+     },
     getMyName: function () {
       const config = this.getToken()
       const hash = localStorage.getItem('jwt')
       const info = VueJwtDecode.decode(hash)
       axios.post(`${SERVER_URL}/accounts/myprofile/`, info, config)
       .then( (res) => {
-        console.log(res)
         this.user = res.data
         this.getRecommend()
       })

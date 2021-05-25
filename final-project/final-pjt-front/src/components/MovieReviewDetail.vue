@@ -29,7 +29,6 @@ export default {
       axios.get(`${SERVER_URL}/movies/${this.movie.id}/reviews/`, config)
         .then((res) => {
           this.comments = res.data
-          console.log('뜬거냐?' + res)
         })
         .catch((err) => {
           alert(err)

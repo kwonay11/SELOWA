@@ -9,4 +9,5 @@ class User(AbstractUser):
     age = models.IntegerField(default=0)
     
     
+    
 

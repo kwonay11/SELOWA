@@ -20,10 +20,9 @@ class Movie(models.Model):
     popularity = models.FloatField(validators=[MinValueValidator(0)])
     adult = models.BooleanField()
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_movies')
-
-    # actors = models.CharField(max_length=200)
-    # directors = models.CharField(max_length=200)
-    # nations = models.CharField(max_length=200)
+    dislike_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='dislike_movies')
+    wish_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='wish_movies')
+    watched_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='watched_movies')
     
 
 class Review(models.Model):

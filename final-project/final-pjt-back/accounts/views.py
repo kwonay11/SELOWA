@@ -59,3 +59,23 @@ def my_profile(request):
     user = get_object_or_404(get_user_model(), pk=request.data.get('user_id'))
     serializer = UserSerializer(user)
     return Response(serializer.data)
+
+
+@api_view(['POST'])
+def users_info(request):
+    # print(request.data)
+    users = request.data.get('users')
+    movies = []
+    for user in users:
+        user = get_object_or_404(get_user_model(), pk=user)
+        serializer = UserSerializer(user)
+        # print(serializer.data)
+        like_movies = serializer.data.get('like_movies')
+        dislike_movies = serializer.data.get('dislike_movies')
+        wish_movies = serializer.data.get('wish_movies')
+        watched_movies = serializer.data.get('watched_movies')
+        for movie in like_movies:
+            if movie not in movies:
+                movies.append(movie)
+    
+    return Response(movies)
