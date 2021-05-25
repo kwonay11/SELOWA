@@ -54,7 +54,8 @@
         :footer-bg-variant="footerBgVariant"
         :footer-text-variant="footerTextVariant"
       > -->
-      <app-my-modal v-if="reviewModify(review)" title="리뷰 수정" :visible.sync="visible">
+      <!--뺏다넣었다하면 됨 v-if="reviewModify(review)" -->
+      <app-update-modal  title="리뷰 수정" :visible.sync="visible">
         <hr>
         <!-- <section class="page-section" id="contact"> -->
           <!-- <div class="container"> -->
@@ -101,7 +102,7 @@
           <button @click="close2" class="btn btn-secondary m-1" id="sendMessageButton" type="submit">수정 창 닫기</button>
         </div> -->
       <!-- </b-modal> -->
-      </app-my-modal>
+      </app-update-modal>
       <hr>
     </div>
   </div>
@@ -109,12 +110,12 @@
 
 <script>
 import axios from 'axios'
-import myModal from './myModal'
+import updateModal from './updateModal'
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
 export default {
   name: 'MovieReviewDetail',
   components: {
-    appMyModal: myModal,
+    appUpdateModal: updateModal,
   },
   // data: function () {
   //   return {
