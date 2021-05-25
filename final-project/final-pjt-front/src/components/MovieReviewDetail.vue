@@ -1,7 +1,12 @@
 <template>
   <div>
-    리뷰제목 
-    {{ reviews }}
+  
+    <h4>{{ review.id }}번 리뷰</h4>
+    <h3>리뷰제목: {{ review.title }}</h3>
+    <h5>영화 평점: {{review.rank}}</h5>
+    <h5>리뷰내용:{{review.content}}</h5>
+   <hr>
+  
   </div>
 </template>
 
@@ -11,7 +16,7 @@ const SERVER_URL = process.env.VUE_APP_SERVER_URL
 export default {
   name: 'MovieReviewDetail',
   props: {
-    reviews: {
+    review: {
       type: Object,
     },
     movie: {

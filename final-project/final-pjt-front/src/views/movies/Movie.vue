@@ -1,10 +1,12 @@
 <template>
   <div class="home ms-5">
-    <button  @click="onClickBtn" class ="btn btn-outline-danger m-1">Total Movie</button> 
-    <!-- <button @click="onRecommend" class ="btn btn-outline-danger m-1" >Recomended Movie</button> -->
     <hr>
-    
+    <!-- 자료가 없으면 스피너생김 -->
+    <div v-if="movies.length === 0"     class="spinner-border" role="status">
+    <span class="visually-hidden">Loading...</span>
+    </div>
     <div class="row row-cols-1 row-cols-md-4 ms-5 ">
+      
       <!-- 그리드 카드 형태로  -->
       <MovieCard v-for="(movie,idx) in movies" :key="idx" :movie="movie"/>
 
@@ -64,9 +66,12 @@ export default {
 
     // },  
 
-    
-    
-  }
+  },
+    created() {
+      this.onClickBtn()
+    }
+
+
 }
 </script>
 <style>
