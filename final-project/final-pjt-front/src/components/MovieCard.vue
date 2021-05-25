@@ -37,6 +37,7 @@ export default {
     },
     methods:{
     movieDetail: function () {
+        console.log('디테일은 넘어가는데...')
         // 여기서 각 무비 id에 해당하는 object데이터를 디테일로 넘겨줘야할듯?.?
         console.log(this.movie)
     },
