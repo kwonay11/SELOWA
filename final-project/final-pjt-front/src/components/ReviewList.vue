@@ -18,10 +18,12 @@
 
 <script>
 import MovieReviewDetail from '@/components/MovieReviewDetail'
+
 export default {
   name: "ReviewList",
   components: {
     MovieReviewDetail,
+    
   },
   props: {
     reviews: {

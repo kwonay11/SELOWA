@@ -18,11 +18,20 @@
         </div>
       </div>
 
-      <label style="margin-right: 15px" class="content-font" for="rank">내가 생각하는 영화 평점</label>
+      <!-- <label style="margin-right: 15px" class="content-font" for="rank">내가 생각하는 영화 평점</label> -->
       <div class="select-wrapper" style="margin-right: 15px; margin-bottom:15px">            
         <!-- <select name="rate" id="rate" v-model="myMovieRate" class="content-font">
           <option style="color: black;" class="content-font" :value="rate" v-for="(rate, idx) in this.$store.state.reviewRate" :key="idx">{{ rate }}</option>
         </select> -->
+        <h4 id="reviews">Reviews</h4>
+          <span>내가 생각하는 영화 평점:</span>
+          <select v-model="myMovieRate" id="myMovieRate">
+            <option>5</option>
+            <option>4</option>
+            <option>3</option>
+            <option>2</option>
+            <option>1</option>
+          </select>
       </div>
 
       <div class="control-group">
@@ -36,7 +45,8 @@
         <div id="success"></div>
         <div class="st-font form-group">
           <button @click="createReview" class="btn btn-secondary btn-xl" id="sendMessageButton" type="submit">작성 !</button>
-        </div>               
+        </div>  
+                     
     </div>
   
 </template>
@@ -55,7 +65,7 @@ export default {
     return {
       title: '',
       content: '',
-      myMovieRate: 0,
+      myMovieRate: '',
     }
   }, 
   methods: {
@@ -82,8 +92,10 @@ export default {
           .then(() => {
             this.$emit('reviews-updated')
             this.title = ""
-            this.rank = 0
-            this.content = "" 
+            this.content = ""
+            this.rank = this.MyMovieRate
+            this.MyMovieRate= ''
+            
           })
           .catch((err) => {
             console.log(err)

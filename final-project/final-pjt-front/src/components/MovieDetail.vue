@@ -4,19 +4,19 @@
     <app-my-modal title="More Info" :visible.sync="visible">
       <div>
         <h2 style="font-weight: bold;">{{ movie.title }} </h2>
-        <br>
+        <hr>
         <div class="movie-information-wrapper mt-4 d-flex align-items-center">
         <img :src="`https://image.tmdb.org/t/p/w300${movie.poster_path}`">
         <br>
-        <h5 style="margin-bottom:10px" class="content-font">인기도 : {{ movie.popularity }}%</h5>
+        <div class="col">
+        <!-- <h5 style="margin-bottom:10px" class="content-font">인기도 : {{ movie.popularity }}%</h5> -->
         <h5 style="margin-bottom:10px" class="content-font">평점 : {{ movie.vote_average }}점</h5>
         <h5 style="margin-bottom:10px" class="content-font">상영 시간 : {{ movie.runtime }}분</h5>
         <h5 style="margin-bottom:10px" class="content-font">개봉 일자 : {{ movie.release_date }}</h5>
         <h5 style="margin-bottom:10px" class="content-font">좋아요 개</h5>
+        <h5 class="m-3">{{ movie.overview }}</h5>
         </div>
-        <br>
-        <hr>
-        {{ movie.overview }}
+        </div>
         <hr>
         <!-- 좋아요 -->
         <div>
