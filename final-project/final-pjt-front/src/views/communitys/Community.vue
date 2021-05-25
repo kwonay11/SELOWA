@@ -1,7 +1,9 @@
 <template>
   <div>
     <!-- <h2 class="st-font" style="margin-bottom: 20px">Community</h2> -->
+    
     <CreateCommunity @communities-updated="communitiesUpdated" style="margin-bottom: 30px"/>
+    <!-- 자료가 없으면 스피너생김 -->
     <CommunityList :communities="communities"/>
   </div>
 </template>

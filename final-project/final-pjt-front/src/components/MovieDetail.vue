@@ -9,7 +9,7 @@
         <img :src="`https://image.tmdb.org/t/p/w300${movie.poster_path}`">
         <br>
         <div class="col">
-        <h5 style="margin-bottom:10px" class="content-font">인기도 : {{ movie.popularity }}%</h5>
+        <!-- <h5 style="margin-bottom:10px" class="content-font">인기도 : {{ movie.popularity }}%</h5> -->
         <h5 style="margin-bottom:10px" class="content-font">평점 : {{ movie.vote_average }}점</h5>
         <h5 style="margin-bottom:10px" class="content-font">상영 시간 : {{ movie.runtime }}분</h5>
         <h5 style="margin-bottom:10px" class="content-font">개봉 일자 : {{ movie.release_date }}</h5>
