@@ -102,13 +102,13 @@ export default {
   border: 2px solid white;
 } */
 #reviewRate {
-  color: white;
+  color: black;
 }
 #reviewContent {
-  color: white;
-  border: 2px solid white;
+  color: black;
+  border: 2px solid black;
 }
 #movieRate {
-  color: white;
+  color: black;
 }
 </style>

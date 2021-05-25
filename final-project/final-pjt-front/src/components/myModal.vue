@@ -1,8 +1,9 @@
 <template>
-<transition name="modal" appear>
+<div class="container">
+<transition  name="modal" appear>
   <div class="my-modal" 
     v-if="visible" @click.self="handleWrapperClick">
-    <div class="my-modal__dialog">
+    <div class="my-modal__dialog bg-dark">
       <header class="my-modal__header">
         <span>{{title}}</span>
         <!-- update:visible', !visible 모달 바깥을 클릭해서 모달을 닫음 -->
@@ -14,6 +15,7 @@
     </div>
   </div>
 </transition>
+</div>
 </template>
 
 <script>
@@ -46,8 +48,7 @@ $module: 'my-modal';
   justify-content: center;
   // 모달이 맨 위로 나오게 하기
   z-index: 30;
-    top: 0;
-    left: 0;
+  
   background-color: rgba(0,0,0,.7);
   top: 0; right: 0; bottom: 0; left: 0;
   position: fixed;
@@ -55,11 +56,10 @@ $module: 'my-modal';
   margin: 0;
   //This is modal layer
   &__dialog{
-    left: 35%;
-    top: 75px;
-    width: 600px;
+    left: 22%;
+    top: 90px;
+    width: 1000px;
     position: absolute;
-    background: rgb(170, 130, 130);
     margin-bottom: 50px;
   }
 
@@ -73,8 +73,14 @@ $module: 'my-modal';
   &__body {
     padding: 25px;
     min-height: 150px;
-    max-height: 412px;
+    max-height: 500px;
     overflow-y: scroll;
   }
+  // .container {
+  //   display: flex;
+  //   // align-items: center;
+  //   // justify-content: center;
+    
+  // }
 }
 </style>

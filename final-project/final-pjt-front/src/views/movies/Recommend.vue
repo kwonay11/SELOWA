@@ -1,6 +1,10 @@
 <template>
   <div id="app">
     <h2 style="margin-bottom:60px">SELOWA 알고리즘이 {{user.username}}님에게 추천하는 영화 페이지</h2>
+    <!-- 자료가 없으면 스피너생김 -->
+    <div v-if="movies.length === 0"     class="spinner-border" role="status">
+    <span class="visually-hidden">Loading...</span>
+    </div>
     <vue-glide v-if="movies.length"
       class="glide__track"
       data-glide-el="track"
@@ -12,6 +16,7 @@
       <vue-glide-slide
         v-for = "(movie, idx) in movies"
         :key="idx">
+        
         <MovieCard
           :movie="movie"
         />
@@ -159,6 +164,7 @@ export default {
 </script>
 
 <style>
+
   .main {
     width: 90%;
     height: 50%;
