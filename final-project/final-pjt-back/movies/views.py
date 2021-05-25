@@ -19,18 +19,67 @@ def movie_detail(request, movie_pk):
     serializer = MovieSerializer(movie)
     return Response(serializer.data)
 
-@api_view(['GET', 'POST'])
+@api_view(['GET', 'POST', 'PUT', 'DELETE'])
 def reviews(request, movie_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
     if request.method == 'GET':
         review_list = movie.review_set.all()
         serializer = ReviewSerializer(review_list, many=True)
         return Response(serializer.data)
-    else: # POST
+    
+    elif request.method == 'POST': # POST
         serializer = ReviewSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save(movie=movie)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+   
+    elif request.method == 'PUT':
+        serializer = ReviewSerializer(reviews, data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save(movie=movie)
+            return Response(serializer.data)
+    
+    else: 
+        reviews.delete()
+        return Response({'pk': movie_pk})
+
+
+@api_view(['PUT', 'DELETE'])
+def review_update_delete(request, review_pk):
+  review = get_object_or_404(Review, pk=review_pk)
+  if not request.user.reviews.filter(pk=review_pk).exists():
+    return Response({'message': '권한이 없습니다.'})
+
+  if request.method == 'PUT':
+    serializer = ReviewSerializer(review, data=request.data)
+    
+    if serializer.is_valid(raise_exception=True):
+      movie = get_object_or_404(Movie, pk=request.data.get('movie'))
+      pre_point = movie.vote_average * (movie.vote_count - 1)
+      pre_count = movie.vote_count - 1
+      point = pre_point+request.data.get('rank')
+      count = movie.vote_count
+      new_vote_average = round(point/count, 2)
+      movie.vote_average = new_vote_average
+      movie.vote_count = count
+      movie.save()
+      serializer.save(user=request.user)
+      return Response(serializer.data)
+
+  else:
+    review = get_object_or_404(Review, pk=review_pk)
+    movie = get_object_or_404(Movie, pk=review.movie_id)
+    pre_point = movie.vote_average * (movie.vote_count)
+    pre_count = movie.vote_count
+    point = pre_point - review.rank
+    count = movie.vote_count-1
+    new_vote_average = round(point/count, 2)
+    movie.vote_average = new_vote_average
+    movie.vote_count = count
+    movie.save()
+    review.delete()
+    return Response({ 'id': review_pk })
+
 
 @api_view(['POST'])
 def recommend(request):

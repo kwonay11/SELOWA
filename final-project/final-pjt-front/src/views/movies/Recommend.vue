@@ -165,7 +165,7 @@ export default {
             this.favorite_movies = res.data[0]
             this.users_movies = res.data[1]
             this.my_users_like_movies = res.data[2]
-            alert(this.favorite_movies.length)
+            // alert(this.favorite_movies.length)
           })
           .catch( (err) => {
             console.log(err)
