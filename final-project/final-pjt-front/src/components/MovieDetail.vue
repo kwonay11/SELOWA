@@ -4,11 +4,8 @@
     <app-my-modal title="More Info" :visible.sync="visible">
       <div>
         <h2 style="font-weight: bold;">{{ movie.title }} </h2>
-        <br>
-        <div class="movie-information-wrapper mt-4 d-flex align-items-center">
         <img :src="`https://image.tmdb.org/t/p/w300${movie.poster_path}`">
         <br>
-        <h5 style="margin-bottom:10px" class="content-font">인기도 : {{ movie.popularity }}%</h5>
         <h5 style="margin-bottom:10px" class="content-font">평점 : {{ movie.vote_average }}점</h5>
         <h5 style="margin-bottom:10px" class="content-font">상영 시간 : {{ movie.runtime }}분</h5>
         <h5 style="margin-bottom:10px" class="content-font">개봉 일자 : {{ movie.release_date }}</h5>
@@ -49,19 +46,24 @@ import myModal from './myModal'
 import MovieReview from '@/components/MovieReview'
 
 import axios from 'axios'
+import VueJwtDecode from "vue-jwt-decode"
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 export default {
   name: 'MovieDetail',
+  data: function () {
+    return {
+      visible: false,
+      me: [],
+      liking: '',
+      numLike: '',
+      rating: Number(this.movie.vote_average),
+    }
+  },
   props: {
         movie:{
             type: Object,
         },
-  },
-  data: function () {
-    return {
-      visible: false,
-    }
   },
   components: {
     appMyModal: myModal,
@@ -70,6 +72,37 @@ export default {
   methods: {
     handleClickButton(){
       this.visible = !this.visible
+    },
+    ratingToInt: function () {
+      this.rating = Math.ceil(this.rating / 2)
+    },
+    getToken: function () {
+      // const token = localStorage.getItem('jwt')
+
+      const config = {
+        headers: {
+          Authorization: 'JWT ${token}'
+        },
+      }
+      return config
+    },
+    getName: function () {
+      const config = this.getToken()
+      const hash = localStorage.getItem('jwt')
+      // console.log(VueJwtDecode.decode(hash))
+      const info = VueJwtDecode.decode(hash)
+      axios.post(`${SERVER_URL}/accounts/myprofile/`, info, config)
+      .then( (res) => {
+        this.me = res.data
+        if (this.me.like_movies.includes(this.movie.id)) {
+          this.liking = true
+        } else {
+          this.liking = false
+        }
+      })
+      .catch( (err) => {
+        console.log(err)
+      })
     },
     like: function () {
       const config = this.getToken()
@@ -84,7 +117,29 @@ export default {
         // console.log(res)
       })
     },
+    number: function () {
+      // console.log(this.me)
+      this.numLike = this.movie.like_users.length
+    },
+    check: function () {
+      if (this.liking) {
+        this.numLike -= 1
+      } else {
+        this.numLike += 1
+      }
+    },
+  },
+  computed: {
+    isLinking: function () {
+      return this.liking
+    },
+  },
+  created: function () {
+    this.getName()
+    this.number()
+    this.ratingToInt()
   }
+
 }
 </script>
 

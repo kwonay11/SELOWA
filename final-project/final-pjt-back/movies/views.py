@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.shortcuts import render, get_list_or_404, get_object_or_404
 from .models import Movie, Review
-from accounts.models import UserMovie
+from django.contrib.auth import get_user_model
 from .serializers import MovieListSerializer, MovieSerializer, ReviewSerializer
 
 # Create your views here.
@@ -79,3 +79,17 @@ def recommend(request):
     # # 제작 국가별
     # # 연령대
     return Response(user_movies_review)
+
+@api_view(['POST'])
+# @authentication_classes([JSONWebTokenAuthentication])
+# @permission_classes([IsAuthenticated])
+def my_movie_like(request, my_pk):
+    me = get_object_or_404(get_user_model(), pk=my_pk)
+    data = []
+    movies = request.data
+    for movie_pk in movies:
+        movie = get_object_or_404(Movie, pk=movie_pk)
+        serializer = MovieSerializer(movie)
+        data.append(serializer.data)
+    
+    return Response(data)
