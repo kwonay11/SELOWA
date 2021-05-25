@@ -7,40 +7,31 @@
     <Menu style="position:fixed; top:0; z-index:3;"></Menu>
     <div id="nav">
       <span v-if="login">
-        <router-link :to="{ name: 'Movie' }">Movie</router-link> |
-        <router-link :to="{ name: 'Community' }">Community</router-link> | 
-        <router-link :to="{ name: 'Login' }" @click.native="logout">LOGOUT</router-link> 
+        <!-- <router-link :to="{ name: 'Home' }" >Home</router-link> | -->
+        <router-link :to="{ name: 'Home' }" class="fas fa-home font-weight-bolder " style="text-decoration:none"> Home</router-link> |
+        <router-link :to="{ name: 'Movie' }" class="fas fa-film font-weight-bolder " style="text-decoration:none"> Movie</router-link> |
+        <router-link :to="{ name: 'Recommend' }" class="fas fa-video font-weight-bolder " style="text-decoration:none"> Recommended Movie</router-link> |
+        <router-link :to="{ name: 'Community' }" class="fas fa-comment font-weight-bolder " style="text-decoration:none"> Community</router-link> | 
+        <router-link @click.native="logout" to="#" class="fas fa-sign-out-alt font-weight-bolder " style="text-decoration:none"> LOGOUT</router-link> 
         <!-- 로그아웃하면 클릭시 로그인화면으로 보내기 -->
       </span>
       <span v-else>
-        <router-link :to="{ name: 'Signup' }">Signup</router-link> |
-        <router-link :to="{ name: 'Login' }">Login</router-link> 
+        <router-link :to="{ name: 'Home' }" class="fas fa-home font-weight-bolder " style="text-decoration:none"> Home</router-link> |
+        <router-link :to="{ name: 'Signup' }" class="fas fa-user-plus font-weight-bolder " style="text-decoration:none"> Signup</router-link> |
+        <router-link :to="{ name: 'Login' }" class="fas fa-sign-in-alt font-weight-bolder " style="text-decoration:none">Login</router-link> 
       </span>
     </div>
     <router-view @login="login = true"/>
-
-    <!-- <button @click="onClickBtn">전체 영화 불러오기</button>
-    <div class="row row-cols-1 row-cols-md-4 ms-5">-->
-    <MovieCard /> 
-    <MovieDetail />
-    <!-- </div> -->
+  
   </div>
 </template>
 
 <script>
 import Menu from '@/components/Menu'
-import MovieCard from '@/components/MovieCard'
-import MovieDetail from '@/components/MovieDetail'
-// import axios from 'axios'
-// const API_URL = 'https://gist.githubusercontent.com/eduChange-hphk/d9acb9fcfaa6ece53c9e8bcddd64131b/raw/9c8bc58a99e2ea77d42abd41376e5e1becabea69/movies.json'
-
-
 export default {
   name: 'App',
   components: {
     Menu,
-    MovieCard,
-    MovieDetail,
   },
   data: function () {
     return {
@@ -51,14 +42,14 @@ export default {
     //로고 누르면 메인페이지로
     main: function () {
       console.log('MainPage')
-      this.$router.push({ name: 'App' })
+      this.$router.push({ name: 'Home' })
     },
     logout: function() {
       console.log('logout 됨')
       // 로그아웃 처리
       this.login = false
       localStorage.removeItem('jwt')
-      this.$router.push({ name: 'Login' })
+      this.$router.push({ name: 'Home' })
     }
   },
   created: function () {
@@ -69,21 +60,7 @@ export default {
       this.login = true
     }
   },
-  // onClickBtn: function (){
-  //     this.movies
-  //     axios.get(API_URL, {})
-  //     .then((res) => {
-  //       console.log(res)
-  //       this.movies = res.data
-  //       console.log(this.movies)
-        
-  //     })
-  //     .catch((err) => {
-  //       console.log(err)
-  //     })
-    
-
-  //   },
+  
 
 }
 </script>
@@ -91,13 +68,14 @@ export default {
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family:'Raleway','Sunflower', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  /* color: white; */
+  color: white;
   
 }
+
 
 #nav {
   padding: 30px;

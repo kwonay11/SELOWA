@@ -5,6 +5,7 @@
       :movie="movie"
       style="margin-bottom:30px"
     />
+    <hr>
     <ReviewList 
       :reviews="reviews"
       :movie="movie"
@@ -49,7 +50,6 @@ export default {
       const config = this.getToken()
       axios.get(`${SERVER_URL}/movies/${this.movie.id}/reviews/`, config)
       .then((res) => {
-        // console.log(res)
         this.reviews = res.data
       })
       .catch((err) => {

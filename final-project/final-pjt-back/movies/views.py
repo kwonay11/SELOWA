@@ -32,46 +32,50 @@ def reviews(request, movie_pk):
             serializer.save(movie=movie)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-
-# def recommend(request):
-#     # 인기순
-#     # favorite_movies = Movie.objects.all().order_by('-rating')[:10]
-#     # 리뷰 기반 장르기반 추천
-#     user_movies_review = []
-#     # 배우기반 추천
-#     user_movies_actor = []
-#     # 감독기반 추천
-#     user_movies_director = []
-#     # 개봉년도
-#     # 제작 국가
-#     # 연령대
-#     user_movies_age = []
-#     # 리뷰 기반 장름별
-#     reviews = Review.objects.all()
-#     for review in reviews:
-#         movie = Movie.objects.get(pk=review.movie_id)
-#         if not movie in user_movies_review:
-#             user_movies_review.append(movie)
+@api_view(['POST'])
+def recommend(request):
+    # 인기순
+    favorite_movies = Movie.objects.all().order_by('-vote_average')[:10]
+   
+    serializer1 = MovieSerializer(favorite_movies, many=True)
+    # 리뷰 기반 장르기반 추천
+    user_movies_review = []
+    # 배우기반 추천
+    user_movies_actor = []
+    # 감독기반 추천
+    user_movies_director = []
+    # 개봉년도
+    # 제작 국가
+    # 연령대
+    user_movies_age = []
+    # 리뷰 기반 장름별
+    reviews = Review.objects.all()
+    for review in reviews:
+        movie = Movie.objects.get(pk=review.movie_id)
+        if not movie in user_movies_review:
+            user_movies_review.append(movie)
     
-#     if user_movies_review:
-#         serializer = MovieSerializer(user_movies_review[0])
-#         genre = serializer.data.get('genres')[0]
-#         idx = 1
-#         while len(users_movies_review) < 30:
-#             movie = Movie.objects.get(pk=idx)
-#             movie_ser = MovieSerializer(movie)
-#             if movie_ser.get('genres')[0] == genre and movie not in users_movies_review:
-#                 users_movies_review.append(movie)
-#             idx += 1
-#             if idx == 979:
-#                 users_movies_review = Movie.objects.all().order_by('release_date')[:30]
-#     else:
-#         users_movies_review = Movie.objects.all().order_by('release_date')[:30]
+    if user_movies_review:
+        serializer = MovieSerializer(user_movies_review[0])
+        genre = serializer.data.get('genres')[0]
+        idx = 1
+        while len(user_movies_review) < 30:
+            movie = Movie.objects.get(pk=idx)
+            movie_ser = MovieSerializer(movie)
+            # print(movie)
+            if movie_ser.data.get('genres')[0] == genre and movie not in user_movies_review:
+                user_movies_review.append(movie)
+            idx += 1
+            if idx == 75:
+                user_movies_review = Movie.objects.all().order_by('release_date')[:30]
+    else:
+        user_movies_review = Movie.objects.all().order_by('release_date')[:30]
+    print(user_movies_review)
     
-    
-#     genre_movies = Movie.objects.all().order_by('-genres')[:10]
-    # 배우별
-    # 감독별
-    # 개봉년도별
-    # 제작 국가별
-    # 연령대 
+    # genre_movies = Movie.objects.all().order_by('-genres')[:10]
+    # # 배우별
+    # # 감독별
+    # # 개봉년도별
+    # # 제작 국가별
+    # # 연령대
+    return Response(user_movies_review)

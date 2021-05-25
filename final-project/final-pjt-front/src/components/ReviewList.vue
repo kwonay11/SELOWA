@@ -1,11 +1,13 @@
 <template>
   <div>
-    <h2 class="title-font" style="margin-bottom:30px">Review List</h2>
-    <h5 class="content-font" style="margin-bottom:30px" v-if="reviews">리뷰 상세페이지로 넘어가고 싶으시면 제목을 클릭하세요!</h5>    
+    <h2 style="margin-bottom:30px">Review List</h2>
+    <h5 v-if="reviews">리뷰 상세페이지로 넘어가고 싶으시면 제목을 클릭하세요!</h5>    
     <ul>
-      <div style="cursor:pointer;" v-for="(review, idx) in reviews" :key="idx">
+      
+      <div v-for="(review, idx) in reviews" :key="idx">
+        <!-- {{ review }} -->
         <MovieReviewDetail 
-          :review="review"
+          :reviews="reviews"
           :movie="movie"
           @deleteReview="deleteReview"
           @reviews-updated="updateRiview"
@@ -33,6 +35,7 @@ export default {
   },
   data: function () {
     return {
+
     }
   },
   methods: {

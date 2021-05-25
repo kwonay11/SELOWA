@@ -2,13 +2,12 @@
   <div>
     <div>
       <div>
-          {{ community_time}}
         <h2>{{ community.userName }}님의 게시글</h2>
         <hr>
         <div class="st-font" style="margin-bottom:30px">
           <span @click="moveToProfile(community)" style="cursor:pointer;">작성자: {{ community.userName }} | </span>  
           <span>글 생성시간: {{ community_time }} |</span>
-          <span>글 수정시간: {{ community.updated_at }}</span>  
+          <span>글 수정시간: {{ community_update_time }}</span>  
         </div>
         <div>
       
@@ -84,7 +83,9 @@ export default {
     return {
       community: [Array, Object],
       time : [],
+      time2 : [],
       community_time: '',
+      community_update_time: '',
       comment_content: '',
       comments: [Array, Object],
       user: [],
@@ -108,8 +109,10 @@ export default {
         .then((res) => {
           // const time = res.data.created_at.split('')
           this.time = res.data.created_at.split('')
+          this.time2 = res.data.updated_at.split('')
           // 시간 포맷 수정
-          this.community_time = this.time.slice(0, 16).join('')
+          this.community_time = this.time.slice(0, 10).join('')+(' ')+this.time.slice(11, 16).join('')
+          this.community_update_time = this.time2.slice(0, 10).join('')+(' ')+this.time2.slice(11, 16).join('')
           this.community = res.data
         })
         .catch((err) => {
@@ -120,6 +123,7 @@ export default {
       const config = this.getToken()
       const hash = localStorage.getItem('jwt')
       const info = VueJwtDecode.decode(hash)
+      console.log(`${SERVER_URL}/accounts/myprofile/`)
       axios.post(`${SERVER_URL}/accounts/myprofile/`, info, config)
       .then( (res) => {
         this.user = res.data
@@ -184,7 +188,8 @@ export default {
     },
     // 커뮤니티 글 수정
     moveToDetailUpdate: function (community) {
-      // console.log(this.user.username) -- undefined 뜸!
+      // alert(community)
+      console.log(this.user.username)
       if (this.user.username === community.userName) {
         this.$router.push({ name: 'CommunityDetailUpdate', params: { community_pk: `${community.id}` }})
       } else {
