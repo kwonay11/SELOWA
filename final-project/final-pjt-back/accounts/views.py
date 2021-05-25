@@ -2,9 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import UserSerializer, UserMovieSerializer
+from .serializers import UserSerializer
 from django.contrib.auth import get_user_model
-from .models import UserMovie
 import urllib
 
 
@@ -57,7 +56,6 @@ def signup(request):
 
 @api_view(['POST'])
 def my_profile(request):
-
     user = get_object_or_404(get_user_model(), pk=request.data.get('user_id'))
     serializer = UserSerializer(user)
     return Response(serializer.data)
