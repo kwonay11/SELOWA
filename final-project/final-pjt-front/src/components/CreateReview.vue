@@ -95,7 +95,6 @@ export default {
             this.content = ""
             this.rank = this.MyMovieRate
             this.MyMovieRate= ''
-            
           })
           .catch((err) => {
             console.log(err)

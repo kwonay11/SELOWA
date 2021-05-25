@@ -1,7 +1,6 @@
 from rest_framework import serializers
 # from allauth.account.adapter import get_adapter
 from django.contrib.auth import get_user_model
-from .models import UserMovie
 # from rest_auth.registration.serializers import RegisterSerializer
 
 User = get_user_model()
@@ -13,12 +12,5 @@ class UserSerializer(serializers.ModelSerializer): # ModelSerializer
     # 오버 라이딩 -> 13번째줄 password가 필드가 만들어짐 바꿔치기 하는것
     class Meta:
         model = User # 어떤 DB랑 Serializer랑 연결할지 설정
-        fields = ('id','username', 'password', 'age') 
-
-
-class UserMovieSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = UserMovie
-        fields = '__all__'
-        read_only_fields = '__all__'
+        fields = ('id','username', 'password', 'age', 'like_movies', 'dislike_movies', 'wish_movies', 'watched_movies') 
+        read_only_fields = ('reviews', 'like_movies', 'dislike_movies', 'wish_movies', 'watched_movies')

@@ -10,7 +10,7 @@ urlpatterns = [
     # 소셜 로그인
     # path('login/kakao/', views.kakao_login, name='kakao_login'),
     # path('login/kakao/callback/', views.kakao_callback, name='kakao_login'),
-
+    path('info/', views.users_info),
 
     # path('<username>/', views.profile, name='profile'),
     path('myprofile/', views.my_profile, name='profile'),

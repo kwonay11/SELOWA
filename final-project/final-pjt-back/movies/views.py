@@ -2,8 +2,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from django.shortcuts import render, get_list_or_404, get_object_or_404
-from .models import Movie, Review
-from accounts.models import UserMovie
+from .models import Movie, Review, Genre
+from django.contrib.auth import get_user_model
 from .serializers import MovieListSerializer, MovieSerializer, ReviewSerializer
 
 # Create your views here.
@@ -37,9 +37,13 @@ def recommend(request):
     # 인기순
     favorite_movies = Movie.objects.all().order_by('-vote_average')[:10]
    
-    serializer1 = MovieSerializer(favorite_movies, many=True)
+    favorite_serialize = MovieSerializer(favorite_movies, many=True)
+    print(favorite_serialize)
     # 리뷰 기반 장르기반 추천
     user_movies_review = []
+    # 좋아요 기반 장르 추천
+    user_like_movies = []
+    
     # 배우기반 추천
     user_movies_actor = []
     # 감독기반 추천
@@ -58,24 +62,77 @@ def recommend(request):
     if user_movies_review:
         serializer = MovieSerializer(user_movies_review[0])
         genre = serializer.data.get('genres')[0]
+        genre_name = Genre.objects.get(id=genre)
         idx = 1
         while len(user_movies_review) < 30:
             movie = Movie.objects.get(pk=idx)
             movie_ser = MovieSerializer(movie)
-            # print(movie)
             if movie_ser.data.get('genres')[0] == genre and movie not in user_movies_review:
                 user_movies_review.append(movie)
             idx += 1
-            if idx == 75:
+            # 마지막 데이터
+            if idx == 80:
                 user_movies_review = Movie.objects.all().order_by('release_date')[:30]
     else:
         user_movies_review = Movie.objects.all().order_by('release_date')[:30]
-    print(user_movies_review)
     
+    like_movies = request.data.get('like_movies')
+    for like_movies in like_movies:
+        movie = get_object_or_404(Movie, pk=like_movies)
+        if not movie in user_like_movies:
+            user_like_movies.append(movie)
+
+    user_genre_serialize = MovieSerializer(user_movies_review, many=True)
+    user_like_serialize = MovieSerializer(user_like_movies, many=True)
     # genre_movies = Movie.objects.all().order_by('-genres')[:10]
     # # 배우별
     # # 감독별
     # # 개봉년도별
     # # 제작 국가별
     # # 연령대
-    return Response(user_movies_review)
+    return Response([favorite_serialize.data, user_genre_serialize.data, user_like_serialize.data])
+
+@api_view(['POST'])
+# @authentication_classes([JSONWebTokenAuthentication])
+# @permission_classes([IsAuthenticated])
+def my_movie_like(request, my_pk):
+    me = get_object_or_404(get_user_model(), pk=my_pk)
+    print(me)
+    data = []
+    movies = request.data
+    for movie_pk in movies:
+        movie = get_object_or_404(Movie, pk=movie_pk)
+        serializer = MovieSerializer(movie)
+        data.append(serializer.data)
+    
+    return Response(data)
+
+@api_view(['POST'])
+def movie_like(request, my_pk, movie_title):
+  movie = get_object_or_404(Movie, title=movie_title)
+  me = get_object_or_404(get_user_model(), pk=my_pk)
+  if me.like_movies.filter(pk=movie.pk).exists():
+      me.like_movies.remove(movie.pk)
+      liking = False
+      
+  else:
+      me.like_movies.add(movie.pk)
+      liking = True
+  
+  return Response(liking)
+
+@api_view(['POST'])
+def like_movie_users(request, my_pk):
+  # print(request.data)
+  users = []
+  movies = request.data.get('movies')
+  # print(movies)
+  for movie in movies:
+    movie = get_object_or_404(Movie, pk=movie)
+    serializer = MovieSerializer(movie)
+    # print(serializer.data)
+    for user in serializer.data.get('like_users'):
+      if user not in users:
+        users.append(user)
+
+  return Response(users)
