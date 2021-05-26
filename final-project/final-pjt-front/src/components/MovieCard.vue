@@ -50,7 +50,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 /* 영화 하나 커서 올렸을 때 확대 됨 */
 .card img {
   -webkit-transform: scale(1);

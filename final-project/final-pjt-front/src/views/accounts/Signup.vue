@@ -21,12 +21,12 @@
     </div>
       <br>
       <label for="password" style="color:#e0435e;">비밀번호: </label>
-      <input type="text" id="password" v-model="credentials.password">
+      <input type="password" id="password" v-model="credentials.password">
     </div>
     <div>
       <br>
       <label for="passwordConfirmation" style="color:#e0435e;">비밀번호 확인: </label>
-      <input type="text" id="passwordConfirmation" v-model="credentials.passwordConfirmation"
+      <input type="password" id="passwordConfirmation" v-model="credentials.passwordConfirmation"
       @keypress.enter="signup(credentials)">
     </div>
 

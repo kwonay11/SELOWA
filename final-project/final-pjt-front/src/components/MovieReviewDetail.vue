@@ -41,44 +41,28 @@
     </div>
 <!-- 리뷰 수정 -->
   <div>
-      <!-- <b-modal
-        hide-footer
-        v-model="show2"
-        id="review-modal"
-        size="lg"
-        :title="review.title"
-        :header-bg-variant="headerBgVariant"
-        :header-text-variant="headerTextVariant"
-        :body-bg-variant="bodyBgVariant"
-        :body-text-variant="bodyTextVariant"
-        :footer-bg-variant="footerBgVariant"
-        :footer-text-variant="footerTextVariant"
-      > -->
-      <!--뺏다넣었다하면 됨 v-if="reviewModify(review)" -->
-      <app-update-modal  title="리뷰 수정" :visible.sync="visible">
+      <!--뺏다넣었다하면 됨v-if="reviewModify(review)" -->
+      <!-- 그냥 아래에 뭘 넣고 빼면 됨 -->
+      <app-update-modal title="리뷰 수정" v-show="visible">
         <hr>
-        <!-- <section class="page-section" id="contact"> -->
-          <!-- <div class="container"> -->
-              <!-- Contact Section Heading-->
               <h2>리뷰 수정</h2>
-              <!-- Contact Section Form-->
               <div class="row">
                   <div class="col-lg-8 mx-auto">
-                      <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19.-->
+                      
                     <div>
                         <div>
                             <label>리뷰 제목:</label>
                             <input v-model.trim="title" class="form-control" id="reviewTitle" type="text" :placeholder="review.title" required="required" data-validation-required-message="Please enter your review title." />
-                            <p class="help-block text-danger"></p>
+                            
                         </div>
                     </div>
 
                         <div class="st-font form-group floating-label-form-group controls mb-0 pb-2">
                             <label>영화 제목: {{ movie.title }}</label>
-                            <!-- <p class="help-block text-danger"></p> -->
+                            
                         </div>
                       <span>내가 생각하는 영화 평점:</span>
-                      <select v-model="myMovieRate" id="myMovieRate">
+                      <select v-model="myMovieRate2">
                         <option>5</option>
                         <option>4</option>
                         <option>3</option>
@@ -89,21 +73,17 @@
                         <div>
                             <label>리뷰 내용</label>
                             <textarea v-model.trim="content" class="form-control" id="content" rows="5" :placeholder="review.content" required="required" data-validation-required-message="Please enter a content."></textarea>
-                            <!-- <p class="help-block text-danger"></p> -->
+                            
                         </div>
                     <br />
                     <div id="success"></div>
                     <div class="text-white st-font form-group"><button @click="update(review)" class="btn btn-secondary btn-xl" id="sendMessageButton" type="submit">수정 !</button></div>
                   </div>
               </div>
-          <!-- </div> -->
-        <!-- </section> -->
-        <!-- <div class="text-white st-font form-group">
-          <button @click="close2" class="btn btn-secondary m-1" id="sendMessageButton" type="submit">수정 창 닫기</button>
-        </div> -->
-      <!-- </b-modal> -->
+          
       </app-update-modal>
       <hr>
+      
     </div>
   </div>
 </template>
@@ -117,11 +97,11 @@ export default {
   components: {
     appUpdateModal: updateModal,
   },
-  // data: function () {
-  //   return {
-  //     show2:false,
-  //   }
-  // },
+  data: function () {
+    return {
+      myMovieRate2: 0,
+    }
+  },
   props: {
     review: {
       type: Object,
@@ -144,17 +124,18 @@ export default {
     //   this.show2 = false
     // },
     // 리뷰수정
-    reviewModify: function() {
+    reviewModify: function() { //수정버튼 눌렀을 때 
       this.visible = !this.visible
         // this.show2 = true
         console.log(this.visible)
     },
     update: function (review) {
+    console.log('업데이트 함수 들어옴')
     const config = this.getToken()
     const reviewItem = {
       title: this.title,
       content: this.content,
-      rank: this.myMovieRate,
+      rank: this.myMovieRate2,
       movie: review.movie,
     }
     axios.put(`${SERVER_URL}/movies/review/${review.id}/`, reviewItem, config)
@@ -174,21 +155,24 @@ export default {
    // 리뷰 삭제
     reviewDelete: function(review) {
       console.log('삭제된다')
-      const config = this.getToken()
-      axios.delete(`${SERVER_URL}/movies/review/${review.id}/`, config)
-        .then((res) => {
-          if (res.data.message) {
-            alert("본인이 작성한 글만 삭제 가능합니다!")
-          }
-          else {
-            this.$emit('reviewDelete')
-          }
-        })
+      
+          // if (res.data.message) {
+          //   alert("본인이 작성한 글만 삭제 가능합니다!")
+            
+          // }
+          // else {
+            this.$emit('reviewDelete',review.id)
+          // }
+        
     },
 
-    // created: function () {
-    //   this.close2()
-    // },
+    
+  },
+  watch: {
+    visible: function () {
+      
+    }
+
   }
 }
 </script>

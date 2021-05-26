@@ -14,7 +14,7 @@
         <h5 style="margin-bottom:10px" class="content-font">평점 : {{ movie.vote_average }}점</h5>
         <h5 style="margin-bottom:10px" class="content-font">상영 시간 : {{ movie.runtime }}분</h5>
         <h5 style="margin-bottom:10px" class="content-font">개봉 일자 : {{ movie.release_date }}</h5>
-
+        <h5>{{movie.genres}}</h5>
         <h5 class="m-3">{{ movie.overview }}</h5>
         </div>
         </div>
@@ -76,9 +76,9 @@ export default {
     handleClickButton(){
       this.visible = !this.visible
     },
-    // ratingToInt: function () {
-    //   this.rating = Math.ceil(this.rating / 2)
-    // },
+    ratingToInt: function () {
+      this.rating = Math.ceil(this.rating / 2)
+    },
     getToken: function () {
       // const token = localStorage.getItem('jwt')
 
@@ -142,7 +142,7 @@ export default {
   created: function () {
     this.getName()
     this.number()
-    // this.ratingToInt()
+    this.ratingToInt()
   }
 
 }
