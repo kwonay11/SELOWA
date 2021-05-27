@@ -25,7 +25,7 @@
         </select> -->
         <h4 id="reviews">Reviews</h4>
           <span>내가 생각하는 영화 평점:</span>
-          <select v-model="myMovieRate" id="myMovieRate">
+          <select v-model="myMovieRate" id="myMovieRate" @change="changeIdx">
             <option>5</option>
             <option>4</option>
             <option>3</option>
@@ -86,14 +86,13 @@ export default {
         rank: this.myMovieRate,
         movie: this.movie.id,
       }
-      console.log(reviewItem)
       if (reviewItem.title) {
         axios.post(`${SERVER_URL}/movies/${this.movie.id}/reviews/`, reviewItem, config)
           .then(() => {
             this.$emit('reviews-updated')
             this.title = ""
             this.content = ""
-            this.rank = this.MyMovieRate
+            this.rank = 0
             this.MyMovieRate= ''
           })
           .catch((err) => {
@@ -101,6 +100,9 @@ export default {
           })
       } 
     },
+    changeIdx: function (e){
+      this.myMovieRate = e.target.value
+    }
   },
   created: function () {
   },

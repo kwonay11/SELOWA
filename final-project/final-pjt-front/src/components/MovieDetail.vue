@@ -14,7 +14,6 @@
         <h5 style="margin-bottom:10px" class="content-font">평점 : {{ movie.vote_average }}점</h5>
         <h5 style="margin-bottom:10px" class="content-font">상영 시간 : {{ movie.runtime }}분</h5>
         <h5 style="margin-bottom:10px" class="content-font">개봉 일자 : {{ movie.release_date }}</h5>
-        <h5>{{movie.genres}}</h5>
         <h5 class="m-3">{{ movie.overview }}</h5>
         </div>
         </div>
@@ -60,7 +59,7 @@ export default {
       me: [],
       liking: '',
       numLike: '',
-      // rating: Number(this.movie.vote_average),
+      rating: Number(this.movie.vote_average),
     }
   },
   props: {
@@ -80,24 +79,21 @@ export default {
       this.rating = Math.ceil(this.rating / 2)
     },
     getToken: function () {
-      // const token = localStorage.getItem('jwt')
-
+      const token = localStorage.getItem('jwt')
       const config = {
         headers: {
-          Authorization: 'JWT ${token}'
+          Authorization: `JWT ${token}`
         },
       }
       return config
     },
-    getName: function () {
+    getMyName: function () {
       const config = this.getToken()
       const hash = localStorage.getItem('jwt')
-      // console.log(VueJwtDecode.decode(hash))
       const info = VueJwtDecode.decode(hash)
       axios.post(`${SERVER_URL}/accounts/myprofile/`, info, config)
       .then( (res) => {
         this.me = res.data
-        // alert(this.me.like_movies)
         if (this.me.like_movies.includes(this.movie.id)) {
           this.liking = true
         } else {
@@ -109,7 +105,6 @@ export default {
       })
     },
     like: function () {
-      console.log(this.me)
       const config = this.getToken()
       const item = {
         myId: this.me.id,
@@ -117,7 +112,8 @@ export default {
       }
       axios.post(`${SERVER_URL}/movies/${this.me.id}/${this.movie.title}/like/`, item, config)
       .then( () => {
-        this.getName()
+        console.log('좋아요')
+        this.getMyName()
         this.check()
         // console.log(res)
       })
@@ -140,7 +136,7 @@ export default {
     },
   },
   created: function () {
-    this.getName()
+    this.getMyName()
     this.number()
     this.ratingToInt()
   }

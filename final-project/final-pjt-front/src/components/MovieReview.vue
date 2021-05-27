@@ -78,9 +78,9 @@ export default {
     },
   },
   // created에서 watch로 바꿨더니 데이터가 바뀔 때마다 바로 바뀐다.
-  watch: function () { 
-    this.getReviews()
-  },
+  // watch: function () { 
+  //   this.getReviews()
+  // },
   created: function () { 
     this.getReviews()
   },

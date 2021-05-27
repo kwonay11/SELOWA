@@ -1,6 +1,6 @@
 <template>
 
-<transition  name="modal" appear>
+<!-- <transition  name="modal" appear> -->
   <div class="update-modal d-flex align-items-center justify-content-center" 
     v-if="visible" @click.self="handleWrapperClick">
     <div class="update-modal__dialog bg-dark">
@@ -16,7 +16,7 @@
       </div>
     </div>
   </div>
-</transition>
+<!-- </transition> -->
 
 </template>
 
@@ -38,7 +38,7 @@ export default {
     },
   },
   methods: {
-    handleWrapperClick(){
+      handleWrapperClick(){
       this.$emit('update:visible', false)
     },
   },
@@ -52,7 +52,7 @@ $module: 'update-modal';
   align-items: center;
   justify-content: center;
   // 모달이 맨 위로 나오게 하기
-  z-index: 99;
+  z-index: 1500;
   // top: 0;
   // left: 0;
   // width: 100%;

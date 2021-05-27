@@ -123,7 +123,7 @@ export default {
       const config = this.getToken()
       const hash = localStorage.getItem('jwt')
       const info = VueJwtDecode.decode(hash)
-      console.log(`${SERVER_URL}/accounts/myprofile/`)
+      // console.log(`${SERVER_URL}/accounts/myprofile/`)
       axios.post(`${SERVER_URL}/accounts/myprofile/`, info, config)
       .then( (res) => {
         this.user = res.data
@@ -204,8 +204,8 @@ export default {
   },
   computed: {
     commentsList: function () {
-      console.log('댓글입니다')
-      console.log(this.comments)
+      // console.log('댓글입니다')
+      // console.log(this.comments)
       return this.comments
     }
   },

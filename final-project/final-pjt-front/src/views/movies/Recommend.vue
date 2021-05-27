@@ -64,12 +64,7 @@
       </vue-glide-slide>
     </vue-glide>
 
-      <!--<h3 class="content-font" v-if="my_users_like_movies.length > 0">{{user.username}} 님의 취향저격 베스트 콘텐츠</h3>
-      <hr>
-      <MovieCard :movies="my_users_like_movies"/>
-      <MovieCard :movies="movies"/>
-      <h3 class="content-font" v-if="favorite_movies.length === 30">높은 평점을 받은 영화</h3>
-      <MovieCard :movies="favorite_movies"/> -->
+
   </div>
 </template>
 
@@ -136,26 +131,23 @@ export default {
       axios.post(`${SERVER_URL}/movies/${this.user.id}/like/users/`, item, config)
       .then( (res) => {
         this.favorite_movies = res.data[0]
-        this.users_movies = res.data[1]
         this.my_users_like_movies = res.data[2]
+        // this.my_users_like_movies = res.data[2]
       })
       .catch( (err) => {
-        console.log("추천" + err)
+        console.log(err)
       })
-      // 내가 좋아하는 영화 좋아하는 사람 찾기
+      // 내가 좋아하는 영화를 좋아하는 사람 찾기
       axios.post(`${SERVER_URL}/movies/${this.user.id}/like/users/`,item , config)
       .then( (res) => {
-        // console.log(res)
-        // this.my_like_users = res.data
         const item = {
           users: res.data,
         }
         // 그 사람들이 좋아하는 영화 찾기
         axios.post(`${SERVER_URL}/accounts/info/`, item, config)
         .then( (res) => {
-          // console.log(res)
           this.my_like_users_movies = res.data
-          // 일반적인 추천 받기
+          // 추천 받기
           const item2 = {
             like_movies: this.my_like_users_movies
           }
@@ -165,7 +157,6 @@ export default {
             this.favorite_movies = res.data[0]
             this.users_movies = res.data[1]
             this.my_users_like_movies = res.data[2]
-            // alert(this.favorite_movies.length)
           })
           .catch( (err) => {
             console.log(err)

@@ -6,7 +6,10 @@ from .models import Movie, Review, Genre
 from django.contrib.auth import get_user_model
 import jwt
 from django.conf import settings
-from .serializers import MovieListSerializer, MovieSerializer, ReviewSerializer
+from .serializers import MovieListSerializer, MovieSerializer, ReviewListSerializer, ReviewSerializer
+from rest_framework.decorators import authentication_classes, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 # Create your views here.
 @api_view(['GET'])
@@ -22,46 +25,48 @@ def movie_detail(request, movie_pk):
     return Response(serializer.data)
 
 @api_view(['GET', 'POST'])
+@authentication_classes([JSONWebTokenAuthentication])
+@permission_classes([IsAuthenticated])
 def reviews(request, movie_pk):
-    movie = get_object_or_404(Movie, pk=movie_pk)
     if request.method == 'GET':
         review_list = Review.objects.all().filter(movie_id=movie_pk)
-        serializer = ReviewSerializer(review_list, many=True)
+        serializer = ReviewListSerializer(review_list, many=True)
         return Response(serializer.data)
 
     else:
-        serializer = ReviewSerializer(data=request.data)
+        serializer = ReviewListSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             movie = get_object_or_404(Movie, pk=request.data.get('movie'))
 
             pre_point = movie.vote_average * movie.vote_count
-            pre_count = movie.vote_count
-
-            point = pre_point+request.data.get('rank')
+            
+            point = pre_point+int(request.data.get('rank'))
             count = movie.vote_count + 1
             new_vote_average = round(point/count, 2)
 
             movie.vote_average = new_vote_average
             movie.vote_count = count
             movie.save()
-
+            # print(request.user)
             serializer.save(user=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
+# authentication_classes 붙여줘야함!
 @api_view(['PUT', 'DELETE'])
+@authentication_classes([JSONWebTokenAuthentication])
+@permission_classes([IsAuthenticated])
 def review_update_delete(request, review_pk):
   review = get_object_or_404(Review, pk=review_pk)
-#   if not request.user.reviews.filter(pk=review_pk).exists():
-#     return Response({'message': '권한이 없습니다.'})
+  if not request.user.reviews.filter(pk=review_pk).exists():
+    return Response({'message': '권한이 없습니다.'})
 
   if request.method == 'PUT':
-    serializer = ReviewSerializer(review, data=request.data)
+    serializer = ReviewListSerializer(review, data=request.data)
     
     if serializer.is_valid(raise_exception=True):
       movie = get_object_or_404(Movie, pk=request.data.get('movie'))
       pre_point = movie.vote_average * (movie.vote_count - 1)
-      pre_count = movie.vote_count - 1
-      point = pre_point+request.data.get('rank')
+      point = pre_point+int(request.data.get('rank'))
       count = movie.vote_count
       new_vote_average = round(point/count, 2)
       movie.vote_average = new_vote_average
@@ -72,21 +77,21 @@ def review_update_delete(request, review_pk):
 
   else:
     review = get_object_or_404(Review, pk=review_pk)
-    token = request.headers['Authorization'].split()[1]
-    SECRET_KEY = settings.SECRET_KEY
-    print(token)
+    # token = request.headers['Authorization'].split()[1]
+    # SECRET_KEY = settings.SECRET_KEY
+    # print(token)
     # 디코드하려면 재료 3개
-    payload = jwt.decode(token,SECRET_KEY,algorithms=['HS256'])
-    print(payload['user_id'])
-    # movie = get_object_or_404(Movie, pk=review.movie_id)
-    # pre_point = movie.vote_average * (movie.vote_count)
-    # pre_count = movie.vote_count
-    # point = pre_point - review.rank
-    # count = movie.vote_count-1
-    # new_vote_average = round(point/count, 2)
-    # movie.vote_average = new_vote_average
-    # movie.vote_count = count
-    # movie.save()
+    # payload = jwt.decode(token,SECRET_KEY,algorithms=['HS256'])
+    # print(payload['user_id'])
+    movie = get_object_or_404(Movie, pk=review.movie_id)
+    pre_point = movie.vote_average * (movie.vote_count)
+    pre_count = movie.vote_count
+    point = pre_point - review.rank
+    count = movie.vote_count-1
+    new_vote_average = round(point/count, 2)
+    movie.vote_average = new_vote_average
+    movie.vote_count = count
+    movie.save()
     # print(request.user) 익명으로 안받아와짐 그래서 토큰으로 받아줌
     review.delete()
     return Response({ 'id': review_pk })
@@ -96,9 +101,7 @@ def review_update_delete(request, review_pk):
 def recommend(request):
     # 인기순
     favorite_movies = Movie.objects.all().order_by('-vote_average')[:10]
-   
     favorite_serialize = MovieSerializer(favorite_movies, many=True)
-    print(favorite_serialize)
     # 리뷰 기반 장르기반 추천
     user_movies_review = []
     # 좋아요 기반 장르 추천
@@ -118,23 +121,8 @@ def recommend(request):
         movie = Movie.objects.get(pk=review.movie_id)
         if not movie in user_movies_review:
             user_movies_review.append(movie)
-    
-    if user_movies_review:
-        serializer = MovieSerializer(user_movies_review[0])
-        genre = serializer.data.get('genres')[0]
-        genre_name = Genre.objects.get(id=genre)
-        idx = 1
-        while len(user_movies_review) < 30:
-            movie = Movie.objects.get(pk=idx)
-            movie_ser = MovieSerializer(movie)
-            if movie_ser.data.get('genres')[0] == genre and movie not in user_movies_review:
-                user_movies_review.append(movie)
-            idx += 1
-            # 마지막 데이터
-            if idx == 80:
-                user_movies_review = Movie.objects.all().order_by('release_date')[:30]
-    else:
-        user_movies_review = Movie.objects.all().order_by('release_date')[:30]
+
+
     
     like_movies = request.data.get('like_movies')
     for like_movies in like_movies:
@@ -142,22 +130,18 @@ def recommend(request):
         if not movie in user_like_movies:
             user_like_movies.append(movie)
 
-    user_genre_serialize = MovieSerializer(user_movies_review, many=True)
+    # user_genre_serialize = MovieSerializer(user_movies_review, many=True)
     user_like_serialize = MovieSerializer(user_like_movies, many=True)
-    # genre_movies = Movie.objects.all().order_by('-genres')[:10]
-    # # 배우별
-    # # 감독별
-    # # 개봉년도별
-    # # 제작 국가별
-    # # 연령대
-    return Response([favorite_serialize.data, user_genre_serialize.data, user_like_serialize.data])
+
+    print(user_like_serialize)
+    return Response([favorite_serialize.data, user_like_serialize.data])
 
 @api_view(['POST'])
 # @authentication_classes([JSONWebTokenAuthentication])
 # @permission_classes([IsAuthenticated])
 def my_movie_like(request, my_pk):
     me = get_object_or_404(get_user_model(), pk=my_pk)
-    print(me)
+    # print(me)
     data = []
     movies = request.data
     for movie_pk in movies:
