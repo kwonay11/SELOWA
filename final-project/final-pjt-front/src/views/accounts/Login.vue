@@ -17,9 +17,9 @@
     </div>
     <div>
       <hr>
-      <p style="color:#e0435e;">소셜 로그인</p>
+      <!-- <p style="color:#e0435e;">소셜 로그인</p>
       <img @click="kakao_login()" src="../../assets/kakao.png" class="rounded mx-auto d-block" style="width:10%" alt="kakao">
-      <hr>
+      <hr> -->
       <p style="color:#e0435e;">회원이 아니라면?</p>
       <router-link :to="{ name: 'Signup' }" style="color:#e0435e;">회원가입</router-link>
 
@@ -61,20 +61,20 @@ export default {
         console.log(err)
       })
     },
-    kakao_login: function () {
-      axios.post(`${SERVER_URL}accounts/api-token-auth/`)
-      .then((res) => {
-        console.log(res.data.token)
-        // localstorage에 jwt 토큰 저장
-        localStorage.setItem('jwt', res.data.token)
-        // App 컴포넌트한테 로그인 됐습니다를 알려야 함.
-        this.$emit('login') // 데이터는 안 담아서 보내도됨 (이벤트(신호)만 알리면 됨)
-        this.$router.push({ name: 'Home' })
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-    }
+    // kakao_login: function () {
+    //   axios.post(`${SERVER_URL}accounts/api-token-auth/`)
+    //   .then((res) => {
+    //     console.log(res.data.token)
+    //     // localstorage에 jwt 토큰 저장
+    //     localStorage.setItem('jwt', res.data.token)
+    //     // App 컴포넌트한테 로그인 됐습니다를 알려야 함.
+    //     this.$emit('login') // 데이터는 안 담아서 보내도됨 (이벤트(신호)만 알리면 됨)
+    //     this.$router.push({ name: 'Home' })
+    //   })
+    //   .catch((err) => {
+    //     console.log(err)
+    //   })
+    // }
 
   }
 }

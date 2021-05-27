@@ -1,6 +1,9 @@
 <template>
   <div>
-     <h1 style="text-align:left" class="m-2">How Many Movies?<br>100</h1>
+    <div>
+     <h1 style="text-align:center" class="m-2">Welcome to the SELOWA!</h1>
+     <img src="@/assets/apeach2.png" alt="apeach2">
+     </div>
       <video width="1300px" src="@/assets/video.mp4" controls autoplay muted></video>
     </div>
 </template>

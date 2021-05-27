@@ -3,7 +3,7 @@
   <div class="row d-flex justify-content-center align-items-center " >
     
   <div>
-    <h2 style="margin-bottom:30px">제목과 버튼을 눌러 상세페이지로, 유저를 눌러 프로필로 넘어가보세요</h2>
+    <!-- <h2 style="margin-bottom:30px">제목과 버튼을 눌러 상세페이지로, 유저를 눌러 프로필로 넘어가보세요</h2> -->
     <div class="row d-flex justify-content-center align-items-center  " >
       <div class="card bg-dark row d-flex justify-content-center align-items-center" style="width: 50%; ">
       <div class="col-lg-8 col-md-10 mx-auto">
