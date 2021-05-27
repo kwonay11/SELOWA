@@ -9,7 +9,8 @@
     <ReviewList 
       :reviews="reviews"
       :movie="movie"
-      @deleteReview="getReviews"
+     
+      @reviewDelete="deleteReview"
       @reviews-updated="reviewsUpdated"
     />
   </div>
@@ -56,11 +57,31 @@ export default {
         console.log(err)
       })
     },
+    deleteReview: function (review_id) {
+
+      const config = this.getToken()
+      // console.log(config)
+      axios.delete(`${SERVER_URL}/movies/review/${review_id}/`, config)
+        .then((res) => {
+          console.log(res.data.id)
+          // 리뷰 리스트 중에 삭제할 인덱스값을 넣어서 삭제해주기
+          const targetReviewId = this.reviews.findIndex((rv)=>{
+            return rv.id === res.data.id
+
+          })
+          this.reviews.splice(targetReviewId, 1)
+        })
+
+    },
     reviewsUpdated: function () {
       this.getReviews()
     },
   },
-  created: function () {
+  // created에서 watch로 바꿨더니 데이터가 바뀔 때마다 바로 바뀐다.
+  watch: function () { 
+    this.getReviews()
+  },
+  created: function () { 
     this.getReviews()
   },
 }

@@ -19,6 +19,7 @@
 <script>
 import MovieReviewDetail from '@/components/MovieReviewDetail'
 
+
 export default {
   name: "ReviewList",
   components: {
@@ -39,8 +40,8 @@ export default {
     }
   },
   methods: {
-    deleteReview: function () {
-      this.$emit('deleteReview')
+    deleteReview: function (review_id) {
+      this.$emit('reviewDelete',review_id)
     },
     updateRiview: function () {
       this.$emit('reviews-updated')

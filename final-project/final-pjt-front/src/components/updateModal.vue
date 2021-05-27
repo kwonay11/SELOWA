@@ -3,7 +3,7 @@
 <transition  name="modal" appear>
   <div class="update-modal d-flex align-items-center justify-content-center" 
     v-if="visible" @click.self="handleWrapperClick">
-    <div class="update-modal__dialog">
+    <div class="update-modal__dialog bg-dark">
       <header class="update-modal__header">
         <span>{{title}}</span>
         <!-- update:visible', !visible 모달 바깥을 클릭해서 모달을 닫음 -->
@@ -23,6 +23,9 @@
 <script>
 export default {
   name: 'update-modal',
+  data: function () {
+
+  },
   props: {
     visible: {
       type: Boolean,
@@ -49,7 +52,7 @@ $module: 'update-modal';
   align-items: center;
   justify-content: center;
   // 모달이 맨 위로 나오게 하기
-  z-index: 9;
+  z-index: 99;
   // top: 0;
   // left: 0;
   // width: 100%;
@@ -67,9 +70,9 @@ $module: 'update-modal';
   &__dialog{
     display: flex;
     vertical-align: middle;
-    left: 22%;
+    left: 40%;
     
-    width: 1000px;
+    width:410px;
     position: absolute;
     margin-bottom: 50px;
   }

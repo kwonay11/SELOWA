@@ -12,7 +12,7 @@
     <div>
       <br>
       <label for="password" style="color:#e0435e;">비밀번호: </label>
-      <input type="text" id="password" v-model="credentials.password"
+      <input type="password" id="password" v-model="credentials.password"
       @keypress.enter="login(credentials)">
     </div>
     <div>

@@ -4,6 +4,8 @@ from rest_framework import status
 from django.shortcuts import render, get_list_or_404, get_object_or_404
 from .models import Movie, Review, Genre
 from django.contrib.auth import get_user_model
+import jwt
+from django.conf import settings
 from .serializers import MovieListSerializer, MovieSerializer, ReviewSerializer
 
 # Create your views here.
@@ -19,36 +21,38 @@ def movie_detail(request, movie_pk):
     serializer = MovieSerializer(movie)
     return Response(serializer.data)
 
-@api_view(['GET', 'POST', 'PUT', 'DELETE'])
+@api_view(['GET', 'POST'])
 def reviews(request, movie_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
     if request.method == 'GET':
-        review_list = movie.review_set.all()
+        review_list = Review.objects.all().filter(movie_id=movie_pk)
         serializer = ReviewSerializer(review_list, many=True)
         return Response(serializer.data)
-    
-    elif request.method == 'POST': # POST
+
+    else:
         serializer = ReviewSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
-            serializer.save(movie=movie)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-   
-    elif request.method == 'PUT':
-        serializer = ReviewSerializer(reviews, data=request.data)
-        if serializer.is_valid(raise_exception=True):
-            serializer.save(movie=movie)
-            return Response(serializer.data)
-    
-    else: 
-        reviews.delete()
-        return Response({'pk': movie_pk})
+            movie = get_object_or_404(Movie, pk=request.data.get('movie'))
 
+            pre_point = movie.vote_average * movie.vote_count
+            pre_count = movie.vote_count
+
+            point = pre_point+request.data.get('rank')
+            count = movie.vote_count + 1
+            new_vote_average = round(point/count, 2)
+
+            movie.vote_average = new_vote_average
+            movie.vote_count = count
+            movie.save()
+
+            serializer.save(user=request.user)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 @api_view(['PUT', 'DELETE'])
 def review_update_delete(request, review_pk):
   review = get_object_or_404(Review, pk=review_pk)
-  if not request.user.reviews.filter(pk=review_pk).exists():
-    return Response({'message': '권한이 없습니다.'})
+#   if not request.user.reviews.filter(pk=review_pk).exists():
+#     return Response({'message': '권한이 없습니다.'})
 
   if request.method == 'PUT':
     serializer = ReviewSerializer(review, data=request.data)
@@ -68,15 +72,22 @@ def review_update_delete(request, review_pk):
 
   else:
     review = get_object_or_404(Review, pk=review_pk)
-    movie = get_object_or_404(Movie, pk=review.movie_id)
-    pre_point = movie.vote_average * (movie.vote_count)
-    pre_count = movie.vote_count
-    point = pre_point - review.rank
-    count = movie.vote_count-1
-    new_vote_average = round(point/count, 2)
-    movie.vote_average = new_vote_average
-    movie.vote_count = count
-    movie.save()
+    token = request.headers['Authorization'].split()[1]
+    SECRET_KEY = settings.SECRET_KEY
+    print(token)
+    # 디코드하려면 재료 3개
+    payload = jwt.decode(token,SECRET_KEY,algorithms=['HS256'])
+    print(payload['user_id'])
+    # movie = get_object_or_404(Movie, pk=review.movie_id)
+    # pre_point = movie.vote_average * (movie.vote_count)
+    # pre_count = movie.vote_count
+    # point = pre_point - review.rank
+    # count = movie.vote_count-1
+    # new_vote_average = round(point/count, 2)
+    # movie.vote_average = new_vote_average
+    # movie.vote_count = count
+    # movie.save()
+    # print(request.user) 익명으로 안받아와짐 그래서 토큰으로 받아줌
     review.delete()
     return Response({ 'id': review_pk })
 
