@@ -151,10 +151,6 @@ getRecommend: function () {
 },
 ```
 
-
-
-* 높은 평점을 받은 영화로 추천
-
 **[views.py]**
 
 ```python
@@ -174,6 +170,13 @@ def recommend(request):
     user_like_serialize = MovieSerializer(user_like_movies, many=True)
 
     return Response([favorite_serialize.data, user_like_serialize.data])
+```
+
+* 높은 평가를 받은 영화 순서
+
+```python
+favorite_movies = Movie.objects.all().order_by('-vote_average')[:10]
+    favorite_serialize = MovieSerializer(favorite_movies, many=True)
 ```
 
 
