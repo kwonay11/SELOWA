@@ -67,7 +67,7 @@ $ python manage.py loaddata movies/fixtures/movies.json
 
 > custom-modal만들어서 해결
 
-![bandicam 2021-05-28 02-28-14-344](README.assets/bandicam 2021-05-28 02-28-14-344.gif)
+![bandicam 2021-05-28 02-28-14-344](https://user-images.githubusercontent.com/25261332/119915035-90330c00-bf9c-11eb-834b-30dbb2c6f4e8.gif)
 
 
 
@@ -183,17 +183,14 @@ favorite_movies = Movie.objects.all().order_by('-vote_average')[:10]
 
 
 
-![bandicam 2021-05-28 02-58-39-005](README.assets/bandicam 2021-05-28 02-58-39-005.gif)
-
-
-
 
 
 **D. 커뮤니티**
 
 
 
-![bandicam 2021-05-28 03-11-00-871](README.assets/bandicam 2021-05-28 03-11-00-871.gif)
+![bandicam 2021-05-28 03-11-00-871](https://user-images.githubusercontent.com/25261332/119915116-bce72380-bf9c-11eb-8554-078c3564c3c3.gif)
+
 
 
 
