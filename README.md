@@ -73,9 +73,7 @@ $ python manage.py loaddata movies/fixtures/movies.json
 
 **C. 추천 알고리즘**
 
-![bandicam 2021-05-30 23-46-13-789](README.assets/bandicam 2021-05-30 23-46-13-789.gif)
-
-
+![bandicam 2021-05-30 23-46-13-789](https://user-images.githubusercontent.com/25261332/120108779-a231cc00-c1a1-11eb-80fe-75f3337f0b6b.gif)
 
 
 
