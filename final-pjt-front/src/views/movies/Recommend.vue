@@ -24,7 +24,11 @@
       </vue-glide-slide>
     </vue-glide>
 
-    
+    <h3 class="content-font" v-if="my_users_like_movies.length == 0"> 
+      {{ user.username }} 님이 좋아하는 영화 기반추천(취향이 일치하는 분이 없어요..)
+      <hr>
+    </h3>
+
     <h3 class="content-font" v-if="my_users_like_movies.length > 0"> 
       {{ user.username }} 님이 좋아하는 영화 기반추천</h3>
     <vue-glide v-if="my_users_like_movies.length"
@@ -32,7 +36,7 @@
       data-glide-el="track"
       ref="slider"
       type="carousel"
-      :breakpoints="{3000: {perView: 7}, 1100: {perView: 5}, 600: {perView: 3}}"
+      :breakpoints="{3000: {perView: my_users_like_movies.length}, 1100: {perView: 5}, 600: {perView: 3}}"
     >
       <vue-glide-slide
         v-for = "(movie, idx) in my_users_like_movies"
@@ -135,13 +139,16 @@ export default {
         const item = {
           users: res.data,
         }
+        console.log(this.users)
         // 그 사람들이 좋아하는 영화 찾기
         axios.post(`${SERVER_URL}/accounts/info/`, item, config)
         .then( (res) => {
           this.my_like_users_movies = res.data
+         
           // 추천 받기
           const item2 = {
-            like_movies: this.my_like_users_movies
+            like_movies: this.my_like_users_movies,
+            me_like: this.user.like_movies
           }
           axios.post(`${SERVER_URL}/movies/recommend/`, item2, config)
           .then( (res) => {
