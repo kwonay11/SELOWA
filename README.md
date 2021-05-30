@@ -106,7 +106,7 @@ getMovieDatas: function () {
 > 내가 좋아요누른 영화를 남이 좋아요 눌렀으면 남이 좋아하는 영화가 무엇인지 찾고 추천
 
 ```javascript
-  getRecommend: function () {
+   getRecommend: function () {
       const config = this.getToken()
       const item = {
         movies: this.user.like_movies,
@@ -117,13 +117,16 @@ getMovieDatas: function () {
         const item = {
           users: res.data,
         }
+        console.log(this.users)
         // 그 사람들이 좋아하는 영화 찾기
         axios.post(`${SERVER_URL}/accounts/info/`, item, config)
         .then( (res) => {
           this.my_like_users_movies = res.data
+         
           // 추천 받기
           const item2 = {
-            like_movies: this.my_like_users_movies
+            like_movies: this.my_like_users_movies,
+            me_like: this.user.like_movies
           }
           axios.post(`${SERVER_URL}/movies/recommend/`, item2, config)
           .then( (res) => {
@@ -142,7 +145,7 @@ getMovieDatas: function () {
       .catch( (err) => {
         console.log(err)
       })
- },
+     },
 ```
 
 **[views.py]**
@@ -150,19 +153,27 @@ getMovieDatas: function () {
 ```python
 @api_view(['POST'])
 def recommend(request):
-    # 인기순
-    favorite_movies = Movie.objects.all().order_by('-vote_average')[:10]
-    favorite_serialize = MovieSerializer(favorite_movies, many=True)
+    me_like = request.data.get('me_like')
+
     # 좋아요 기반 장르 추천
-    user_like_movies = []
+    user_like_movies = []    
+
+    # 좋아요 기반 추천
     like_movies = request.data.get('like_movies')
-    for like_movies in like_movies:
-        movie = get_object_or_404(Movie, pk=like_movies)
+    for like_movie in like_movies:
+        movie = get_object_or_404(Movie, pk=like_movie)
         if not movie in user_like_movies:
             user_like_movies.append(movie)
 
+    # 내가 좋아요 한 것 제거
+    for like_movie in user_like_movies:
+        if like_movie.id in me_like:
+            user_like_movies.remove(like_movie)
+    
+    # user_genre_serialize = MovieSerializer(user_movies_review, many=True)
     user_like_serialize = MovieSerializer(user_like_movies, many=True)
 
+    # print(user_like_serialize)
     return Response([favorite_serialize.data, user_like_serialize.data])
 ```
 
