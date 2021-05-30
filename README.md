@@ -73,6 +73,12 @@ $ python manage.py loaddata movies/fixtures/movies.json
 
 **C. 추천 알고리즘**
 
+![bandicam 2021-05-30 23-39-28-806](README.assets/bandicam 2021-05-30 23-39-28-806.gif)
+
+
+
+
+
 * 랜덤 추천
 
 > lodash를 사용해 랜덤추천을 구현함
@@ -102,53 +108,43 @@ getMovieDatas: function () {
 > 내가 좋아요누른 영화를 남이 좋아요 눌렀으면 남이 좋아하는 영화가 무엇인지 찾고 추천
 
 ```javascript
-getRecommend: function () {
-    const config = this.getToken()
-    const item = {
+  getRecommend: function () {
+      const config = this.getToken()
+      const item = {
         movies: this.user.like_movies,
-    }
-    axios.post(`${SERVER_URL}/movies/${this.user.id}/like/users/`, item, config)
-        .then( (res) => {
-        this.favorite_movies = res.data[0]
-        this.users_movies = res.data[1]
-        this.my_users_like_movies = res.data[2]
-    })
-        .catch( (err) => {
-        console.log(err)
-    })
-    // 내가 좋아하는 영화를 좋아하는 사람 찾기
-    axios.post(`${SERVER_URL}/movies/${this.user.id}/like/users/`,item , config)
-        .then( (res) => {
+      }
+      // 내가 좋아하는 영화를 좋아하는 사람 찾기
+      axios.post(`${SERVER_URL}/movies/${this.user.id}/like/users/`,item , config)
+      .then( (res) => {
         const item = {
-            users: res.data,
+          users: res.data,
         }
         // 그 사람들이 좋아하는 영화 찾기
         axios.post(`${SERVER_URL}/accounts/info/`, item, config)
-            .then( (res) => {
-            this.my_like_users_movies = res.data
-            // 추천 받기
-            const item2 = {
-                like_movies: this.my_like_users_movies
-            }
-            axios.post(`${SERVER_URL}/movies/recommend/`, item2, config)
-                .then( (res) => {
-
-                this.favorite_movies = res.data[0]
-                this.users_movies = res.data[1]
-                this.my_users_like_movies = res.data[2]
-            })
-                .catch( (err) => {
-                console.log(err)
-            })
-        })
-            .catch( (err) => {
+        .then( (res) => {
+          this.my_like_users_movies = res.data
+          // 추천 받기
+          const item2 = {
+            like_movies: this.my_like_users_movies
+          }
+          axios.post(`${SERVER_URL}/movies/recommend/`, item2, config)
+          .then( (res) => {
+          
+            this.favorite_movies = res.data[0]
+            this.my_users_like_movies = res.data[1]
+          })
+          .catch( (err) => {
             console.log(err)
+          })
         })
-    })
         .catch( (err) => {
+          console.log(err)
+        })
+      })
+      .catch( (err) => {
         console.log(err)
-    })
-},
+      })
+ },
 ```
 
 **[views.py]**
