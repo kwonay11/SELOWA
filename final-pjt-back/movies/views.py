@@ -99,6 +99,8 @@ def review_update_delete(request, review_pk):
 
 @api_view(['POST'])
 def recommend(request):
+    me_like = request.data.get('me_like')
+
     # 인기순
     favorite_movies = Movie.objects.all().order_by('-vote_average')[:10]
     favorite_serialize = MovieSerializer(favorite_movies, many=True)
@@ -122,14 +124,18 @@ def recommend(request):
         if not movie in user_movies_review:
             user_movies_review.append(movie)
 
-
-    
+    # 좋아요 기반 추천
     like_movies = request.data.get('like_movies')
-    for like_movies in like_movies:
-        movie = get_object_or_404(Movie, pk=like_movies)
+    for like_movie in like_movies:
+        movie = get_object_or_404(Movie, pk=like_movie)
         if not movie in user_like_movies:
             user_like_movies.append(movie)
 
+    # 내가 좋아요 한 것 제거
+    for like_movie in user_like_movies:
+        if like_movie.id in me_like:
+            user_like_movies.remove(like_movie)
+    
     # user_genre_serialize = MovieSerializer(user_movies_review, many=True)
     user_like_serialize = MovieSerializer(user_like_movies, many=True)
 
@@ -170,13 +176,13 @@ def like_movie_users(request, my_pk):
   # print(request.data)
   users = []
   movies = request.data.get('movies')
-  # print(movies)
+
   for movie in movies:
     movie = get_object_or_404(Movie, pk=movie)
     serializer = MovieSerializer(movie)
-    # print(serializer.data)
+
     for user in serializer.data.get('like_users'):
       if user not in users:
         users.append(user)
-
+    
   return Response(users)
