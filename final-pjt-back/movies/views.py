@@ -133,7 +133,7 @@ def recommend(request):
     # user_genre_serialize = MovieSerializer(user_movies_review, many=True)
     user_like_serialize = MovieSerializer(user_like_movies, many=True)
 
-    print(user_like_serialize)
+    # print(user_like_serialize)
     return Response([favorite_serialize.data, user_like_serialize.data])
 
 @api_view(['POST'])

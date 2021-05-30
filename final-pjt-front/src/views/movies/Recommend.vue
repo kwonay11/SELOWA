@@ -2,7 +2,7 @@
   <div id="app">
     <h2 style="margin-bottom:60px">SELOWA 알고리즘이 {{user.username}}님에게 추천하는 영화 페이지</h2>
     <!-- 자료가 없으면 스피너생김 -->
-    <div v-if="movies.length === 0"     class="spinner-border" role="status">
+    <div v-if="movies.length === 0" class="spinner-border" role="status">
     <span class="visually-hidden">Loading...</span>
     </div>
     <h3 class="content-font">랜덤 영화 추천</h3>
@@ -117,6 +117,7 @@ export default {
         
         for (const key in sampleNums) {
           this.movies.push(res.data[sampleNums[key]])
+          // console.log(this.movies)
         }
       })
       .catch( (err) => {
@@ -128,15 +129,6 @@ export default {
       const item = {
         movies: this.user.like_movies,
       }
-      axios.post(`${SERVER_URL}/movies/${this.user.id}/like/users/`, item, config)
-      .then( (res) => {
-        this.favorite_movies = res.data[0]
-        this.my_users_like_movies = res.data[2]
-        // this.my_users_like_movies = res.data[2]
-      })
-      .catch( (err) => {
-        console.log(err)
-      })
       // 내가 좋아하는 영화를 좋아하는 사람 찾기
       axios.post(`${SERVER_URL}/movies/${this.user.id}/like/users/`,item , config)
       .then( (res) => {
@@ -155,8 +147,7 @@ export default {
           .then( (res) => {
           
             this.favorite_movies = res.data[0]
-            this.users_movies = res.data[1]
-            this.my_users_like_movies = res.data[2]
+            this.my_users_like_movies = res.data[1]
           })
           .catch( (err) => {
             console.log(err)

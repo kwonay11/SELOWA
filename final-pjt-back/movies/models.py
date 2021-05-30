@@ -16,6 +16,7 @@ class Movie(models.Model):
     vote_average = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(10)])
     vote_count = models.IntegerField(validators=[MinValueValidator(0)])
     release_date = models.TextField()
+    adult = models.BooleanField()
     runtime = models.IntegerField(validators=[MinValueValidator(0)])
     popularity = models.FloatField(validators=[MinValueValidator(0)])
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_movies')

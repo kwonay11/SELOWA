@@ -2,7 +2,7 @@
   <div class="home ms-5">
     <hr>
     <!-- 자료가 없으면 스피너생김 -->
-    <div v-if="movies.length === 0"     class="spinner-border" role="status">
+    <div v-if="movies.length === 0"   class="spinner-border" role="status">
     <span class="visually-hidden">Loading...</span>
     </div>
     <div class="row row-cols-1 row-cols-md-4 ms-5 ">
@@ -43,7 +43,7 @@ export default {
   },
   methods:{
     onClickBtn: function (){
-      axios.get(`${SERVER_URL}/movies/`, {})
+      axios.get(`${SERVER_URL}/movies/`)
       .then((res) => {
         this.movies = res.data
       })

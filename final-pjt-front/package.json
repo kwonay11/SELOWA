@@ -10,6 +10,7 @@
   "dependencies": {
     "axios": "^0.21.1",
     "core-js": "^3.12.1",
+    "runserve": "^2.0.5",
     "sass": "^1.34.0",
     "sass-loader": "^10.2.0",
     "stylus": "^0.54.8",
