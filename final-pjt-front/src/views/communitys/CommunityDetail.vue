@@ -4,15 +4,15 @@
       <div>
         <h2>{{ community.userName }}님의 게시글</h2>
         <hr>
-        <div class="st-font" style="margin-bottom:30px">
+        <div style="margin-bottom:30px">
           <span @click="moveToProfile(community)" style="cursor:pointer;">작성자: {{ community.userName }} | </span>  
           <span>글 생성시간: {{ community_time }} |</span>
           <span>글 수정시간: {{ community_update_time }}</span>  
         </div>
         <div>
       
-          <p class="title-font" style="font-size: 40px">제목: {{ community.title }}</p>
-          <p class="content-font" style="font-size: 50px">내용: {{ community.content }}</p>
+          <p style="font-size: 40px">제목: {{ community.title }}</p>
+          <p style="font-size: 50px">내용: {{ community.content }}</p>
         </div>
       </div>
       <button @click="moveToDetailUpdate(community)" type="button" class="st-font btn btn-secondary text-white" style="margin-right:10px">수정</button>
@@ -39,33 +39,33 @@
     </section>
     <br>
     <!-- 글씨 색 바꿔주세요~!!!  -->
-    <div class="row d-flex justify-content-center align-items-center h-150" >
-    <div class="card text- bg-dark m-3 p-5 row d-flex justify-content-center align-items-center" style="width: 50%; ">
+    <div class="row d-flex justify-content-center align-items-center" >
     <div class="d-flex justify-content-center align-items-center" v-for="(comment, idx) in commentsList" :key="idx">
-        <div class="rowrow d-flex justify-content-center align-items-center h-150">
+        <div class="row d-flex justify-content-center align-items-center h-150">
             <div class="col-8">
-                <div class="card m-1" style="width:100%;">
+                <div class="card m-1 bg-dark" style="width:100%;">
                     <div >
                         <div>
-                            <img src="@/assets/apeach.png" alt="user profile image" style="width:50%">
+                            <img src="@/assets/apeach.png" alt="user profile image"  style="width:100px">
                         </div>
-                        <div class="float-left meta" style="color:black">
+                        <div class="float-left meta" style="color:white">
                             <div class="title h5 st-font">
                                 <b style="cursor:pointer; ;" @click="moveToProfile(comment.user, comment.userName)">{{comment.userName}}</b>
-                                님이 댓글을 작성하셨습니다.
+                                
                             </div>
                             <h6 class="title-font text-muted time">{{comment.created_at}}</h6>
                         </div>
                     </div> 
-                    <div style="font-size:30px; color:black"> 
-                        <p>{{comment.content}}</p>
+                    <div style="font-size:30px; color:white; width:1000px"> 
+                        <p class="row justify-content-left m-2">{{comment.content}}</p>
                     </div>
-                <button class ="btn btn-outline-danger" style="cursor:pointer;" @click="deleteComment(community, comment)">삭제</button>
+                    <div class="row justify-content-end m-2">
+                      <button class ="btn btn-outline-danger " style="cursor:pointer;width:60px" @click="deleteComment(community, comment)">삭제</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-  </div>
   </div>
   </div>
 </template>
@@ -163,33 +163,40 @@ export default {
     },
     deleteCommunity: function (community) {
       const config = this.getToken()
-      axios.delete(`${SERVER_URL}/community/${community.id}/`, config)
-        .then((res) => {
-          if (res.data.message) {
-            alert("본인이 작성한 글만 삭제 가능합니다!")
-          }
-          else {
-            this.$router.push({ name: 'Community' })
-          }
-        })
+      if(this.user.username === community.userName){ //유저가 같을 때 삭제 가능
+        axios.delete(`${SERVER_URL}/community/${community.id}/`, config)
+          .then((res) => {
+            if (res.data.message) {
+              alert("삭제되었습니다") 
+            }
+            else {
+              this.$router.push({ name: 'Community' })
+            }
+          })
+      }else{
+        alert("본인이 작성한 글만 삭제 가능합니다!")
+      }
     },
     deleteComment: function (community, comment) {
       const config = this.getToken()
-      axios.delete(`${SERVER_URL}/community/${community.id}/comments/${comment.id}/`, config)
-        .then((res) => {
-          console.log(res)
-          if (res.data.message) {
-            alert("본인이 작성한 댓글만 삭제 가능합니다!")
-          }
-          else {
-            this.getComments()
-          }
-        })
-    },
+      if(this.user.username === comment.userName){
+        axios.delete(`${SERVER_URL}/community/${community.id}/comments/${comment.id}/`, config)
+          .then((res) => {
+            if (res) {
+              alert("삭제되었습니다.")
+              this.getComments()
+            }
+          })
+      }
+      else{
+        alert("본인이 작성한 댓글만 삭제 가능합니다.") //if else로 함
+      }
+    }
+    ,
     // 커뮤니티 글 수정
     moveToDetailUpdate: function (community) {
       // alert(community)
-      console.log(this.user.username)
+      //console.log(this.user.username)
       if (this.user.username === community.userName) {
         this.$router.push({ name: 'CommunityDetailUpdate', params: { community_pk: `${community.id}` }})
       } else {

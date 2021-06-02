@@ -60,7 +60,4 @@ export default {
 </script>
 
 <style>
- .routr-color {
-   color: rgb(240, 20, 20)
- }
 </style>
