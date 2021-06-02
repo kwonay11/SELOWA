@@ -30,6 +30,7 @@ export default {
     },
     computed:{
        movieImage: function () {
+          //  if(this.movie.poster_path!=null)
            return `https://image.tmdb.org/t/p/w500/${this.movie.poster_path}`
            //https://image.tmdb.org/t/p/w500/를 붙여서 리턴
        },

@@ -66,10 +66,11 @@ def users_info(request):
     # print(request.data)
     users = request.data.get('users')
     movies = []
+    ages = []
     for user in users:
         user = get_object_or_404(get_user_model(), pk=user)
         serializer = UserSerializer(user)
-        # print(serializer.data)
+        age = serializer.data.get('age')
         like_movies = serializer.data.get('like_movies')
         dislike_movies = serializer.data.get('dislike_movies')
         wish_movies = serializer.data.get('wish_movies')
@@ -77,5 +78,7 @@ def users_info(request):
         for movie in like_movies:
             if movie not in movies:
                 movies.append(movie)
-    
-    return Response(movies)
+            # 연령별 추천
+            if age==user.age and movie not in ages:
+                ages.append(movie)
+    return Response([movies, ages])
