@@ -112,14 +112,12 @@ export default {
       }
       axios.post(`${SERVER_URL}/movies/${this.me.id}/${this.movie.title}/like/`, item, config)
       .then( () => {
-        console.log('좋아요')
         this.getMyName()
         this.check()
         // console.log(res)
       })
     },
     number: function () {
-      // console.log(this.me)
       this.numLike = this.movie.like_users.length
     },
     check: function () {

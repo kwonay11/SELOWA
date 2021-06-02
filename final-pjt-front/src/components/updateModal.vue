@@ -23,9 +23,6 @@
 <script>
 export default {
   name: 'update-modal',
-  data: function () {
-
-  },
   props: {
     visible: {
       type: Boolean,

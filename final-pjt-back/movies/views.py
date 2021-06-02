@@ -63,7 +63,10 @@ def review_update_delete(request, review_pk):
   if request.method == 'PUT':
     serializer = ReviewListSerializer(review, data=request.data)
     
+    print(serializer)
+    # if serializer.is_valid(raise_exception=True):
     if serializer.is_valid(raise_exception=True):
+      print('일로?1')
       movie = get_object_or_404(Movie, pk=request.data.get('movie'))
       pre_point = movie.vote_average * (movie.vote_count - 1)
       point = pre_point+int(request.data.get('rank'))
@@ -76,6 +79,7 @@ def review_update_delete(request, review_pk):
       return Response(serializer.data)
 
   else:
+    print('일로?')
     review = get_object_or_404(Review, pk=review_pk)
     # token = request.headers['Authorization'].split()[1]
     # SECRET_KEY = settings.SECRET_KEY
@@ -85,7 +89,7 @@ def review_update_delete(request, review_pk):
     # print(payload['user_id'])
     movie = get_object_or_404(Movie, pk=review.movie_id)
     pre_point = movie.vote_average * (movie.vote_count)
-    pre_count = movie.vote_count
+    # pre_count = movie.vote_count
     point = pre_point - review.rank
     count = movie.vote_count-1
     new_vote_average = round(point/count, 2)
