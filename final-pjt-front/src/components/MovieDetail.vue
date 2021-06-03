@@ -1,6 +1,13 @@
 <template>
-  <div>
-    <button @click="handleClickButton" class ="btn btn-outline-danger" style="width: 70%;">More Info</button>
+  <div class="d-flex text-align:center col m-1">
+        <p class="st-font" style="margin-left: 1em;">좋아요 {{ numLike }}개</p>
+    <vue-star  animate="animated bounceIn" color="#F05654" >
+      <i v-if="isLiking" @click="like" slot="icon" style="color:crimson" class="fa fa-heart"></i>
+      <i v-else @click="like" slot="icon" style="color:white" class="fa fa-heart"></i>
+    </vue-star>
+   <div class="col">
+    <button @click="handleClickButton" class ="btn btn-outline-danger" style="width: 60%;">More Info</button>
+    </div>
     <app-my-modal title="More Info" :visible.sync="visible">
       <div>
         
@@ -20,10 +27,16 @@
         <hr>
         <!-- 좋아요 -->
         <div>
-        <i id="heart" v-if="isLiking" @click="like" style="color:crimson; font-size:60px; text-align:left;" class="fas fa-heart"></i>
-        <i id="heart" v-else @click="like" style="font-size:60px; text-align:left; margin-top:30px;" class="far fa-heart"></i>
-        <p class="st-font" style="text-align:center; margin-top:5px">좋아요 {{ numLike }}개</p>
-       
+          <!-- <vue-star  animate="animated bounceIn" color="#F05654" >
+            <i v-if="isLiking" @click="like" slot="icon" class="fa fa-heart"></i>
+            <i v-else @click="like" slot="icon" class="fa fa-heart"></i>
+          </vue-star> -->
+        </div>
+          <!-- <i id="heart" v-if="isLiking" @click="like" style="color:crimson; font-size:60px; text-align:left;" class="fas fa-heart"></i>
+          <i id="heart" v-else @click="like" style="font-size:60px; text-align:left; margin-top:30px;" class="far fa-heart"></i> -->
+        
+          
+        
         <!-- 싫어요 -->
         <!-- <i id="dislike" v-if="isLiking" @click="like" style="color:blue; font-size:60px; text-align:center;" class="far fa-thumbs-down"></i>
         <i id="dislike" v-else @click="like" style="font-size:60px; text-align:center; margin-top:30px;" class="far fa-thumbs-down"></i>  -->
@@ -33,28 +46,32 @@
         <i id="want" v-else @click="like" style="font-size:60px; text-align:right; margin-top:30px;" class="far fa-laugh-squint"></i> -->
         <!-- <p class="st-font" style="text-align:right; margin-top:5px">보고싶어요 {{ numWant }}개</p> -->
         </div>
-        <hr>
+        
         <MovieReview 
           :movie="movie"
         />
-      </div>
+      
     </app-my-modal>
   </div>
 </template>
 
 <script>
 import myModal from './myModal'
-
+import VueStar from 'vue-star'
 import MovieReview from '@/components/MovieReview'
 
 import axios from 'axios'
 import VueJwtDecode from "vue-jwt-decode"
+
+
+
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 export default {
   name: 'MovieDetail',
   data: function () {
     return {
+      
       visible: false,
       me: [],
       liking: '',
@@ -70,6 +87,8 @@ export default {
   components: {
     appMyModal: myModal,
     MovieReview,
+    VueStar,
+
   },
   methods: {
     handleClickButton(){
@@ -144,6 +163,8 @@ export default {
 }
 </script>
 
+
 <style>
-p {white-space: nowrap;}
+
+          
 </style>

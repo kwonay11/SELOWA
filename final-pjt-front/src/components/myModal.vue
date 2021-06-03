@@ -49,7 +49,7 @@ $module: 'my-modal';
   align-items: center;
   justify-content: center;
   // 모달이 맨 위로 나오게 하기
-  z-index: 30;
+  z-index: 1000;
   // top: 0;
   // left: 0;
   // width: 100%;

@@ -1,8 +1,8 @@
 <template>
-<div class="col" >
+<div class="clo" >
 
 <!-- <button class="btn btn-sm btn-dark m-4" type="submit"> -->
-  <div class="card m-4 bg-dark" style="width: 20rem;">
+  <div class="card m-2 bg-dark" style="width: 21rem;">
       
       <img @click="movieDetail" :src="movieImage" alt="poster_path" style="width:320px" class="m-1" >
         <hr>
