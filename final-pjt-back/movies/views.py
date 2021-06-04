@@ -108,9 +108,6 @@ def recommend(request):
     favorite_serialize = MovieSerializer(favorite_movies, many=True)
     # 리뷰 기반 장르기반 추천
     user_movies_review = []
-    # 좋아요 기반 장르 추천
-    user_like_movies = []
-    
     # 배우기반 추천
     user_movies_actor = []
     # 감독기반 추천
@@ -124,20 +121,21 @@ def recommend(request):
         if not movie in user_movies_review:
             user_movies_review.append(movie)
 
+    # 좋아요 기반추천
+    my_user_like_movies = []
+    user_like_movies = []
     # 좋아요 기반 추천
     like_movies = request.data.get('like_movies')
     for like_movie in like_movies:
         movie = get_object_or_404(Movie, pk=like_movie)
-        if not movie in user_like_movies:
-            user_like_movies.append(movie)
-
+        if not movie in my_user_like_movies:
+            my_user_like_movies.append(movie)
     # 내가 좋아요 한 것 제거
-    for like_movie in user_like_movies:
-        print(like_movie.id)
-        print(me_like)
-        if like_movie.id in me_like:
-            user_like_movies.remove(like_movie)
-            print(user_like_movies)
+    for like_movie in my_user_like_movies:
+        # print(me_like)
+        if like_movie.id not in me_like:
+            user_like_movies.append(like_movie)
+    # print(user_like_movies)
             
     
     # user_genre_serialize = MovieSerializer(user_movies_review, many=True)

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="app">
     <h2>{{ user.age }}살 {{ user.username }}님의 마이페이지</h2>
     <hr>
     <h2>{{ user.username }}님이 좋아요한 영화</h2>
@@ -8,7 +8,7 @@
       data-glide-el="track"
       ref="slider"
       type="carousel"
-      :breakpoints="{3000: {perView: my_like_movies.length}, 1100: {perView: 5}, 600: {perView: 3}}"
+      :breakpoints="{3000: {perView: 5}, 1100: {perView: 5}, 600: {perView: 3}}"
     >
       <vue-glide-slide
         v-for = "(movie, idx) in my_like_movies"
