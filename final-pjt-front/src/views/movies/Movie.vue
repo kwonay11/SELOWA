@@ -53,23 +53,11 @@ export default {
     
 
     },
-    // onRecommend: function (){
-    //   axios.get(`${SERVER_URL}/movies/recommend/`, {})
-    //   .then((res) => {
-    //     this.movies = res.data
-    //     this.$router.push({ name: 'Recommend' })
-    //   })
-    //   .catch((err) => {
-    //     console.log(err)
-    //   })
-    
-
-    // },  
 
   },
-    created() {
-      this.onClickBtn()
-    }
+  created() {
+    this.onClickBtn()
+  }
 
 
 }

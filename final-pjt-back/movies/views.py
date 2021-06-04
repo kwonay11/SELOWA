@@ -63,6 +63,8 @@ def review_update_delete(request, review_pk):
   if request.method == 'PUT':
     serializer = ReviewListSerializer(review, data=request.data)
     
+
+    # if serializer.is_valid(raise_exception=True):
     if serializer.is_valid(raise_exception=True):
       movie = get_object_or_404(Movie, pk=request.data.get('movie'))
       pre_point = movie.vote_average * (movie.vote_count - 1)
@@ -85,7 +87,7 @@ def review_update_delete(request, review_pk):
     # print(payload['user_id'])
     movie = get_object_or_404(Movie, pk=review.movie_id)
     pre_point = movie.vote_average * (movie.vote_count)
-    pre_count = movie.vote_count
+    # pre_count = movie.vote_count
     point = pre_point - review.rank
     count = movie.vote_count-1
     new_vote_average = round(point/count, 2)
@@ -115,8 +117,6 @@ def recommend(request):
     user_movies_director = []
     # 개봉년도
     # 제작 국가
-    # 연령대
-    user_movies_age = []
     # 리뷰 기반 장름별
     reviews = Review.objects.all()
     for review in reviews:
@@ -139,8 +139,18 @@ def recommend(request):
     # user_genre_serialize = MovieSerializer(user_movies_review, many=True)
     user_like_serialize = MovieSerializer(user_like_movies, many=True)
 
-    # print(user_like_serialize)
-    return Response([favorite_serialize.data, user_like_serialize.data])
+    # 연령대
+    user_movies_age = []
+    # 연령별 기반 추천
+    me_age = request.data.get('me_age')
+    for age in me_age:
+        movie = get_object_or_404(Movie, pk=age)
+        if not movie in user_movies_age:
+            user_movies_age.append(movie)
+
+    user_movies_age_serializer = MovieSerializer(user_movies_age, many=True)
+    print(user_like_serialize.data)
+    return Response([favorite_serialize.data, user_like_serialize.data, user_movies_age_serializer.data])
 
 @api_view(['POST'])
 # @authentication_classes([JSONWebTokenAuthentication])

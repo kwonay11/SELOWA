@@ -25,21 +25,39 @@
     </vue-glide>
 
     <h3 class="content-font" v-if="my_users_like_movies.length == 0"> 
-      {{ user.username }} 님이 좋아하는 영화 기반추천(취향이 일치하는 분이 없어요..)
+      {{ user.username }} 님이 좋아하는 영화추천(취향이 일치하는 분이 없어요..)
       <hr>
     </h3>
 
     <h3 class="content-font" v-if="my_users_like_movies.length > 0"> 
-      {{ user.username }} 님이 좋아하는 영화 기반추천</h3>
+      {{ user.username }}님이 좋아하는 영화추천 {{my_users_like_movies.length}}</h3>
     <vue-glide v-if="my_users_like_movies.length"
       class="glide__track"
       data-glide-el="track"
       ref="slider"
       type="carousel"
-      :breakpoints="{3000: {perView: my_users_like_movies.length}, 1100: {perView: 5}, 600: {perView: 3}}"
+      :breakpoints="{3000: {perView: my_users_like_movies.length}, 1100: {perView: my_users_like_movies.length}, 600: {perView: my_users_like_movies.length}}"
     >
       <vue-glide-slide
         v-for = "(movie, idx) in my_users_like_movies"
+        :key="idx">
+        <MovieCard
+          :movie="movie"
+        />
+        
+      </vue-glide-slide>
+    </vue-glide>
+
+    <h3 class="content-font" v-if="age_movies.length > 0">{{user.username}}님과 같은 나이대가 좋아하는 영화 추천</h3>
+    <vue-glide v-if="age_movies.length"
+      class="glide__track"
+      data-glide-el="track"
+      ref="slider"
+      type="carousel"
+      :breakpoints="{3000: {perView: age_movies.length}, 1100: {perView: 5}, 600: {perView: 3}}"
+    >
+      <vue-glide-slide
+        v-for = "(movie, idx) in age_movies"
         :key="idx">
         
         <MovieCard
@@ -48,6 +66,9 @@
         
       </vue-glide-slide>
     </vue-glide>
+
+
+
 
     <h3 class="content-font" v-if="favorite_movies.length === 10">높은 평점을 받은 영화</h3>
     <vue-glide v-if="favorite_movies.length"
@@ -69,6 +90,9 @@
     </vue-glide>
 
 
+
+
+
   </div>
 </template>
 
@@ -88,7 +112,7 @@ export default {
       movies: [],
       movie: '',
       favorite_movies: [],
-      shortest_movies: [],
+      age_movies: [],
       users_movies: [],
       my_like_users_movies: [],
       user: '',
@@ -139,22 +163,23 @@ export default {
         const item = {
           users: res.data,
         }
-        console.log(this.users)
         // 그 사람들이 좋아하는 영화 찾기
         axios.post(`${SERVER_URL}/accounts/info/`, item, config)
         .then( (res) => {
-          this.my_like_users_movies = res.data
-         
+          this.my_like_users_movies = res.data[0]
+          this.age_movies = res.data[1]
           // 추천 받기
           const item2 = {
             like_movies: this.my_like_users_movies,
-            me_like: this.user.like_movies
+            me_like: this.user.like_movies,
+            me_age : this.age_movies
           }
           axios.post(`${SERVER_URL}/movies/recommend/`, item2, config)
           .then( (res) => {
-          
+            console.log(res)
             this.favorite_movies = res.data[0]
             this.my_users_like_movies = res.data[1]
+            this.age_movies = res.data[2]
           })
           .catch( (err) => {
             console.log(err)
