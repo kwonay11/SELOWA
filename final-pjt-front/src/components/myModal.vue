@@ -3,7 +3,7 @@
 <transition  name="modal" appear>
   <div class="my-modal d-flex align-items-center justify-content-center" 
     v-if="visible" @click.self="handleWrapperClick">
-    <div class="my-modal__dialog bg-dark ">
+    <div class="my-modal__dialog ">
       <header class="my-modal__header">
         <span>{{title}}</span>
         <!-- update:visible', !visible 모달 바깥을 클릭해서 모달을 닫음 -->
@@ -45,6 +45,7 @@ export default {
 <style lang="scss">
 $module: 'my-modal';
 .#{$module} {
+  
   // This is modal bg
   align-items: center;
   justify-content: center;
@@ -58,7 +59,7 @@ $module: 'my-modal';
   // display: table;
   // transition: opacity .3s ease;
   
-  background-color: rgba(0,0,0,.7);
+  background-color: rgba(0, 0, 0, 0.911);
   top: 0; right: 0; bottom: 0; left: 0;
   position: fixed;
   overflow: auto;

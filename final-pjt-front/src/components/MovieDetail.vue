@@ -13,10 +13,16 @@
         
         <h2 style="font-weight: bold;">{{ movie.title }} </h2>
         <hr>
+        <div class="video-container">
+          <iframe :src="videoURI" frameborder="0" allow="fullscreen"></iframe>
+        </div>
         <div class="movie-information-wrapper mt-4 d-flex align-items-center">
         <img :src="`https://image.tmdb.org/t/p/w300${movie.poster_path}`">
         <br>
+        
+    
         <div class="col">
+          
         <!-- <h5 style="margin-bottom:10px" class="content-font">인기도 : {{ movie.popularity }}%</h5> -->
         <h5 style="margin-bottom:10px" class="content-font">평점 : {{ movie.vote_average }}점</h5>
         <h5 style="margin-bottom:10px" class="content-font">상영 시간 : {{ movie.runtime }}분</h5>
@@ -59,7 +65,7 @@
 import myModal from './myModal'
 import VueStar from 'vue-star'
 import MovieReview from '@/components/MovieReview'
-
+import _ from 'lodash'
 import axios from 'axios'
 import VueJwtDecode from "vue-jwt-decode"
 
@@ -153,6 +159,15 @@ export default {
     isLiking: function () {
       return this.liking
     },
+    videoURI: function () {
+      const videoId = this.movie.id.title
+      return `https://www.youtube.com/embed/${videoId}`
+    }
+  },
+  filters: {
+    stringUnescape: function (rawText) {
+      return _.unescape(rawText)
+    }
   },
   created: function () {
     this.getMyName()
@@ -165,6 +180,12 @@ export default {
 
 
 <style>
-
+.video-container > iframe {
+  /* position: relative;   container를 기준으로 위치를 지정 */
+  /* top: 0;               container의 가장 위쪽으로 위치를 지정 */
+  /* left: 0; */
+  width: 600px;
+  height: 400px;
+}
           
 </style>
