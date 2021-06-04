@@ -10,7 +10,6 @@
     </div>
     <app-my-modal title="More Info" :visible.sync="visible">
       <div>
-        
         <h2 style="font-weight: bold;">{{ movie.title }} </h2>
         <hr>
         <div class="movie-information-wrapper mt-4 d-flex align-items-center">

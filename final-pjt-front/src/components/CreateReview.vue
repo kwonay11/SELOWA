@@ -100,6 +100,9 @@ export default {
           .catch((err) => {
             console.log(err)
           })
+      }
+      else{
+        alert("내용을 입력해주세요!")
       } 
     },
     changeIdx: function (e){

@@ -7,6 +7,7 @@ import CommunityDetail from '@/views/communitys/CommunityDetail'
 import CommunityDetailUpdate from '@/views/communitys/CommunityDetailUpdate'
 import Signup from '@/views/accounts/Signup'
 import Login from '@/views/accounts/Login'
+import MyProfile from '@/views/accounts/MyProfile'
 import Movie from '@/views/movies/Movie'
 import Recommend from '@/views/movies/Recommend'
 
@@ -52,6 +53,11 @@ const routes = [
     path: '/accounts/login',
     name: 'Login',
     component: Login,
+  },
+  {
+    path: '/accounts/myProfile',
+    name: 'MyProfile',
+    component: MyProfile,
   },
 ]
 

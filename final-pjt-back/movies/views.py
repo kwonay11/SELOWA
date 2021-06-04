@@ -133,12 +133,16 @@ def recommend(request):
 
     # 내가 좋아요 한 것 제거
     for like_movie in user_like_movies:
+        print(like_movie.id)
+        print(me_like)
         if like_movie.id in me_like:
             user_like_movies.remove(like_movie)
+            print(user_like_movies)
+            
     
     # user_genre_serialize = MovieSerializer(user_movies_review, many=True)
     user_like_serialize = MovieSerializer(user_like_movies, many=True)
-
+    
     # 연령대
     user_movies_age = []
     # 연령별 기반 추천
@@ -149,7 +153,6 @@ def recommend(request):
             user_movies_age.append(movie)
 
     user_movies_age_serializer = MovieSerializer(user_movies_age, many=True)
-    print(user_like_serialize.data)
     return Response([favorite_serialize.data, user_like_serialize.data, user_movies_age_serializer.data])
 
 @api_view(['POST'])
