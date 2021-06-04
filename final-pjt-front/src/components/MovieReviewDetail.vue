@@ -79,6 +79,7 @@ export default {
   },
   data: function () {
     return {
+      ori_content: this.review.content,
       myMovieRate2: this.review.rank,
       visible: false,
       reviewupdate: false,
@@ -122,13 +123,13 @@ export default {
       }
       else{
         const config = this.getToken()
+        // 내용수정안할때 예외처리
+        if(this.content==undefined) this.content=this.ori_content
         const reviewItem = {
-          // title: this.title,
           content: this.content,
           rank: this.myMovieRate2,
           movie: review.movie,
         }
-        console.log(reviewItem)
         axios.put(`${SERVER_URL}/movies/review/${review.id}/`, reviewItem, config)
         .then((res) => {
           console.log(res)
@@ -141,29 +142,6 @@ export default {
         this.reviewupdate = false
       }
     },
-    // update: function (review) {
-    // const config = this.getToken()
-    // console.log(config)
-    // const reviewItem = {
-    //   // title: this.title,
-    //   content: this.content,
-    //   rank: this.myMovieRate2,
-    //   movie: review.movie,
-    // }
-    // axios.put(`${SERVER_URL}/movies/review/${review.id}/`, reviewItem, config)
-    // .then( (res) => {
-    //   if (res.data.message) {
-    //     alert("본인이 작성한 글만 수정 가능합니다!")
-    //   }
-    //   else {
-    //     this.visible = !this.visible
-    //     this.$emit("reviews-updated")
-    //   }
-    // })
-    // .catch( (err) => {
-    //   console.log(err)
-    // })
-    // },
    // 리뷰 삭제
     reviewDelete: function(review) {
             this.$emit('reviewDelete',review.id)

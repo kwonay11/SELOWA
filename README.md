@@ -67,7 +67,7 @@ $ python manage.py loaddata movies/fixtures/movies.json
 
 > custom-modal만들어서 해결
 
-![bandicam 2021-05-28 02-28-14-344](https://user-images.githubusercontent.com/25261332/119915035-90330c00-bf9c-11eb-834b-30dbb2c6f4e8.gif)
+![리뷰](README.assets/리뷰.gif)
 
 
 

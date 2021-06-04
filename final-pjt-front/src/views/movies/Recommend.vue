@@ -5,6 +5,7 @@
     <div v-if="movies.length === 0" class="spinner-border" role="status">
     <span class="visually-hidden">Loading...</span>
     </div>
+    
     <h3 class="content-font">랜덤 영화 추천</h3>
     <vue-glide v-if="movies.length"
       class="glide__track"
@@ -24,23 +25,24 @@
       </vue-glide-slide>
     </vue-glide>
 
-    <h3 class="content-font" v-if="my_users_like_movies.length == 0"> 
-      {{ user.username }} 님이 좋아하는 영화추천(취향이 일치하는 분이 없어요..)
+    <h3 class="content-font" v-if="my_users_like_movies.length === 0"> 
+      {{ user.username }} 님이 좋아하는 영화추천(취향이 일치하는 분이 없어요..) {{my_users_like_movies}}
       <hr>
     </h3>
 
     <h3 class="content-font" v-if="my_users_like_movies.length > 0"> 
-      {{ user.username }}님이 좋아하는 영화추천 {{my_users_like_movies.length}}</h3>
+      {{ user.username }}님이 좋아하는 영화추천{{user.like_movies}}</h3>
     <vue-glide v-if="my_users_like_movies.length"
       class="glide__track"
       data-glide-el="track"
       ref="slider"
       type="carousel"
-      :breakpoints="{3000: {perView: my_users_like_movies.length}, 1100: {perView: my_users_like_movies.length}, 600: {perView: my_users_like_movies.length}}"
+      :breakpoints="{3000: {perView: my_users_like_movies.length}, 1100: {perView: 5}, 600: {perView: 3}}"
     >
       <vue-glide-slide
         v-for = "(movie, idx) in my_users_like_movies"
         :key="idx">
+        {{movie }}
         <MovieCard
           :movie="movie"
         />
@@ -48,7 +50,7 @@
       </vue-glide-slide>
     </vue-glide>
 
-    <h3 class="content-font" v-if="age_movies.length > 0">{{user.username}}님과 같은 나이대가 좋아하는 영화 추천</h3>
+    <!-- <h3 class="content-font" v-if="age_movies.length > 0">{{user.username}}님과 같은 나이대가 좋아하는 영화 추천</h3>
     <vue-glide v-if="age_movies.length"
       class="glide__track"
       data-glide-el="track"
@@ -65,7 +67,7 @@
         />
         
       </vue-glide-slide>
-    </vue-glide>
+    </vue-glide> -->
 
 
 
@@ -101,9 +103,7 @@ import axios from 'axios'
 import _ from 'lodash'
 import { Glide, GlideSlide } from 'vue-glide-js'
 import MovieCard from "@/components/MovieCard"
-
 import VueJwtDecode from "vue-jwt-decode"
-
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
 export default {
   name: "Recommend",
@@ -176,7 +176,6 @@ export default {
           }
           axios.post(`${SERVER_URL}/movies/recommend/`, item2, config)
           .then( (res) => {
-            console.log(res)
             this.favorite_movies = res.data[0]
             this.my_users_like_movies = res.data[1]
             this.age_movies = res.data[2]
@@ -215,7 +214,6 @@ export default {
 </script>
 
 <style>
-
   .main {
     width: 90%;
     height: 50%;
