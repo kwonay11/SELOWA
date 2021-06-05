@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="app">
     <h2>{{ user.age }}살 {{ user.username }}님의 마이페이지</h2>
     <hr>
     <h2>{{ user.username }}님이 좋아요한 영화</h2>
@@ -8,7 +8,7 @@
       data-glide-el="track"
       ref="slider"
       type="carousel"
-      :breakpoints="{3000: {perView: my_like_movies.length}, 1100: {perView: 5}, 600: {perView: 3}}"
+      :breakpoints="{3000: {perView: 5}, 1100: {perView: 5}, 600: {perView: 3}}"
     >
       <vue-glide-slide
         v-for = "(movie, idx) in my_like_movies"
@@ -19,6 +19,14 @@
         />
       </vue-glide-slide>
     </vue-glide>
+
+    <h2>{{ user.username }}님이 단 댓글</h2>
+    <hr>
+    <h2 v-for="(review, idx) in reviews" :key="idx">
+      [{{ review.movie_title }}] 영화의 나의 한마디:
+      {{ review.content }}
+    </h2>
+
   </div>
 </template>
 
@@ -36,6 +44,7 @@ export default {
     return { 
       like_movies: [],
       my_like_movies: [],
+      reviews: [],
       user: '',
     }
   },
@@ -61,9 +70,14 @@ export default {
       const info = VueJwtDecode.decode(hash)
       axios.post(`${SERVER_URL}/accounts/myprofile/`, info, config)
       .then( (res) => {
-        // console.log(res.data)
         this.user = res.data
         this.like_movies = res.data.like_movies
+        
+        axios.get(`${SERVER_URL}/movies/review/${this.user.id}`, config)
+        .then( (res) => {
+          // console.log(res.data.content)
+          this.reviews = res.data
+        })
       })
       .catch( (err) => {
         console.log(err)
@@ -80,10 +94,12 @@ export default {
         console.log(err)
       })
     },
+
   },
   created: function () {
     this.getMyName()
     this.getMovieDatas()
+    // this.getMyReview()
   },
   
 }

@@ -1,6 +1,6 @@
 <template>
 
-<transition  name="modal" appear>
+<transition name="modal" appear>
   <div class="my-modal d-flex align-items-center justify-content-center" 
     v-if="visible" @click.self="handleWrapperClick">
     <div class="my-modal__dialog ">
@@ -47,35 +47,40 @@ $module: 'my-modal';
 .#{$module} {
   
   // This is modal bg
-  align-items: center;
-  justify-content: center;
+  // align-items: center;
+  // justify-content: center;
   // 모달이 맨 위로 나오게 하기
   z-index: 1000;
   display: inline-block;
   vertical-align: middle;
   // top: 0;
   // left: 0;
+
   // width: 100%;
   // height: 100%;
   // background-color: rgba(0, 0, 0, 0.993);
+
   // display: table;
   // transition: opacity .3s ease;
   
   background-color: rgba(0, 0, 0, 0.726);
   top: 0; right: 0; bottom: 0; left: 0;
   position: fixed;
+  display: inline-block;
   overflow: auto;
   margin: 0;
  
-  &__dialog{
-    display: inline-block;
+  &__dialog{    display: inline-block;
     border: 1px solid rgb(218, 13, 98);
     // display: flex;
+
     vertical-align: middle;
     // left: 22%;
     
     width: 1000px;
+
     position: fixed;
+
     margin-bottom: 50px;
   }
   &container{
@@ -86,6 +91,7 @@ $module: 'my-modal';
     border-radius: 2px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.664);
     transition: all .3s ease;
+    // position: static;
   }
 
   &_header {
@@ -93,7 +99,7 @@ $module: 'my-modal';
     font-weight: bold;
     line-height: 1.29;
     padding: 16px 16px 0 25px;
-    position: relative;
+    position: static;
   }
   &__body {
     padding: 25px;

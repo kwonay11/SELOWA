@@ -26,12 +26,12 @@
     </vue-glide>
 
     <h3 class="content-font" v-if="my_users_like_movies.length === 0"> 
-      {{ user.username }} 님이 좋아하는 영화추천(취향이 일치하는 분이 없어요..) {{my_users_like_movies}}
+      {{ user.username }} 님이 좋아하는 영화추천(취향이 일치하는 분이 없어요..) 
       <hr>
     </h3>
 
     <h3 class="content-font" v-if="my_users_like_movies.length > 0"> 
-      {{ user.username }}님이 좋아하는 영화추천{{user.like_movies}}</h3>
+      {{ user.username }}님이 좋아하는 영화추천</h3>
     <vue-glide v-if="my_users_like_movies.length"
       class="glide__track"
       data-glide-el="track"
@@ -42,7 +42,6 @@
       <vue-glide-slide
         v-for = "(movie, idx) in my_users_like_movies"
         :key="idx">
-        {{movie }}
         <MovieCard
           :movie="movie"
         />
