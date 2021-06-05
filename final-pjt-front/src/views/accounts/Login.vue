@@ -50,7 +50,7 @@ export default {
     login: function () {
       axios.post(`${SERVER_URL}/accounts/api-token-auth/`, this.credentials)
       .then((res) => {
-        console.log(res.data.token)
+        // console.log(res.data.token)
         // localstorage에 jwt 토큰 저장
         localStorage.setItem('jwt', res.data.token)
         // App 컴포넌트한테 로그인 됐습니다를 알려야 함.

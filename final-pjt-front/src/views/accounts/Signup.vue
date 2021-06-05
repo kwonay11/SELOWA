@@ -58,8 +58,8 @@ export default {
       console.log(credentials)
       // 회원 가입 시켜주세요 -> Django (jwt)
       axios.post(`${SERVER_URL}/accounts/signup/`, this.credentials)
-      .then((res) => {
-        console.log(res)
+      .then(() => {
+        // console.log(res)
         this.$router.push({ name: 'Login'})
       })
       .catch((err) => {
