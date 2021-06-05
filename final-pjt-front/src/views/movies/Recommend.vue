@@ -5,6 +5,20 @@
     <div v-if="movies.length === 0" class="spinner-border" role="status">
     <span class="visually-hidden">Loading...</span>
     </div>
+    <h3>랜덤 영화 추천(30개)</h3>
+    <swiper v-if="movies.length" class="swiper" :options="swiperOption"> 
+      <swiper-slide v-for = "(movie, idx) in movies"
+        :key="idx">
+        
+        <MovieCard
+          :movie="movie"
+        /></swiper-slide> 
+      <div class="swiper-pagination" slot="pagination"></div> 
+      <div class="swiper-button-prev" slot="button-prev"></div> 
+      <div class="swiper-button-next" slot="button-next"></div> 
+    </swiper>
+
+
     
     <h3 class="content-font">랜덤 영화 추천</h3>
     <vue-glide v-if="movies.length"
@@ -103,6 +117,9 @@ import _ from 'lodash'
 import { Glide, GlideSlide } from 'vue-glide-js'
 import MovieCard from "@/components/MovieCard"
 import VueJwtDecode from "vue-jwt-decode"
+import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
+import 'swiper/css/swiper.css'
+
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
 export default {
   name: "Recommend",
@@ -116,12 +133,21 @@ export default {
       my_like_users_movies: [],
       user: '',
       my_users_like_movies: [],
-    }
-  },
+      swiperOption: { 
+        slidesPerView: 1, spaceBetween: 30, loop: true, pagination: { 
+          el: '.swiper-pagination', clickable: true 
+          }, 
+        navigation: { 
+          nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' 
+          } } }
+    },
+  
   components: {
     MovieCard,
     [Glide.name]: Glide,
-    [GlideSlide.name]: GlideSlide
+    [GlideSlide.name]: GlideSlide,
+    Swiper,
+    SwiperSlide,
   },
   methods: {
     getToken: function () {
@@ -213,6 +239,18 @@ export default {
 </script>
 
 <style>
+.swiper { 
+  height: 100%; 
+  width: 100%;
+}
+.swiper-slide { 
+  /* display: flex;  */
+  justify-content: center;
+  align-items: center;
+  /* position: absolute; */
+}
+
+
   .main {
     width: 90%;
     height: 50%;

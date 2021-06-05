@@ -8,7 +8,7 @@
     <div class="row row-cols-1 row-cols-md-4 ms-5 ">
       
       <!-- 그리드 카드 형태로  -->
-      <MovieCard v-for="(movie,idx) in movies" :key="idx" :movie="movie"/>
+      <MovieCard v-for="(movie,idx) in movies" :key="idx" :movie="movie" />
 
       <MovieDetail />
     </div>
