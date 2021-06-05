@@ -1,14 +1,14 @@
 <template>
-<div class="clo" >
+<div class="col" >
 
 <!-- <button class="btn btn-sm btn-dark m-4" type="submit"> -->
   <div class="card m-2 bg-dark" style="width: 21rem;">
       
-      <img @click="movieDetail" :src="movieImage" alt="poster_path" style="width:320px" class="m-1" >
-        <hr>
+      <img :src="movieImage" alt="poster_path" style="width:320px" class="m-2" >
+       
         <MovieDetail :movie="movie"/>
         <br>
-        <!-- <button @click="movieDetail()" class ="btn btn-outline-danger">See more info</button> -->
+       
         
   </div>
 <!-- </button> -->
@@ -52,26 +52,19 @@ export default {
 
 <style scoped>
 /* 영화 하나 커서 올렸을 때 확대 됨 */
-.card img {
-  -webkit-transform: scale(1);
-  -moz-transform: scale(1);
-  -ms-transform: scale(1);
-  -o-transform: scale(1);
-  transform: scale(1);
-  -webkit-transition: 0.3s;
-  -moz-transition: 0.3s;
-  -ms-transition: 0.3s;
-  -o-transition: 0.3s;
-  transition: 0.3s;
-}
-.card:hover img {
-  z-index: 3;
+
+/* .card:hover img{
+  z-index: 900;
     
-  -webkit-transform: scale(1.1);
-  -moz-transform: scale(1.1);
-  -ms-transform: scale(1.1);
-  -o-transform: scale(1.1);
-  transform: scale(1.1);
+  -webkit-transform: scale(1.05);
+  -moz-transform: scale(1.05);
+  -ms-transform: scale(1.05);
+  -o-transform: scale(1.05);
+  transform: scale(1.05);
+} */
+.card:hover img{
+     transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(197, 182, 188, 0.623), 0 4px 8px rgba(0,0,0,.06);
 }
 
 </style>

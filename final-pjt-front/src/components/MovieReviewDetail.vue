@@ -26,33 +26,36 @@
 
     <div v-else>
           작성자 : {{ name.username }}
-          <div v-if="review.rank==5"> {{ review.content }}
+          <div v-if="review.rank==5"> 
             <i class="fas fa-star" style="color:yellow"></i>
             <i class="fas fa-star" style="color:yellow"></i>
             <i class="fas fa-star" style="color:yellow"></i>
             <i class="fas fa-star" style="color:yellow"></i>
             <i class="fas fa-star" style="color:yellow"></i> 
-          
           </div>
-          <div v-else-if="review.rank==4">{{ review.content }}
+           
+          <div v-else-if="review.rank==4">
             <i class="fas fa-star" style="color:yellow"></i> 
             <i class="fas fa-star" style="color:yellow"></i> 
             <i class="fas fa-star" style="color:yellow"></i> 
             <i class="fas fa-star" style="color:yellow"></i> 
             
           </div>
-          <div v-else-if="review.rank==3">{{ review.content }}
+          <div v-else-if="review.rank==3">
             <i class="fas fa-star" style="color:yellow"></i>
             <i class="fas fa-star" style="color:yellow"></i>
             <i class="fas fa-star" style="color:yellow"></i> 
+            
           </div>
-          <div v-else-if="review.rank==2">{{ review.content }}
+          <div v-else-if="review.rank==2">
             <i class="fas fa-star" style="color:yellow"></i>
             <i class="fas fa-star" style="color:yellow"></i> 
+            
           </div>
-          <div v-else-if="review.rank==1">{{ review.content }}
+          <div v-else-if="review.rank==1">
             <i class="fas fa-star" style="color:yellow"></i> 
           </div>
+          {{ review.content }}
     </div>
       <button class="btn btn-secondary m-1" @click="reviewModify(review)">수정</button>
       <button class="btn btn-secondary m-1" @click="reviewDelete(review)">삭제 </button>

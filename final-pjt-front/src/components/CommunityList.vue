@@ -43,7 +43,7 @@ export default {
     },
     moveToProfile: function (user, username) {
       // console.log(user)
-      this.$router.push({ name: "Profile", params: { user_pk: `${user}`, username: `${username}` }})
+      this.$router.push({ name: "MyProfile", params: { user_pk: `${user}`, username: `${username}` }})
     },    
   }
 }

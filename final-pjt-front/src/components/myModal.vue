@@ -51,27 +51,31 @@ $module: 'my-modal';
   justify-content: center;
   // 모달이 맨 위로 나오게 하기
   z-index: 1000;
+  display: inline-block;
+  vertical-align: middle;
   // top: 0;
   // left: 0;
   // width: 100%;
   // height: 100%;
-  // background-color: rgba(0, 0, 0, .5);
+  // background-color: rgba(0, 0, 0, 0.993);
   // display: table;
   // transition: opacity .3s ease;
   
-  background-color: rgba(0, 0, 0, 0.911);
+  background-color: rgba(0, 0, 0, 0.726);
   top: 0; right: 0; bottom: 0; left: 0;
   position: fixed;
   overflow: auto;
   margin: 0;
  
   &__dialog{
-    display: flex;
+    display: inline-block;
+    border: 1px solid rgb(218, 13, 98);
+    // display: flex;
     vertical-align: middle;
-    left: 22%;
+    // left: 22%;
     
     width: 1000px;
-    position: absolute;
+    position: fixed;
     margin-bottom: 50px;
   }
   &container{
@@ -80,7 +84,7 @@ $module: 'my-modal';
     padding: 20px 30px;
     background-color: #fff;
     border-radius: 2px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.664);
     transition: all .3s ease;
   }
 
