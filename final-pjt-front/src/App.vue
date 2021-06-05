@@ -22,16 +22,19 @@
       </span>
     </div>
     <router-view @login="login = true"/>
-  
+    
+
   </div>
 </template>
 
 <script>
 import Menu from '@/components/Menu'
+// import { Slide } from 'vue-burger-menu'
 export default {
   name: 'App',
   components: {
     Menu,
+    // Slide
   },
   data: function () {
     return {
@@ -60,8 +63,6 @@ export default {
       this.login = true
     }
   },
-  
-
 }
 </script>
 

@@ -51,6 +51,17 @@ def reviews(request, movie_pk):
             serializer.save(user=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
+@api_view(['GET'])
+@authentication_classes([JSONWebTokenAuthentication])
+@permission_classes([IsAuthenticated])
+def my_review(request, my_pk):
+    if request.method == 'GET':
+        review_list = Review.objects.all().filter(user_id=my_pk)
+        serializer = ReviewListSerializer(review_list, many=True)
+        return Response(serializer.data)
+
+
+
 # authentication_classes 붙여줘야함!
 @api_view(['PUT', 'DELETE'])
 @authentication_classes([JSONWebTokenAuthentication])
