@@ -5,6 +5,7 @@
     <div v-if="movies.length === 0" class="spinner-border" role="status">
     <span class="visually-hidden">Loading...</span>
     </div>
+    
     <h3>랜덤 영화 추천(30개)</h3>
     <swiper v-if="movies.length" class="swiper" :options="swiperOption"> 
       <swiper-slide v-for = "(movie, idx) in movies"
