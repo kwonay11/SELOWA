@@ -5,7 +5,7 @@
     <!-- 로고 클릭하면 메인페이지로 -->
 
     <Menu style="position:fixed; top:0; z-index:3;"></Menu>
-    <div id="nav" class="card bg-dark">
+    <div id="nav" class="card" style="border: 1px solid rgb(78, 51, 62); background-color: rgba(0, 0, 0, 0.726);">
       
       <span v-if="login">
         <!-- <router-link :to="{ name: 'Home' }" >Home</router-link> | -->
