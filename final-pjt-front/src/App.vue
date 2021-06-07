@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <br>
-    <img @click="main" src="@/assets/logo1.png" alt="logo" style="width: 300px">
+    <img src="@/assets/logo1.png" alt="logo" style="width: 300px">
     <!-- 로고 클릭하면 메인페이지로 -->
 
     <Menu style="position:fixed; top:0; z-index:3;"></Menu>
@@ -17,7 +17,7 @@
         <!-- 로그아웃하면 클릭시 로그인화면으로 보내기 -->
       </span>
       <span v-else>
-        <router-link :to="{ name: 'Home' }" class="fas fa-home font-weight-bolder " style="text-decoration:none"> Home</router-link> |
+        <!-- <router-link :to="{ name: 'Home' }" class="fas fa-home font-weight-bolder " style="text-decoration:none"> Home</router-link> | -->
         <router-link :to="{ name: 'Signup' }" class="fas fa-user-plus font-weight-bolder " style="text-decoration:none"> Signup</router-link> |
         <router-link :to="{ name: 'Login' }" class="fas fa-sign-in-alt font-weight-bolder " style="text-decoration:none">Login</router-link> 
       </span>
@@ -65,17 +65,13 @@ export default {
     }
   },
   methods: {
-    //로고 누르면 메인페이지로
-    main: function () {
-      console.log('MainPage')
-      this.$router.push({ name: 'Home' })
-    },
+    
     logout: function() {
       console.log('logout 됨')
       // 로그아웃 처리
       this.login = false
       localStorage.removeItem('jwt')
-      this.$router.push({ name: 'Home' })
+      this.$router.push({ name: 'Login' })
     }
   },
   created: function () {
