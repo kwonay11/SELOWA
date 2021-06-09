@@ -4,7 +4,7 @@
     <img src="@/assets/logo1.png" alt="logo" style="width: 300px">
     <!-- 로고 클릭하면 메인페이지로 -->
 
-    <Menu style="position:fixed; top:0; z-index:3;"></Menu>
+    <!-- <Menu style="position:fixed; top:0; z-index:3;"></Menu> -->
     <div id="nav" class="card" style="border: 1px solid rgb(78, 51, 62); background-color: rgba(0, 0, 0, 0.726);">
       
       <span v-if="login">
@@ -13,6 +13,7 @@
         <router-link :to="{ name: 'Movie' }" class="fas fa-film font-weight-bolder " style="text-decoration:none"> Movie</router-link> |
         <router-link :to="{ name: 'Recommend' }" class="fas fa-video font-weight-bolder " style="text-decoration:none"> Recommended Movie</router-link> |
         <router-link :to="{ name: 'Community' }" class="fas fa-comment font-weight-bolder " style="text-decoration:none"> Community</router-link> | 
+        <span v-if="login"><router-link :to="{ name: 'MyProfile' }" class="fas fa-id-card-alt font-weight-bolder " style="text-decoration:none"> MyProfile</router-link></span> |
         <router-link @click.native="logout" to="#" class="fas fa-sign-out-alt font-weight-bolder " style="text-decoration:none"> LOGOUT</router-link> 
         <!-- 로그아웃하면 클릭시 로그인화면으로 보내기 -->
       </span>
@@ -31,8 +32,8 @@
     <span v-if="login"><router-link :to="{ name: 'Movie' }" class="fas fa-film font-weight-bolder " style="color:#e0435e;text-decoration:none"> Movie</router-link></span>
     <span v-if="login"><router-link :to="{ name: 'Recommend' }" class="fas fa-video font-weight-bolder " style="color:#e0435e;text-decoration:none"> Recommended Movie</router-link></span>
     <span v-if="login"><router-link :to="{ name: 'Community' }" class="fas fa-comment font-weight-bolder " style="color:#e0435e;text-decoration:none"> Community</router-link></span>
-    <span v-if="login"><router-link @click.native="logout" to="#" class="fas fa-sign-out-alt font-weight-bolder " style="color:#e0435e;text-decoration:none"> Logout</router-link></span>
     <span v-if="login"><router-link :to="{ name: 'MyProfile' }" class="fas fa-id-card-alt font-weight-bolder " style="color:#e0435e; text-decoration:none"> MyProfile</router-link></span>
+    <span v-if="login"><router-link @click.native="logout" to="#" class="fas fa-sign-out-alt font-weight-bolder " style="color:#e0435e;text-decoration:none"> Logout</router-link></span>
    <!-- 로그인 안했을 때 -->
     <span v-if="!login"><router-link :to="{ name: 'Signup' }" class="fas fa-user-plus font-weight-bolder " style="color:#e0435e; text-decoration:none"> Signup</router-link></span>
     <span v-if="!login"><router-link :to="{ name: 'Login' }" class="fas fa-sign-in-alt font-weight-bolder " style="color:#e0435e; text-decoration:none"> Login</router-link></span>
@@ -121,6 +122,8 @@ export default {
     transition: transform 0.4s;
     transition: transform 0.4s, -webkit-transform 0.4s;
 }
+
+
 
 
 </style>

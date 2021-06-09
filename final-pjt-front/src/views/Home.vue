@@ -1,19 +1,23 @@
 <template>
   <div>
     <br>
+    <!-- 검색창 -->
     <div class='column'>
   <div class='search'>
     <div class='search_bar'>
       <input id='searchOne' type='checkbox'>
       <label for='searchOne'>
         <i class="fas fa-search font-weight-bolder " ></i>
-        <!-- <i class='fas fa-times font-weight-bolder'></i> -->
-        <p>|</p>
+        <p>| X</p>
+        <!-- <button><i class='fas fa-times font-weight-bolder'></i></button> -->
+
       </label>
-      <input placeholder='Search...' type='text'>
+      <input @keypress.enter="onInputKeyword" placeholder='Search...' type='text'>
+      <!-- <i class='fas fa-times font-weight-bolder'></i> -->
     </div>
   </div>
 </div>
+<!-- 검색창 끝 -->
     <div class="container">
   <div class="row">
     <div class="col-md-3">
@@ -59,6 +63,10 @@
 export default {
     name:"Home",
      methods: {
+       onInputKeyword: function (event) {
+			// 검색어
+			this.$emit('input-search', event.target.value)
+    },
     Movie: function () {
         this.$router.push({ name: 'Movie' })
       },
@@ -115,6 +123,7 @@ body{
     background-position: right;
     background-size: 100px;
     text-align: left;
+    
 }
 
 .card-2{
@@ -170,7 +179,7 @@ body{
   overflow: hidden;
 }
 .search_bar {
-  width: 280px;
+  width: 580px;
   position: relative;
   margin: 0 auto;
 }
@@ -190,7 +199,7 @@ body{
 }
 .search_bar ::-webkit-input-placeholder {
   /* Safari, Chrome and Opera */
-  color: #441ee9;
+  color: #ac88e7;
   font-weight: 400;
   font-family: "Nunito", sans-serif;
 }
@@ -210,7 +219,7 @@ body{
   display: none;
 }
 .search_bar input[type=checkbox]:checked + label + input {
-  width: 230px;
+  width: 530px;
   border: 5px solid #441ee9;
   text-indent: 0px;
 }
@@ -249,7 +258,7 @@ body{
   background: transparent;
   transition: right 0.3s 0.3s, transform 0.3s 0.3s, color 0.3s;
   line-height: 60px;
-  color: #eb1e8e;
+  color: #e7a5ca;
 }
 .search_bar i:hover {
   color: #441ee9;

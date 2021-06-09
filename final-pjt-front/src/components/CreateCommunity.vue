@@ -1,8 +1,9 @@
 <template>
   <div>
     <section class="page-section" id="contact">
-        <div class="container">
-            <h2 >Community</h2>
+
+        <div class="card" style="border: 1px solid rgb(78, 51, 62); background-color: rgba(0, 0, 0, 0.3);">
+            <h2 >커뮤니티 글 작성</h2>
             <div class="row">
                 <div class="col-lg-8 mx-auto">
                     <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19.-->
@@ -21,7 +22,8 @@
                       </div>
                   </div>
                   <br />
-                  <div class="text-white st-font form-group"><button @click="createCommunity" class ="btn btn-outline-danger" type="submit">Add</button></div>
+                  <div class="text-white st-font form-group m-3"><button @click="createCommunity" class ="btn btn-outline-danger" type="submit">Add</button></div>
+                  
                 </div>
             </div>
         </div>
