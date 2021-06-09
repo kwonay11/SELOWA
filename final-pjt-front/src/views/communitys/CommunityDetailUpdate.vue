@@ -1,7 +1,7 @@
 <template>
   <div>
     <section class="page-section" id="contact">
-        <div class="container">
+        <div class="card" style="border: 1px solid rgb(78, 51, 62); background-color: rgba(0, 0, 0, 0.3);">
             <!-- Contact Section Heading-->
             <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Detail Update</h2>
             <!-- Contact Section Form-->

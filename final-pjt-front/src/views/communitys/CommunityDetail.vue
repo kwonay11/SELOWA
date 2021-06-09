@@ -1,9 +1,8 @@
 <template>
-  <div>
+  <div class="card row d-flex justify-content-center align-items-center" style="border: 1px solid rgb(78, 51, 62); background-color: rgba(0, 0, 0, 0.3);">>
     <div>
       <div>
         <h2>{{ community.userName }}님의 게시글</h2>
-        <hr>
         <div style="margin-bottom:30px">
           <span @click="moveToProfile(community)" style="cursor:pointer;">작성자: {{ community.userName }} | </span>  
           <span>글 생성시간: {{ community_time }} |</span>
@@ -27,7 +26,7 @@
                   <div class="control-group">
                       <div class="st-font form-group floating-label-form-group controls mb-0 pb-2">
                           <label>댓글 작성</label>
-                          <textarea v-model.trim="comment_content" style="font-size: 30px" class="form-control" id="content" rows="5" placeholder="Comment" required="required" data-validation-required-message="Please writer a comment."></textarea>
+                          <textarea v-model.trim="comment_content" style="font-size: 20px" class="form-control" id="content" rows="4" placeholder="Comment" required="required" data-validation-required-message="Please writer a comment."></textarea>
                           <p class="help-block text-danger"></p>
                       </div>
                   </div>
