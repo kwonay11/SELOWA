@@ -22,10 +22,11 @@
     <div class="card" style="border: 1px solid rgb(78, 51, 62); background-color: rgba(0, 0, 0, 0.3);">
     <h2>{{ user.username }}님이 커뮤니티에 작성한 글 제목 <i class="fab fa-readme" style="color:tomato"></i></h2>
     <h2 v-for="(community, idx) in communitys" :key="idx">
-    <h2 style="color:white">{{ community.title }}</h2>
+    <h2  v-if="user.username === community.userName" style="color:white">{{ community.title }}</h2>
     </h2>
     </div>
     <br>
+
   
     <div class="card" style="border: 1px solid rgb(78, 51, 62); background-color: rgba(0, 0, 0, 0.3);">
     <h2>영화에 남긴 나의 한마디 <i class="fas fa-head-side-cough" style="color:hotpink"></i></h2>
@@ -54,6 +55,7 @@ export default {
       my_like_movies: [],
       reviews: [],
       communitys: [],
+      comments: [],
       user: '',
     }
   },
@@ -114,7 +116,6 @@ export default {
       
       .then( (res) => {
         this.user = res.data
-        this.like_movies = res.data.like_movies
         
         axios.get(`${SERVER_URL}/community/`, config)
         
@@ -129,12 +130,13 @@ export default {
         console.log(err)
       })
     },
+     
    },
   created: function () {
     this.getMyName()
     this.getMovieDatas()
     this.getCommunity()
-    // this.getMyReview()
+   
   },
   
 }
