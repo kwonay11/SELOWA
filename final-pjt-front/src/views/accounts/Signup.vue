@@ -64,6 +64,7 @@ export default {
       })
       .catch((err) => {
         console.log(err)
+        alert('회원가입 실패! 비밀번호와 비밀번호 확인을 일치시켜주세요.')
       })
     }
   }

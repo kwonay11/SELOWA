@@ -7,15 +7,17 @@
     
     </div>
     
+    
     <h3>랜덤 영화 추천(30개)</h3>
     <swiper v-if="movies.length" class="swiper" :options="swiperOption"> 
       <swiper-slide v-for = "(movie, idx) in movies"
         :key="idx">
-        
-        <MovieCard
+        <div id="card">
+         <MovieCard
           :movie="movie"
-        /></swiper-slide> 
-      <div class="swiper-pagination" slot="pagination"></div> 
+        /></div></swiper-slide> 
+
+      <!-- <div class="swiper-pagination" slot="pagination"></div>  -->
       <div class="swiper-button-prev" slot="button-prev"></div> 
       <div class="swiper-button-next" slot="button-next"></div> 
     </swiper>
@@ -28,7 +30,7 @@
       data-glide-el="track"
       ref="slider"
       type="carousel"
-      :breakpoints="{3000: {perView: 7}, 1100: {perView: 5}, 600: {perView: 3}}"
+      :breakpoints="{3000: {perView: 5}, 1100: {perView: 4}, 600: {perView: 3}}"
     >
       <vue-glide-slide
         v-for = "(movie, idx) in movies"
@@ -93,7 +95,7 @@
       data-glide-el="track"
       ref="slider"
       type="carousel"
-      :breakpoints="{3000: {perView: 7}, 1100: {perView: 5}, 600: {perView: 3}}"
+      :breakpoints="{3000: {perView: 5}, 1100: {perView: 4}, 600: {perView: 3}}"
     >
       <vue-glide-slide
         v-for = "(movie, idx) in favorite_movies"
@@ -305,4 +307,13 @@ export default {
     z-index: 2;
     margin: 0 auto 2em auto;
   }
+
+.swiper-slide {
+	/* text-align:center; */
+	display:flex; /* 내용을 중앙정렬 하기위해 flex 사용 */
+	align-items:center; /* 위아래 기준 중앙정렬 */
+	justify-content:center; /* 좌우 기준 중앙정렬 */
+}
+
+  
 </style>
