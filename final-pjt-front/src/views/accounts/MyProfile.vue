@@ -19,13 +19,21 @@
         />
       </vue-glide-slide>
     </vue-glide>
-
-    <h2>{{ user.username }}님이 단 댓글</h2>
-    <hr>
+    <div class="card" style="border: 1px solid rgb(78, 51, 62); background-color: rgba(0, 0, 0, 0.3);">
+    <h2>{{ user.username }}님이 커뮤니티에 작성한 글 제목 <i class="fab fa-readme" style="color:tomato"></i></h2>
+    <h2 v-for="(community, idx) in communitys" :key="idx">
+    <h2 style="color:white">{{ community.title }}</h2>
+    </h2>
+    </div>
+    <br>
+  
+    <div class="card" style="border: 1px solid rgb(78, 51, 62); background-color: rgba(0, 0, 0, 0.3);">
+    <h2>영화에 남긴 나의 한마디 <i class="fas fa-head-side-cough" style="color:hotpink"></i></h2>
     <h2 v-for="(review, idx) in reviews" :key="idx">
-      [{{ review.movie_title }}] 영화의 나의 한마디:
+      [{{ review.movie_title }}] -
       {{ review.content }}
     </h2>
+    </div>
 
   </div>
 </template>
@@ -45,6 +53,7 @@ export default {
       like_movies: [],
       my_like_movies: [],
       reviews: [],
+      communitys: [],
       user: '',
     }
   },
@@ -74,9 +83,12 @@ export default {
         this.like_movies = res.data.like_movies
         
         axios.get(`${SERVER_URL}/movies/review/${this.user.id}`, config)
+        
         .then( (res) => {
           // console.log(res.data.content)
           this.reviews = res.data
+          
+        
         })
       })
       .catch( (err) => {
@@ -94,11 +106,34 @@ export default {
         console.log(err)
       })
     },
-
-  },
+     getCommunity: function () {
+      const config = this.getToken()
+      const hash = localStorage.getItem('jwt')
+      const info = VueJwtDecode.decode(hash)
+      axios.post(`${SERVER_URL}/accounts/myprofile/`, info, config)
+      
+      .then( (res) => {
+        this.user = res.data
+        this.like_movies = res.data.like_movies
+        
+        axios.get(`${SERVER_URL}/community/`, config)
+        
+        .then( (res) => {
+          
+          this.communitys = res.data
+          
+        
+        })
+      })
+      .catch( (err) => {
+        console.log(err)
+      })
+    },
+   },
   created: function () {
     this.getMyName()
     this.getMovieDatas()
+    this.getCommunity()
     // this.getMyReview()
   },
   
