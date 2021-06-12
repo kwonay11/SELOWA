@@ -4,6 +4,7 @@
     <!-- 자료가 없으면 스피너생김 -->
     <div v-if="movies.length === 0" class="spinner-border" role="status">
     <span class="visually-hidden">Loading...</span>
+    
     </div>
     
     <h3>랜덤 영화 추천(30개)</h3>
