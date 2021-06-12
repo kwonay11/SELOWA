@@ -59,6 +59,7 @@ export default {
       })
       .catch((err) => {
         console.log(err)
+        alert('회원정보가 존재하지 않습니다! 회원가입 해주세요.')
       })
     },
     // kakao_login: function () {

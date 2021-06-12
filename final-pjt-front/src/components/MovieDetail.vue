@@ -13,7 +13,7 @@
         <h2 style="font-weight: bold;">{{ movie.title }} </h2>
         <hr>
         <div class="video-container">
-          <iframe :src="videoURI" frameborder="0" allow="fullscreen"></iframe>
+          <!-- <iframe :src="videoURI" frameborder="0" allow="fullscreen"></iframe> -->
         </div>
         <div class="movie-information-wrapper mt-4 d-flex align-items-center">
         <img :src="`https://image.tmdb.org/t/p/w300${movie.poster_path}`">

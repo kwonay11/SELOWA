@@ -50,8 +50,8 @@ $module: 'my-modal';
   // align-items: center;
   // justify-content: center;
   // 모달이 맨 위로 나오게 하기
-  z-index: 1000;
-  display: inline-block;
+  z-index: 10000;
+  // display: inline-block;
   vertical-align: middle;
   // top: 0;
   // left: 0;
@@ -66,11 +66,14 @@ $module: 'my-modal';
   background-color: rgba(0, 0, 0, 0.726);
   top: 0; right: 0; bottom: 0; left: 0;
   position: fixed;
-  display: inline-block;
+  display:flex; /* 내용을 중앙정렬 하기위해 flex 사용 */
+	align-items:center; /* 위아래 기준 중앙정렬 */
+	justify-content:center; /* 좌우 기준 중앙정렬 */
   overflow: auto;
   margin: 0;
  
-  &__dialog{    display: inline-block;
+  &__dialog{    
+    display: flex;
     border: 1px solid rgb(78, 51, 62);
     // display: flex;
 
@@ -79,7 +82,7 @@ $module: 'my-modal';
     
     width: 1000px;
 
-    position: fixed;
+    // position: fixed;
 
     margin-bottom: 50px;
   }
