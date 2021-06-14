@@ -1,7 +1,16 @@
 <template>
  <div class="card bg-dark">
-     <h2>검색어 : {{$route.query.inputText}}</h2>
-    <h3>영화 제목: {{ inputText }}</h3>
+     <h2>검색어 : {{$route.query.keyword}}</h2>
+     <div >
+       <!-- keyword와 영화제목이 같은것의 무비카드 보여주기 -->
+
+     
+    <h3>영화 제목: {{ keyword }}</h3>
+
+        <MovieCard
+          :movie="movie"
+        />
+    </div>
  </div>
 </template>
 
@@ -9,11 +18,17 @@
 import axios from "axios"
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
+import MovieCard from "@/components/MovieCard"
+
 export default {
   name: 'SearchBar',
+  components: {
+    MovieCard,
+   
+  },
   data: function () {
     return {
-      inputText: '',
+      keyword: '',
       movies: [],
       result: []
     }
@@ -30,7 +45,7 @@ export default {
       },
       findMovie: function () {
       for(var i=0; i<this.movies.length; i++) {
-        if (this.inputText in this.movies[i].title) {
+        if (this.keyword in this.movies[i].title) {
           this.result.push(this.movies[i])
         }
       }
@@ -39,8 +54,8 @@ export default {
    
   },
   created: function () {
-    this.inputText = this.$route.query.inputText
-    console.log(this.inputText)
+    this.keyword = this.$route.query.keyword
+    console.log(this.keyword)
     this.getMovies()
     this.findMovie()
 }

@@ -9,6 +9,7 @@ import 'vue-glide-js/dist/vue-glide.css'
 Vue.use(VModal, VueGlide, { dynamic:true })
 Vue.config.productionTip = false
 
+
 new Vue({
   el: '#app',
   router,

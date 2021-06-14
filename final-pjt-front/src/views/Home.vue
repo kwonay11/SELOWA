@@ -33,6 +33,7 @@
       </div>
     </div>
   </div>
+  
 </div>
     <!-- <div>
      <h1 style="text-align:center" class="m-2">Welcome to the SELOWA!</h1>
@@ -43,6 +44,7 @@
 </template>
 
 <script>
+
 export default {
     name:"Home",
      methods: {
