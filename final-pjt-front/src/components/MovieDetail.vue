@@ -13,10 +13,10 @@
         <h2 style="font-weight: bold;">{{ movie.title }} </h2>
         <hr>
         <div class="video-container">
-          <iframe :src="videoURI" frameborder="0" allow="fullscreen"></iframe>
+          <iframe :src="src" frameborder="0" allow="fullscreen"></iframe>
         </div>
         <div class="movie-information-wrapper mt-4 d-flex align-items-center">
-        <img :src="`https://image.tmdb.org/t/p/w300${movie.poster_path}`">
+        <!-- <img :src="`https://image.tmdb.org/t/p/w300${movie.poster_path}`"> -->
         <br>
         
     
@@ -71,6 +71,8 @@ import VueJwtDecode from "vue-jwt-decode"
 
 
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
+const API_KEY = process.env.VUE_APP_YOUTUBE_API_KEY
+const API_URL = 'https://www.googleapis.com/youtube/v3/search'
 
 export default {
   name: 'MovieDetail',
@@ -81,6 +83,7 @@ export default {
       me: [],
       liking: '',
       numLike: '',
+      src: '',
       rating: Number(this.movie.vote_average),
     }
   },
@@ -151,15 +154,52 @@ export default {
         this.numLike += 1
       }
     },
+    fetchVideo() {
+    //   console.log(this.movie.title)
+    //   // console.log(`https://api.themoviedb.org/3/movie/${this.movie.id}/videos?api_key=9009338735dd33a1176adf0df62f1258&language=en-US`)
+    // fetch(`https://api.themoviedb.org/3/movie/${this.movie.id}/videos?api_key=${API_KEY}&language=en-US&`)
+    //   .then(res => res.json())
+    //   .then(data => {
+        
+    //     // console.log(data)
+    //     setTimeout(() => {
+    //       this.src = `https://www.youtube.com/embed/${data.results[0].key}?autoplay=1&mute=1`;
+    //     }, 400);
+    //   })
+    //   .catch(err => err);
+    //  this.
+     const params = {
+        key: API_KEY,
+        part: 'snippet',
+        type: 'video',
+        q: this.movie.title
+      }
+      axios.get(API_URL, {
+        params, 
+      })
+      .then((res) => {
+        // console.log(res.data.items)
+        console.log(res.data.items[0].id.videoId)
+        return 'https://www.youtube.com/embed/${videoId}'
+        // console.log(res.data.items)
+        // this.src = 
+        // console.log(this.src)
+        // 선택 된 비디오가 없다면
+        // if (!this.selectedVideo) {
+        //   this.selectedVideo = this.videos[0]
+        // }
+      })
+      .catch((err) => {
+        console.log('에러?')
+        console.log(err)
+      })
+  },
+
   },
   computed: {
     isLiking: function () {
       return this.liking
     },
-    videoURI: function () {
-      const videoId = this.movie.id.title
-      return `https://www.youtube.com/embed/${videoId}`
-    }
   },
   filters: {
     stringUnescape: function (rawText) {
@@ -170,6 +210,7 @@ export default {
     this.getMyName()
     this.number()
     this.ratingToInt()
+    this.fetchVideo()
   }
 
 }
