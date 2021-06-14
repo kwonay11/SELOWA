@@ -84,6 +84,7 @@ export default {
       src: '',
       videoId: '',
       rating: Number(this.movie.vote_average),
+
     }
   },
   props: {
