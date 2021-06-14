@@ -13,13 +13,28 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
 from django.contrib import admin
 from django.urls import path, include
+
+schema_view = get_schema_view(
+   openapi.Info(
+        title='My API',
+        default_version='v1',
+        # 주석은 선택 인자입니다.
+        # description="API 서비스입니다.",
+        # terms_of_service="https://www.google.com/policies/terms/",
+        # contact=openapi.Contact(email="edujunho.hphk@gmail.com"),
+        # license=openapi.License(name="SSAFY License"),
+   ),
+)
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),
     path('community/', include('community.urls')),
     path('movies/', include('movies.urls')),
-
+    path('swagger/', schema_view.with_ui('swagger')),
 ]

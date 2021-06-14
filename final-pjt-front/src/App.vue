@@ -93,7 +93,11 @@ export default {
       this.login = false
       localStorage.removeItem('jwt')
       this.$router.push({ name: 'Login' })
-    }
+    },
+
+
+
+    
   },
   created: function () {
     //1. vue instance가 생성된 직후에 jwt를 가져오는 함수 실행하기
