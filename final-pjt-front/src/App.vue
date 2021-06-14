@@ -11,10 +11,11 @@
         <p>| X</p>
 
       </label>
-      <input @keypress.enter="onInputSearch(inputText)" placeholder='Search...' type='text'>
+      <input @keypress.enter="onInputSearch(keyword)" placeholder='Search...' type='text' v-model="keyword" autofocus>
     </div>
   </div>
 
+    
   </div>
     
     <!-- <Menu style="position:fixed; top:0; z-index:3;"></Menu> -->
@@ -65,11 +66,13 @@
 </template>
 
 <script>
+
 import { Slide } from 'vue-burger-menu'
 export default {
   name: 'App',
   components: {
-    Slide
+    Slide,
+   
   },
   props: {
     login_info: Boolean
@@ -77,14 +80,17 @@ export default {
   data: function () {
     return {
       login: false, //flag
-      inputText : '',
+      keyword : '',
+      articleObj: null,
+    isResult: false,
+    searchQuery: '',
     }
   },
   methods: {
-    onInputSearch: function (inputText) {
-     
-     this.$router.push({name: 'SearchBar', query: {inputText: inputText}})
-      this.inputText = ''
+    onInputSearch: function (keyword) {
+     console.log(keyword)
+     this.$router.push({name: 'SearchBar', query: {keyword: keyword}})
+      this.keyword = ''
     },
     
     logout: function() {
