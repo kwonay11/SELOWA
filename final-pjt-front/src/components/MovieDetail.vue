@@ -13,10 +13,9 @@
         <h2 style="font-weight: bold;">{{ movie.title }} </h2>
         <hr>
         <div class="video-container">
-          <!-- <iframe :src="videoURI" frameborder="0" allow="fullscreen"></iframe> -->
+          <iframe :src="src" frameborder="0" allow="fullscreen"></iframe>
         </div>
         <div class="movie-information-wrapper mt-4 d-flex align-items-center">
-        <img :src="`https://image.tmdb.org/t/p/w300${movie.poster_path}`">
         <br>
         
     
@@ -71,16 +70,19 @@ import VueJwtDecode from "vue-jwt-decode"
 
 
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
+const API_KEY = process.env.VUE_APP_YOUTUBE_API_KEY
+const API_URL = 'https://www.googleapis.com/youtube/v3/search'
 
 export default {
   name: 'MovieDetail',
   data: function () {
     return {
-      
       visible: false,
       me: [],
       liking: '',
       numLike: '',
+      src: '',
+      videoId: '',
       rating: Number(this.movie.vote_average),
     }
   },
@@ -98,6 +100,7 @@ export default {
   methods: {
     handleClickButton(){
       this.visible = !this.visible
+      this.fetchVideo()
     },
     ratingToInt: function () {
       this.rating = Math.ceil(this.rating / 2)
@@ -151,15 +154,40 @@ export default {
         this.numLike += 1
       }
     },
+    fetchVideo() {
+     const params = {
+        key: API_KEY,
+        part: 'snippet',
+        type: 'video',
+        q: this.movie.title + '예고편'
+      }
+      axios.get(API_URL, {
+        params, 
+      })
+      .then((res) => {
+        this.videoId = res.data.items[0].id.videoId
+        console.log(this.videoId)
+        console.log(`https://www.youtube.com/embed/${this.videoId}?autoplay=1&mute=1`)
+        
+        this.src = `https://www.youtube.com/embed/${this.videoId}?autoplay=1&mute=1`
+        // console.log(res.data.items)
+        // this.src = 
+        // console.log(this.src)
+        // 선택 된 비디오가 없다면
+        // if (!this.selectedVideo) {
+        //   this.selectedVideo = this.videos[0]
+        // }
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  },
+
   },
   computed: {
     isLiking: function () {
       return this.liking
     },
-    videoURI: function () {
-      const videoId = this.movie.id.title
-      return `https://www.youtube.com/embed/${videoId}`
-    }
   },
   filters: {
     stringUnescape: function (rawText) {
