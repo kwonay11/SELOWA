@@ -81,7 +81,7 @@ export default {
       me: [],
       liking: '',
       numLike: '',
-      rating: Number(this.movie.vote_average),
+      // rating: Number(this.movie.vote_average),
     }
   },
   props: {

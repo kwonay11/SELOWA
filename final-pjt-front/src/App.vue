@@ -2,10 +2,23 @@
   <div id="app">
     <br>
     <img src="@/assets/logo1.png" alt="logo" style="width: 300px">
-    <!-- 로고 클릭하면 메인페이지로 -->
+    <div class='column'>
+  <div class='search'>
+    <div class='search_bar'>
+      <input id='searchOne' type='checkbox'>
+      <label for='searchOne'>
+        <i class="fas fa-search font-weight-bolder " ></i>
+        <p>| X</p>
 
+      </label>
+      <input @keypress.enter="onInputSearch(inputText)" placeholder='Search...' type='text'>
+    </div>
+  </div>
+
+  </div>
+    
     <!-- <Menu style="position:fixed; top:0; z-index:3;"></Menu> -->
-    <div id="nav" class="card" style="border: 1px solid rgb(78, 51, 62); background-color: rgba(0, 0, 0, 0.726);">
+    <div id="nav" class="card m-4" style="border: 1px solid rgb(78, 51, 62); background-color: rgba(0, 0, 0, 0.726);">
       
       <span v-if="login">
         <!-- <router-link :to="{ name: 'Home' }" >Home</router-link> | -->
@@ -22,6 +35,7 @@
         <router-link :to="{ name: 'Signup' }" class="fas fa-user-plus font-weight-bolder " style="text-decoration:none"> Signup</router-link> |
         <router-link :to="{ name: 'Login' }" class="fas fa-sign-in-alt font-weight-bolder " style="text-decoration:none">Login</router-link> 
       </span>
+
       
     </div>
     <router-view @login="login = true"/>
@@ -63,9 +77,15 @@ export default {
   data: function () {
     return {
       login: false, //flag
+      inputText : '',
     }
   },
   methods: {
+    onInputSearch: function (inputText) {
+     
+     this.$router.push({name: 'SearchBar', query: {inputText: inputText}})
+      this.inputText = ''
+    },
     
     logout: function() {
       console.log('logout 됨')
@@ -123,6 +143,119 @@ export default {
     transition: transform 0.4s, -webkit-transform 0.4s;
 }
 
+.column {
+  /* background: #F6F792; */
+  height: 90px;
+  float: left;
+  width: 100%;
+  position: relative;
+}
+.search {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+  top: 60%;
+  transform: translateY(-50%);
+  width: 100%;
+  text-align: center;
+  overflow: hidden;
+}
+.search_bar {
+  width: 580px;
+  position: relative;
+  margin: 0 auto;
+}
+.search_bar input[type=text] {
+  width: 15px;
+  background: transparent;
+  transition: border 0.3s 0s, width 0.2s 0.3s cubic-bezier(0.225, 0.01, 0.475, 1.01), text-indent 0.2s 0.3s;
+  padding: 20px;
+  border-color: #441ee9;
+  text-indent: 30px;
+  outline: none;
+  border: 0px solid #441ee9;
+  font-size: 15px;
+  color: #ac88e7;
+  border-radius: 5px;
+  font-family: "Nunito", sans-serif;
+}
+.search_bar ::-webkit-input-placeholder {
+  /* Safari, Chrome and Opera */
+  color: #ac88e7;
+  font-weight: 400;
+  font-family: "Nunito", sans-serif;
+}
+.search_bar ::-moz-input-placeholder {
+  /* Safari, Chrome and Opera */
+  color: #441ee9;
+  font-weight: 400;
+  font-family: "Nunito", sans-serif;
+}
+.search_bar ::-o-input-placeholder {
+  /* Safari, Chrome and Opera */
+  color: #441ee9;
+  font-weight: 400;
+  font-family: "Nunito", sans-serif;
+}
+.search_bar input[type=checkbox] {
+  display: none;
+}
+.search_bar input[type=checkbox]:checked + label + input {
+  width: 530px;
+  border: 5px solid #441ee9;
+  text-indent: 0px;
+}
+.search_bar input[type=checkbox]:checked + label i {
+  right: 0px;
+  transform: translateY(-50%) translateX(50%) rotate(360deg) scale(0);
+  color: #441ee9;
+}
+.search_bar input[type=checkbox]:checked + label .last {
+  left: 220px;
+  transform: translateY(-50%) rotate(360deg) scale(1);
+}
+.search_bar input[type=checkbox]:checked + label p {
+  top: 50%;
+  transition: all 0.3s 0.45s;
+}
+.search_bar input[type=checkbox]:not(checked) + label p {
+  top: -50%;
+  transition: all 0.3s 0s;
+}
+.search_bar .last {
+  transform: translateY(-50%) rotate(0deg) scale(0);
+}
+.search_bar i {
+  position: absolute;
+  font-size: 30px;
+  top: 50%;
+  transform: translateY(-50%) translateX(50%) rotate(0deg) scale(1);
+  cursor: pointer;
+  z-index: 2;
+  margin: auto;
+  border-radius: 4px;
+  width: 56px;
+  right: 50%;
+  height: 54px;
+  background: transparent;
+  transition: right 0.3s 0.3s, transform 0.3s 0.3s, color 0.3s;
+  line-height: 60px;
+  color: #e7a5ca;
+}
+.search_bar i:hover {
+  color: #441ee9;
+}
+.search_bar p {
+  position: absolute;
+  margin: 0;
+  right: 52px;
+  color: #441ee9;
+  font-weight: 700;
+  font-size: 30px;
+  top: -50%;
+  transform: translateY(-50%) rotate(0deg) scale(1);
+}
 
 
 

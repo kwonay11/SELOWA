@@ -10,6 +10,7 @@ import Login from '@/views/accounts/Login'
 import MyProfile from '@/views/accounts/MyProfile'
 import Movie from '@/views/movies/Movie'
 import Recommend from '@/views/movies/Recommend'
+import SearchBar from '@/views/movies/SearchBar'
 
 Vue.use(VueRouter)
 
@@ -18,6 +19,11 @@ const routes = [
     path: '/home',
     name: 'Home',
     component: Home,
+  },
+  {
+    path: 'movie/search',
+    name: 'SearchBar',
+    component: SearchBar,
   },
   {
     path: '/movies/recommend',
