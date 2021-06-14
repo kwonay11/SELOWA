@@ -1,7 +1,7 @@
 <template>
 
 <!-- <transition  name="modal" appear> -->
-  <div class="update-modal d-flex align-items-center justify-content-center" 
+  <div class="update-modal d-flex align-items-center justify-content-" 
     v-if="visible" @click.self="handleWrapperClick">
     <div class="update-modal__dialog bg-dark">
       <header class="update-modal__header">

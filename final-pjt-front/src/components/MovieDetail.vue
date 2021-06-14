@@ -16,7 +16,6 @@
           <iframe :src="src" frameborder="0" allow="fullscreen"></iframe>
         </div>
         <div class="movie-information-wrapper mt-4 d-flex align-items-center">
-        <!-- <img :src="`https://image.tmdb.org/t/p/w300${movie.poster_path}`"> -->
         <br>
         
     
@@ -78,12 +77,12 @@ export default {
   name: 'MovieDetail',
   data: function () {
     return {
-      
       visible: false,
       me: [],
       liking: '',
       numLike: '',
       src: '',
+      videoId: '',
       rating: Number(this.movie.vote_average),
     }
   },
@@ -101,6 +100,7 @@ export default {
   methods: {
     handleClickButton(){
       this.visible = !this.visible
+      this.fetchVideo()
     },
     ratingToInt: function () {
       this.rating = Math.ceil(this.rating / 2)
@@ -155,32 +155,21 @@ export default {
       }
     },
     fetchVideo() {
-    //   console.log(this.movie.title)
-    //   // console.log(`https://api.themoviedb.org/3/movie/${this.movie.id}/videos?api_key=9009338735dd33a1176adf0df62f1258&language=en-US`)
-    // fetch(`https://api.themoviedb.org/3/movie/${this.movie.id}/videos?api_key=${API_KEY}&language=en-US&`)
-    //   .then(res => res.json())
-    //   .then(data => {
-        
-    //     // console.log(data)
-    //     setTimeout(() => {
-    //       this.src = `https://www.youtube.com/embed/${data.results[0].key}?autoplay=1&mute=1`;
-    //     }, 400);
-    //   })
-    //   .catch(err => err);
-    //  this.
      const params = {
         key: API_KEY,
         part: 'snippet',
         type: 'video',
-        q: this.movie.title
+        q: this.movie.title + '예고편'
       }
       axios.get(API_URL, {
         params, 
       })
       .then((res) => {
-        // console.log(res.data.items)
-        console.log(res.data.items[0].id.videoId)
-        return 'https://www.youtube.com/embed/${videoId}'
+        this.videoId = res.data.items[0].id.videoId
+        console.log(this.videoId)
+        console.log(`https://www.youtube.com/embed/${this.videoId}?autoplay=1&mute=1`)
+        
+        this.src = `https://www.youtube.com/embed/${this.videoId}?autoplay=1&mute=1`
         // console.log(res.data.items)
         // this.src = 
         // console.log(this.src)
@@ -190,7 +179,6 @@ export default {
         // }
       })
       .catch((err) => {
-        console.log('에러?')
         console.log(err)
       })
   },
@@ -210,7 +198,6 @@ export default {
     this.getMyName()
     this.number()
     this.ratingToInt()
-    this.fetchVideo()
   }
 
 }
