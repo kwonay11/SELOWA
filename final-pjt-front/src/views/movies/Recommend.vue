@@ -8,13 +8,14 @@
     </div>
     
     
-    <h3>랜덤 영화 추천(30개)</h3>
+    <!-- <h3>랜덤 영화 추천(30개)</h3>
     <div>
+      
     <swiper v-if="movies.length" class="swiper" :options="swiperOption"> 
       <swiper-slide v-for = "(movie, idx) in movies"
         :key="idx">
         <div id="card">
-         <MovieCard
+         <MovieCard2
           :movie="movie"
         />
         <br>
@@ -26,23 +27,24 @@
       <div class="swiper-button-prev" slot="button-prev" style="color:white"></div> 
       <div class="swiper-button-next" slot="button-next" style="color:white"></div> 
     </swiper>
-    </div>
+    </div> -->
 
 
     
     <h3 class="content-font">랜덤 영화 추천</h3>
+    
     <vue-glide v-if="movies.length"
-      class="glide__track"
+      class="glide__track m-4"
       data-glide-el="track"
       ref="slider"
       type="carousel"
-      :breakpoints="{3000: {perView: 6}, 1100: {perView: 4}, 600: {perView: 3}}"
+      :breakpoints="{3000: {perView: 5}, 1100: {perView: 4}, 600: {perView: 3}}"
     >
       <vue-glide-slide
         v-for = "(movie, idx) in movies"
         :key="idx">
         
-        <MovieCard
+        <MovieCard2
           :movie="movie"
         />
         
@@ -57,7 +59,7 @@
     <h3 class="content-font" v-if="my_users_like_movies.length > 0"> 
       {{ user.username }}님이 좋아하는 영화추천</h3>
     <vue-glide v-if="my_users_like_movies.length"
-      class="glide__track"
+      class="glide__track m-4"
       data-glide-el="track"
       ref="slider"
       type="carousel"
@@ -66,7 +68,7 @@
       <vue-glide-slide
         v-for = "(movie, idx) in my_users_like_movies"
         :key="idx">
-        <MovieCard
+        <MovieCard2
           :movie="movie"
         />
         
@@ -97,7 +99,7 @@
 
     <h3 class="content-font" v-if="favorite_movies.length === 10">높은 평점을 받은 영화</h3>
     <vue-glide v-if="favorite_movies.length"
-      class="glide__track"
+      class="glide__track m-4"
       data-glide-el="track"
       ref="slider"
       type="carousel"
@@ -107,7 +109,7 @@
         v-for = "(movie, idx) in favorite_movies"
         :key="idx">
         
-        <MovieCard
+        <MovieCard2
           :movie="movie"
         />
         
@@ -125,10 +127,10 @@
 import axios from 'axios'
 import _ from 'lodash'
 import { Glide, GlideSlide } from 'vue-glide-js'
-import MovieCard from "@/components/MovieCard"
+import MovieCard2 from "@/components/MovieCard2"
 import VueJwtDecode from "vue-jwt-decode"
-import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
-import 'swiper/css/swiper.css'
+// import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
+// import 'swiper/css/swiper.css'
 
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
 export default {
@@ -153,11 +155,11 @@ export default {
     },
   
   components: {
-    MovieCard,
+    MovieCard2,
     [Glide.name]: Glide,
     [GlideSlide.name]: GlideSlide,
-    Swiper,
-    SwiperSlide,
+    // Swiper,
+    // SwiperSlide,
   },
   methods: {
     getToken: function () {
