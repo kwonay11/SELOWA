@@ -25,8 +25,8 @@ def movie_detail(request, movie_pk):
     return Response(serializer.data)
 
 @api_view(['GET', 'POST'])
-# @authentication_classes([JSONWebTokenAuthentication])
-# @permission_classes([IsAuthenticated])
+@authentication_classes([JSONWebTokenAuthentication])
+@permission_classes([IsAuthenticated])
 def reviews(request, movie_pk):
     if request.method == 'GET':
         review_list = Review.objects.all().filter(movie_id=movie_pk)
