@@ -179,6 +179,7 @@ def my_movie_like(request, my_pk):
     
     return Response(data)
 
+@api_view(['POST'])
 def my_movie_dislike(request, my_pk):
     me = get_object_or_404(get_user_model(), pk=my_pk)
     # print(me)
@@ -190,7 +191,8 @@ def my_movie_dislike(request, my_pk):
         data.append(serializer.data)
     
     return Response(data)
-
+    
+@api_view(['POST'])
 def my_movie_wish(request, my_pk):
     me = get_object_or_404(get_user_model(), pk=my_pk)
     # print(me)
