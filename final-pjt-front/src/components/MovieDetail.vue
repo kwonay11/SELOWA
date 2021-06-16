@@ -1,6 +1,7 @@
 <template>
-  <div class="d-flex col text-align:center  m-1">
-    <div><p class="st-font" style="margin-left: 1em; top:88%"  >좋아요 {{ numLike }}개</p>
+  <div class="d-flex text-align:center  m-1">
+    <div>
+    <p class="st-font" style="margin-left: 1em; top:88%"  >좋아요 {{ numLike }}개</p>
     <vue-star animate="animated bounceIn" color="#F05654" style="top:84%">
       <i v-if="isLiking" @click="like" slot="icon" style="color:crimson" class="fa fa-heart"></i>
       <i v-else @click="like" slot="icon" style="color:white" class="fa fa-heart"></i>
@@ -9,22 +10,22 @@
 
     <div>
     <p class="st-font" style="margin-left: 1em;">싫어요 {{ numDisLike }}개</p>
-    <vue-star animate="animated bounceIn" color="#258dc8" style="top:84%">
+    <vue-star animate="animated bounceIn" style="top:84%">
       <i v-if="isDisLiking" @click="dislike" slot="icon" style="color:skyblue" class="fas fa-thumbs-down"></i>
-      <i v-else @click="dislike" slot="icon" style="color:white" class="fas fa-thumbs-down"></i>
+      <i v-else @click="dislike" slot="icon" class="fas fa-thumbs-down"></i>
     </vue-star>
     </div>
 
     <div>
     <p class="st-font" style="margin-left: 1em;">보고싶어요 {{ numWish }}개</p>
-    <vue-star animate="animated bounceIn" color="#f1da36" style="top:84%">
+    <vue-star animate="animated bounceIn"  style="top:84%">
       <i v-if="isWishing" @click="wish" slot="icon" style="color:yellow" class="far fa-grin-stars"></i>
-      <i v-else @click="wish" slot="icon" style="color:white" class="far fa-grin-stars"></i>
+      <i v-else @click="wish" slot="icon" class="far fa-grin-stars"></i>
     </vue-star>
     </div>
 
    <div>
-    <button @click="handleClickButton" class ="btn btn-outline-danger" style="width: 70%;">더보기</button>
+    <button @click="handleClickButton" class ="btn btn-outline-danger" style="width: 60%;">더보기</button>
     </div>
     <app-my-modal title="More Info" :visible.sync="visible">
       <div>
@@ -151,6 +152,16 @@ export default {
         } else {
           this.liking = false
         }
+        if (this.me.dislike_movies.includes(this.movie.id)) {
+          this.disliking = true
+        } else {
+          this.disliking = false
+        }
+         if (this.me.wish_movies.includes(this.movie.id)) {
+          this.wishing = true
+        } else {
+          this.wishing = false
+        }
       })
       .catch( (err) => {
         console.log(err)
@@ -260,10 +271,10 @@ export default {
       return this.liking
     },
     isDisLiking: function () {
-      return this.liking
+      return this.disliking
     },
     isWishing: function () {
-      return this.liking
+      return this.wishing
     },
   },
   filters: {
