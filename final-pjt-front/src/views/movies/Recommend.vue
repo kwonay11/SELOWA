@@ -27,8 +27,8 @@
       <div class="swiper-button-prev" slot="button-prev" style="color:white"></div> 
       <div class="swiper-button-next" slot="button-next" style="color:white"></div> 
     </swiper>
-    </div> -->
-
+    </div> --> 
+    
 
     
     <h3 class="content-font">랜덤 영화 추천</h3>
@@ -145,6 +145,7 @@ export default {
       my_like_users_movies: [],
       user: '',
       my_users_like_movies: [],
+      genre: [],
       swiperOption: { 
         slidesPerView: 1, spaceBetween: 30, loop: true, pagination: { 
           el: '.swiper-pagination', clickable: true 
@@ -189,6 +190,7 @@ export default {
         console.log(err)
       })
     },
+    
     getRecommend: function () {
       const config = this.getToken()
       const item = {
@@ -246,20 +248,21 @@ export default {
   created: function () {
     this.getMovieDatas()
     this.getMyName()
+   
   },
 }
 </script>
 
 <style>
-.swiper { 
+/* .swiper { 
   height: 100%; 
   width: 100%;
 }
 .swiper-slide { 
-  /* display: flex;  */
+  
   justify-content: center;
   align-items: center;
-  /* position: absolute; */
+  
 }
 
 
@@ -284,8 +287,7 @@ export default {
         -webkit-justify-content: center;
         -ms-justify-content: center;
         justify-content: center;
-        /* padding: 8em 4em 6em 4em; */
-        /* min-height: 70vh; */
+       
         background-position: center;
         background-size: cover;
         background-repeat: no-repeat;
@@ -318,10 +320,10 @@ export default {
 
 .swiper-slide {
 	height:100%;
-	display:flex; /* 내용을 중앙정렬 하기위해 flex 사용 */
-	align-items:center; /* 위아래 기준 중앙정렬 */
-	justify-content:center; /* 좌우 기준 중앙정렬 */
-}
+	display:flex; 
+	align-items:center;
+	justify-content:center;
+} */
 
   
 </style>

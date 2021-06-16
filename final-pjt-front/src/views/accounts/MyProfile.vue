@@ -14,7 +14,7 @@
         v-for = "(movie, idx) in my_like_movies"
         :key="idx">
         
-        <MovieCard
+        <MovieCard2
           :movie="movie"
         />
       </vue-glide-slide>
@@ -42,7 +42,7 @@
 <script>
 import axios from 'axios'
 import { Glide, GlideSlide } from 'vue-glide-js'
-import MovieCard from "@/components/MovieCard"
+import MovieCard2 from "@/components/MovieCard2"
 import VueJwtDecode from "vue-jwt-decode"
 
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
@@ -60,7 +60,7 @@ export default {
     }
   },
   components: {
-    MovieCard,
+    MovieCard2,
     [Glide.name]: Glide,
     [GlideSlide.name]: GlideSlide
   },
