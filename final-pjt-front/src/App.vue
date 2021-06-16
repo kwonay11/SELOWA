@@ -3,6 +3,7 @@
     <br>
     <img src="@/assets/logo1.png" alt="logo" style="width: 300px">
     <div class='column'>
+
   <div class='search'>
     <div class='search_bar'>
       <input id='searchOne' type='checkbox'>
@@ -11,11 +12,22 @@
         <p>| X</p>
 
       </label>
-      <input @keypress.enter="onInputSearch(keyword)" placeholder='Search...' type='text' v-model="keyword" autofocus>
+      <input @keypress.enter="onInputSearch(keyword)" placeholder='Press enter...' type='text' v-model="keyword" autofocus>
     </div>
   </div>
+  <!-- 연습 자동완성 아래나오는거 -->
+  <i class="fas fa-search">
+        <input v-model="skillInput" @input="submitAutoComplete" type="text" style="margin-bottom : 15px;" />
+      </i>
+<div class="autocomplete disabled">
+  <div
+       @click="searchSkillAdd"
+       style="cursor: pointer"
+       v-for="(res,i) in result"
+       :key="i"
+       >{{ res }}</div>
+</div>
 
-    
   </div>
     
     <!-- <Menu style="position:fixed; top:0; z-index:3;"></Menu> -->
@@ -41,6 +53,8 @@
     </div>
     <router-view @login="login = true"/>
 
+    
+
     <Slide id="page-wrap">
     <!-- 로그인했을 때 -->
     <span v-if="login"><router-link :to="{ name: 'Home' }" class="fas fa-home font-weight-bolder " style="color:#e0435e;text-decoration:none"> Home</router-link></span>
@@ -56,6 +70,7 @@
     <!-- <span v-if="login"><router-link :to="{ name: 'Users' }" class="fas fa-user-friends font-weight-bolder "> Users</router-link></span> -->
     
   </Slide>
+  
 
 
   </div>
@@ -66,13 +81,12 @@
 </template>
 
 <script>
-
 import { Slide } from 'vue-burger-menu'
+import skills from "@/skills.js";
 export default {
   name: 'App',
   components: {
     Slide,
-   
   },
   props: {
     login_info: Boolean
@@ -84,9 +98,23 @@ export default {
       articleObj: null,
     isResult: false,
     searchQuery: '',
+    skillInput:'',
+      result: '',
     }
   },
   methods: {
+    submitAutoComplete() {
+      const autocomplete = document.querySelector(".autocomplete")
+      if (this.skillInput) {
+        autocomplete.classList.remove("disabled")
+        this.result = skills.filter((skill) => {
+          return skill.match(new RegExp("^" + this.skillInput, "i"))
+         
+        })
+      } else {
+        autocomplete.classList.add("disabled")
+      }
+    },
     onInputSearch: function (keyword) {
      console.log(keyword)
      this.$router.push({name: 'SearchBar', query: {keyword: keyword}})
