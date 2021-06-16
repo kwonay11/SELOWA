@@ -9,23 +9,17 @@
       <input id='searchOne' type='checkbox'>
       <label for='searchOne'>
         <i class="fas fa-search font-weight-bolder " ></i>
-        <p>| X</p>
+        <p >| X</p>
 
       </label>
-      <input @keypress.enter="onInputSearch(keyword)" placeholder='Press enter...' type='text' v-model="keyword" autofocus>
+      <input @keypress.enter="onInputSearch(keyword)" @input="submitAutoComplete" placeholder='영화제목 입력 후 enter!' type='text' v-model="keyword" autofocus >
     </div>
-  </div>
-  <!-- 연습 자동완성 아래나오는거 -->
-  <i class="fas fa-search">
-        <input v-model="skillInput" @input="submitAutoComplete" type="text" style="margin-bottom : 15px;" />
-      </i>
-<div class="autocomplete disabled">
-  <div
-       @click="searchSkillAdd"
-       style="cursor: pointer"
+  <!-- 키워드 있을 때만 자동완성 뜨기 -->
+<div  v-if="keyword" class="autocomplete disabled card m-1" style="width:300px; border: 2px solid rgb(76, 56, 192); background-color: black">
+  <div 
        v-for="(res,i) in result"
        :key="i"
-       >{{ res }}</div>
+       >{{ res }}</div></div>
 </div>
 
   </div>
@@ -44,7 +38,6 @@
         <!-- 로그아웃하면 클릭시 로그인화면으로 보내기 -->
       </span>
       <span v-else>
-        <!-- <router-link :to="{ name: 'Home' }" class="fas fa-home font-weight-bolder " style="text-decoration:none"> Home</router-link> | -->
         <router-link :to="{ name: 'Signup' }" class="fas fa-user-plus font-weight-bolder " style="text-decoration:none"> Signup</router-link> |
         <router-link :to="{ name: 'Login' }" class="fas fa-sign-in-alt font-weight-bolder " style="text-decoration:none">Login</router-link> 
       </span>
@@ -66,17 +59,12 @@
    <!-- 로그인 안했을 때 -->
     <span v-if="!login"><router-link :to="{ name: 'Signup' }" class="fas fa-user-plus font-weight-bolder " style="color:#e0435e; text-decoration:none"> Signup</router-link></span>
     <span v-if="!login"><router-link :to="{ name: 'Login' }" class="fas fa-sign-in-alt font-weight-bolder " style="color:#e0435e; text-decoration:none"> Login</router-link></span>
-    <!-- <span v-if="login"><router-link :to="{ name: 'Recommend' }" class="far fa-thumbs-up font-weight-bolder " style="color:#e0435e;text-decoration:none"> Recommend</router-link></span> -->
-    <!-- <span v-if="login"><router-link :to="{ name: 'Users' }" class="fas fa-user-friends font-weight-bolder "> Users</router-link></span> -->
     
   </Slide>
   
 
 
   </div>
-
-  
-
 
 </template>
 
@@ -98,17 +86,18 @@ export default {
       articleObj: null,
     isResult: false,
     searchQuery: '',
-    skillInput:'',
+    
       result: '',
     }
   },
   methods: {
     submitAutoComplete() {
       const autocomplete = document.querySelector(".autocomplete")
-      if (this.skillInput) {
+      if (this.keyword) {
         autocomplete.classList.remove("disabled")
         this.result = skills.filter((skill) => {
-          return skill.match(new RegExp("^" + this.skillInput, "i"))
+          return skill.match(new RegExp("^" + this.keyword, "i"))
+          // 해당 글자로 시작하는 키워드를 뽑아내기 위해 ^ 를 사용하고, 대소문자 구분 없이 찾아내기 위해 i 옵션을 사용한다.
          
         })
       } else {
@@ -119,6 +108,7 @@ export default {
      console.log(keyword)
      this.$router.push({name: 'SearchBar', query: {keyword: keyword}})
       this.keyword = ''
+      
     },
     
     logout: function() {
@@ -187,6 +177,7 @@ export default {
   float: left;
   width: 100%;
   position: relative;
+  z-index:100000;
 }
 .search {
   position: absolute;
@@ -279,7 +270,7 @@ export default {
   background: transparent;
   transition: right 0.3s 0.3s, transform 0.3s 0.3s, color 0.3s;
   line-height: 60px;
-  color: #e7a5ca;
+  color: #b12273;
 }
 .search_bar i:hover {
   color: #441ee9;
@@ -288,11 +279,16 @@ export default {
   position: absolute;
   margin: 0;
   right: 52px;
-  color: #441ee9;
+  color: #b12273;
   font-weight: 700;
   font-size: 30px;
   top: -50%;
   transform: translateY(-50%) rotate(0deg) scale(1);
+}
+.autocomplete{
+  position: relative;
+  left:42%;
+
 }
 
 
