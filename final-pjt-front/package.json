@@ -24,6 +24,7 @@
     "swiper": "^5.3.7",
     "tinymotion": "^0.2.0",
     "vue": "^2.6.12",
+    "vue-autosuggest": "^2.2.0",
     "vue-awesome-swiper": "^4.1.1",
     "vue-axios": "^3.2.4",
     "vue-bs-pagination": "^1.1.2",
