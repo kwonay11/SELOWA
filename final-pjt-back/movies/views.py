@@ -179,6 +179,30 @@ def my_movie_like(request, my_pk):
     
     return Response(data)
 
+def my_movie_dislike(request, my_pk):
+    me = get_object_or_404(get_user_model(), pk=my_pk)
+    # print(me)
+    data = []
+    movies = request.data
+    for movie_pk in movies:
+        movie = get_object_or_404(Movie, pk=movie_pk)
+        serializer = MovieSerializer(movie)
+        data.append(serializer.data)
+    
+    return Response(data)
+
+def my_movie_wish(request, my_pk):
+    me = get_object_or_404(get_user_model(), pk=my_pk)
+    # print(me)
+    data = []
+    movies = request.data
+    for movie_pk in movies:
+        movie = get_object_or_404(Movie, pk=movie_pk)
+        serializer = MovieSerializer(movie)
+        data.append(serializer.data)
+    
+    return Response(data)
+
 @api_view(['POST'])
 def movie_like(request, my_pk, movie_title):
   movie = get_object_or_404(Movie, title=movie_title)
@@ -194,6 +218,34 @@ def movie_like(request, my_pk, movie_title):
   return Response(liking)
 
 @api_view(['POST'])
+def movie_dislike(request, my_pk, movie_title):
+  movie = get_object_or_404(Movie, title=movie_title)
+  me = get_object_or_404(get_user_model(), pk=my_pk)
+  if me.dislike_movies.filter(pk=movie.pk).exists():
+      me.dislike_movies.remove(movie.pk)
+      disliking = False
+      
+  else:
+      me.dislike_movies.add(movie.pk)
+      disliking = True
+  
+  return Response(disliking)
+
+@api_view(['POST'])
+def movie_wish(request, my_pk, movie_title):
+  movie = get_object_or_404(Movie, title=movie_title)
+  me = get_object_or_404(get_user_model(), pk=my_pk)
+  if me.wish_movies.filter(pk=movie.pk).exists():
+      me.wish_movies.remove(movie.pk)
+      wishing = False
+      
+  else:
+      me.wish_movies.add(movie.pk)
+      wishing = True
+  
+  return Response(wishing)
+
+@api_view(['POST'])
 def like_movie_users(request, my_pk):
   # print(request.data)
   users = []
@@ -204,6 +256,38 @@ def like_movie_users(request, my_pk):
     serializer = MovieSerializer(movie)
 
     for user in serializer.data.get('like_users'):
+      if user not in users:
+        users.append(user)
+    
+  return Response(users)
+
+@api_view(['POST'])
+def dislike_movie_users(request, my_pk):
+  # print(request.data)
+  users = []
+  movies = request.data.get('movies')
+
+  for movie in movies:
+    movie = get_object_or_404(Movie, pk=movie)
+    serializer = MovieSerializer(movie)
+
+    for user in serializer.data.get('dislike_users'):
+      if user not in users:
+        users.append(user)
+    
+  return Response(users)
+
+@api_view(['POST'])
+def wish_movie_users(request, my_pk):
+  # print(request.data)
+  users = []
+  movies = request.data.get('movies')
+
+  for movie in movies:
+    movie = get_object_or_404(Movie, pk=movie)
+    serializer = MovieSerializer(movie)
+
+    for user in serializer.data.get('wish_users'):
       if user not in users:
         users.append(user)
     

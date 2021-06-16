@@ -21,7 +21,26 @@
     
         <div class="col">
           
-        <!-- <h5 style="margin-bottom:10px" class="content-font">인기도 : {{ movie.popularity }}%</h5> -->
+        <h5 style="margin-bottom:10px" class="content-font" v-if="movie.genres[0] === 28">장르 : 액션 </h5>
+        <h5 style="margin-bottom:10px" class="content-font" v-if="movie.genres[0] === 12">장르 : 어드벤쳐 </h5>
+        <h5 style="margin-bottom:10px" class="content-font" v-if="movie.genres[0] === 16">장르 : 애니메이션 </h5>
+        <h5 style="margin-bottom:10px" class="content-font" v-if="movie.genres[0] === 35">장르 : 코미디 </h5>
+        <h5 style="margin-bottom:10px" class="content-font" v-if="movie.genres[0] === 80">장르 : 범죄 </h5>
+        <h5 style="margin-bottom:10px" class="content-font" v-if="movie.genres[0] === 99">장르 : 다큐멘터리 </h5>
+        <h5 style="margin-bottom:10px" class="content-font" v-if="movie.genres[0] === 18">장르 : 드라마 </h5>
+        <h5 style="margin-bottom:10px" class="content-font" v-if="movie.genres[0] === 10751">장르 : 가족 </h5>
+        <h5 style="margin-bottom:10px" class="content-font" v-if="movie.genres[0] === 14">장르 : 판타지 </h5>
+        <h5 style="margin-bottom:10px" class="content-font" v-if="movie.genres[0] === 36">장르 : 역사 </h5>
+        <h5 style="margin-bottom:10px" class="content-font" v-if="movie.genres[0] === 27">장르 : 호러 </h5>
+        <h5 style="margin-bottom:10px" class="content-font" v-if="movie.genres[0] === 10402">장르 : 음악 </h5>
+        <h5 style="margin-bottom:10px" class="content-font" v-if="movie.genres[0] === 9648">장르 : 미스터리 </h5>
+        <h5 style="margin-bottom:10px" class="content-font" v-if="movie.genres[0] === 10749">장르 : 로맨스 </h5>
+        <h5 style="margin-bottom:10px" class="content-font" v-if="movie.genres[0] === 878">장르 : 공상과학 </h5>
+        <h5 style="margin-bottom:10px" class="content-font" v-if="movie.genres[0] === 10770">장르 : TV Movie </h5>
+        <h5 style="margin-bottom:10px" class="content-font" v-if="movie.genres[0] === 53">장르 : 스릴러 </h5>
+        <h5 style="margin-bottom:10px" class="content-font" v-if="movie.genres[0] === 10752">장르 : 전쟁 </h5>
+        <h5 style="margin-bottom:10px" class="content-font" v-if="movie.genres[0] === 37">장르 : 서부 영화 </h5>
+        
         <h5 style="margin-bottom:10px" class="content-font">평점 : {{ movie.vote_average }}점</h5>
         <h5 style="margin-bottom:10px" class="content-font">상영 시간 : {{ movie.runtime }}분</h5>
         <h5 style="margin-bottom:10px" class="content-font">개봉 일자 : {{ movie.release_date }}</h5>
