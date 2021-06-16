@@ -7,19 +7,25 @@
   <div class='search'>
     <div class='search_bar'>
       <input id='searchOne' type='checkbox'>
-      <label for='searchOne'>
+      <label for='searchOne'  @click="cleanKeyword">
+       <!-- 닫힐 때 키워드 초기화해주기 -->
         <i class="fas fa-search font-weight-bolder " ></i>
-        <p >| X</p>
+        <p>| X</p>
 
       </label>
       <input @keypress.enter="onInputSearch(keyword)" @input="submitAutoComplete" placeholder='영화제목 입력 후 enter!' type='text' v-model="keyword" autofocus >
     </div>
-  <!-- 키워드 있을 때만 자동완성 뜨기 -->
-<div  v-if="keyword" class="autocomplete disabled card m-1" style="width:300px; border: 2px solid rgb(76, 56, 192); background-color: black">
+ 
+<div v-if="keyword" class="autocomplete disabled card m-1" style="width:300px; border: 2px solid rgb(76, 56, 192); background-color: black">
   <div 
+    @click="searchSkillAdd(i)"
+       style="cursor: pointer"
        v-for="(res,i) in result"
        :key="i"
-       >{{ res }}</div></div>
+       >{{ result[i] }}
+
+  </div>
+  </div>
 </div>
 
   </div>
@@ -91,6 +97,14 @@ export default {
     }
   },
   methods: {
+    searchSkillAdd(i){
+      this.keyword =this.result[i]
+
+    },
+    cleanKeyword(){
+      this.keyword = ''
+
+    },
     submitAutoComplete() {
       const autocomplete = document.querySelector(".autocomplete")
       if (this.keyword) {
