@@ -74,7 +74,7 @@ $module: 'my-modal';
  
   &__dialog{    
     display: flex;
-    border: 1px solid rgb(78, 51, 62);
+    border: 2px solid rgb(119, 74, 92);
     // display: flex;
 
     vertical-align: middle;
