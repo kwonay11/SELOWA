@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <h2>{{ user.age }}살 {{ user.username }}님의 마이페이지</h2>
+    <h2>{{ user.username }}님의 마이페이지</h2>
     <hr>
     <h2>{{ user.username }}님이 좋아요한 영화</h2>
     <vue-glide v-if="my_like_movies.length"
@@ -19,6 +19,45 @@
         />
       </vue-glide-slide>
     </vue-glide>
+
+    <h2>{{ user.username }}님이 싫어요한 영화</h2>
+    <vue-glide v-if="my_dislike_movies.length"
+      class="glide__track"
+      data-glide-el="track"
+      ref="slider"
+      type="carousel"
+      :breakpoints="{3000: {perView: 5}, 1100: {perView: 5}, 600: {perView: 3}}"
+    >
+      <vue-glide-slide
+        v-for = "(movie, idx) in my_dislike_movies"
+        :key="idx">
+        
+        <MovieCard2
+          :movie="movie"
+        />
+      </vue-glide-slide>
+    </vue-glide>
+
+
+    <h2>{{ user.username }}님이 보고싶어요한 영화</h2>
+    <vue-glide v-if="my_wish_movies.length"
+      class="glide__track"
+      data-glide-el="track"
+      ref="slider"
+      type="carousel"
+      :breakpoints="{3000: {perView: 5}, 1100: {perView: 5}, 600: {perView: 3}}"
+    >
+      <vue-glide-slide
+        v-for = "(movie, idx) in my_wish_movies"
+        :key="idx">
+        
+        <MovieCard2
+          :movie="movie"
+        />
+      </vue-glide-slide>
+    </vue-glide>
+
+
     <div class="card" style="border: 1px solid rgb(78, 51, 62); background-color: rgba(0, 0, 0, 0.3);">
     <h2>{{ user.username }}님이 커뮤니티에 작성한 글 제목 <i class="fab fa-readme" style="color:tomato"></i></h2>
     <h2 v-for="(community, idx) in communitys" :key="idx">
@@ -52,7 +91,11 @@ export default {
   data: function () {
     return { 
       like_movies: [],
+      dislike_movies: [],
+      wishing_movies: [],
       my_like_movies: [],
+      my_dislike_movies: [],
+      my_wish_movies: [],
       reviews: [],
       communitys: [],
       comments: [],
@@ -83,6 +126,8 @@ export default {
       .then( (res) => {
         this.user = res.data
         this.like_movies = res.data.like_movies
+        this.dislike_movies = res.data.dislike_movies
+        this.wishing_movies = res.data.wish_movies
         
         axios.get(`${SERVER_URL}/movies/review/${this.user.id}`, config)
         
@@ -103,6 +148,13 @@ export default {
         for(var i = 0; i < this.like_movies.length; i++){
           this.my_like_movies.push(res.data[this.like_movies[i]-1])
         }
+        for(var j = 0; j<this.dislike_movies.length; j++){
+          this.my_dislike_movies.push(res.data[this.dislike_movies[j]-1])
+        }
+        for(var k = 0; k<this.wishing_movies.length; k++){
+          this.my_wish_movies.push(res.data[this.wishing_movies[k]-1])
+        }
+
       })
       .catch( (err) => {
         console.log(err)
