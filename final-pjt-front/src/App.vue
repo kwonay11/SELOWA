@@ -106,27 +106,24 @@ export default {
 
     },
     submitAutoComplete() {
-      const autocomplete = document.querySelector(".autocomplete")
       if (this.keyword) {
-        autocomplete.classList.remove("disabled")
+        
         this.result = skills.filter((skill) => {
           return skill.match(new RegExp("^" + this.keyword, "i"))
           // 해당 글자로 시작하는 키워드를 뽑아내기 위해 ^ 를 사용하고, 대소문자 구분 없이 찾아내기 위해 i 옵션을 사용한다.
          
         })
-      } else {
-        autocomplete.classList.add("disabled")
-      }
+      } 
     },
     onInputSearch: function (keyword) {
-     console.log(keyword)
+    //  console.log(keyword)
      this.$router.push({name: 'SearchBar', query: {keyword: keyword}})
       this.keyword = ''
       
     },
     
     logout: function() {
-      console.log('logout 됨')
+      // console.log('logout 됨')
       // 로그아웃 처리
       this.login = false
       localStorage.removeItem('jwt')

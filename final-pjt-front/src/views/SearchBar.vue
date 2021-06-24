@@ -11,9 +11,7 @@
         <h2 style="font-weight: bold;">영화제목: {{ result[0].title }} </h2>
         <hr>
           <img :src="movieImage" alt="poster_path" style="width:30%" class="m-2" >
-        <!-- <div class="video-container d-flex col">
-          <iframe :src="src" frameborder="0" allow="fullscreen"></iframe>
-        </div> -->
+        
         <div class="mt-4 d-flex align-items-center">
         <br>
        
@@ -65,11 +63,6 @@
 import axios from "axios"
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
-// const API_KEY = process.env.VUE_APP_YOUTUBE_API_KEY
-// const API_URL = 'https://www.googleapis.com/youtube/v3/search'
-
-
-// import MovieCard from "@/components/MovieCard"
 
 export default {
   name: 'SearchBar',
@@ -90,6 +83,7 @@ export default {
     }
   },
   methods: {
+
     getMovies: function () {
       axios.get(`${SERVER_URL}/movies/`)
         .then((res) => {
@@ -97,8 +91,8 @@ export default {
           for(var i=0; i<this.movies.length; i++) {
             if (this.keyword === this.movies[i].title) {
               this.result.push(this.movies[i])
-          console.log(this.movies[i])
-          console.log('에러안남')
+          // console.log(this.movies[i])
+          // console.log('에러안남')
 
           
           
@@ -107,40 +101,12 @@ export default {
          
         })
         .catch((err) => {
-          console.log(err)
-          console.log('에러')
+          //console.log(err)
+          // console.log('에러')
         })
       },
       
-        //   fetchVideo() {
-        //    const params = {
-        //       key: API_KEY,
-        //       part: 'snippet',
-        //       type: 'video',
-        //       q: this.result[0].title + '예고편'
-        //     }
-        //     axios.get(API_URL, {
-        //       params, 
-        //     })
-        //     .then((res) => {
-        //       this.videoId = res.data.items[0].id.videoId
-        //       console.log(this.videoId)
-        //       console.log(`https://www.youtube.com/embed/${this.videoId}?autoplay=1&mute=1`)
-              
-        //       this.src = `https://www.youtube.com/embed/${this.videoId}?autoplay=1&mute=1`
-        //       // console.log(res.data.items)
-        //       // this.src = 
-        //       // console.log(this.src)
-        //       // 선택 된 비디오가 없다면
-        //       // if (!this.selectedVideo) {
-        //       //   this.selectedVideo = this.videos[0]
-        //       // }
-        //     })
-        //     .catch((err) => {
-        //       console.log(err)
-        //     })
-        // },
-    
+        
   },
   computed:{
        movieImage: function () {

@@ -117,7 +117,7 @@ getMovieDatas: function () {
         const item = {
           users: res.data,
         }
-        console.log(this.users)
+        // console.log(this.users)
         // 그 사람들이 좋아하는 영화 찾기
         axios.post(`${SERVER_URL}/accounts/info/`, item, config)
         .then( (res) => {
@@ -135,15 +135,15 @@ getMovieDatas: function () {
             this.my_users_like_movies = res.data[1]
           })
           .catch( (err) => {
-            console.log(err)
+            //console.log(err)
           })
         })
         .catch( (err) => {
-          console.log(err)
+          //console.log(err)
         })
       })
       .catch( (err) => {
-        console.log(err)
+        //console.log(err)
       })
      },
 ```

@@ -54,8 +54,8 @@ export default {
     }
   },
   methods: {
-    signup: function (credentials) {
-      console.log(credentials)
+    signup: function () {
+      // console.log(credentials)
       // 회원 가입 시켜주세요 -> Django (jwt)
       axios.post(`${SERVER_URL}/accounts/signup/`, this.credentials)
       .then(() => {
@@ -63,8 +63,8 @@ export default {
         this.$router.push({ name: 'Login'})
       })
       .catch((err) => {
-        console.log(err)
-        alert('회원가입 실패! 비밀번호와 비밀번호 확인을 일치시켜주세요.')
+        //console.log(err)
+        alert('회원가입 실패!')
       })
     }
   }

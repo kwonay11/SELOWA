@@ -1,5 +1,5 @@
 <template>
-  <div class="card row d-flex justify-content-center align-items-center" style="border: 1px solid rgb(78, 51, 62); background-color: rgba(0, 0, 0, 0.3);">>
+  <div class="card row d-flex justify-content-center align-items-center" style="border: 1px solid rgb(78, 51, 62); background-color: rgba(0, 0, 0, 0.3);">
     <div>
       <div>
         <h2>{{ community.userName }}님의 게시글</h2>

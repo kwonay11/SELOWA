@@ -90,7 +90,7 @@ export default {
       if (reviewItem.content) {
         axios.post(`${SERVER_URL}/movies/${this.movie.id}/reviews/`, reviewItem, config)
           .then((res) => {
-            console.log(res)
+            //console.log(res)
             this.$emit('reviews-updated')
             // this.title = ""
             this.content = ""
@@ -98,7 +98,7 @@ export default {
             this.MyMovieRate= ''
           })
           .catch((err) => {
-            console.log(err)
+            //console.log(err)
           })
       }
       else{
