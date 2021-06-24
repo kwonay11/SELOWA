@@ -163,9 +163,9 @@ export default {
           this.wishing = false
         }
       })
-      .catch( (err) => {
-        console.log(err)
-      })
+      // .catch( (err) => {
+      //   console.log(err)
+      // })
     },
     like: function () {
       const config = this.getToken()
@@ -260,9 +260,9 @@ export default {
         //   this.selectedVideo = this.videos[0]
         // }
       })
-      .catch((err) => {
-        console.log(err)
-      })
+      // .catch((err) => {
+      //   console.log(err)
+      // })
   },
 
   },
@@ -283,6 +283,7 @@ export default {
     }
   },
   created: function () {
+    
     this.getMyName()
     this.likenumber()
     this.dislikenumber()

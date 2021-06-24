@@ -36,6 +36,8 @@ export default {
     return{
       movies: [],
       inputText:'',
+      
+
     }
   },
   components: {
