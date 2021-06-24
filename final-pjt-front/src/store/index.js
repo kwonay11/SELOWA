@@ -18,7 +18,7 @@ export default new Vuex.Store({
       // console.log(loginStatus)
       if (loginStatus) {
         state.login = true
-        console.log(state.login)
+        // console.log(state.login)
       }
       else {
         state.login = false

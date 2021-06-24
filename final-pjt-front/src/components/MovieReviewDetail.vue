@@ -110,7 +110,7 @@ export default {
         this.name = res.data
       })
       .catch( (err) => {
-        console.log(err)
+        //console.log(err)
       })
     },
     changeIdx: function (e){
@@ -135,12 +135,12 @@ export default {
         }
         axios.put(`${SERVER_URL}/movies/review/${review.id}/`, reviewItem, config)
         .then((res) => {
-          console.log(res)
+          //console.log(res)
           this.content = null
           this.$emit("reviews-updated")
         })
         .catch(err => {
-          console.log(err)
+          //console.log(err)
         })
         this.reviewupdate = false
       }

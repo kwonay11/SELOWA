@@ -7,30 +7,6 @@
     
     </div>
     
-    
-    <!-- <h3>랜덤 영화 추천(30개)</h3>
-    <div>
-      
-    <swiper v-if="movies.length" class="swiper" :options="swiperOption"> 
-      <swiper-slide v-for = "(movie, idx) in movies"
-        :key="idx">
-        <div id="card">
-         <MovieCard2
-          :movie="movie"
-        />
-        <br>
-        <br>
-        </div>
-        </swiper-slide> 
-    
-      <div class="swiper-pagination" slot="pagination"></div> 
-      <div class="swiper-button-prev" slot="button-prev" style="color:white"></div> 
-      <div class="swiper-button-next" slot="button-next" style="color:white"></div> 
-    </swiper>
-    </div> --> 
-    
-
-    
     <h3 class="content-font">랜덤 영화 추천</h3>
     
     <vue-glide v-if="movies.length"
@@ -103,7 +79,7 @@
       data-glide-el="track"
       ref="slider"
       type="carousel"
-      :breakpoints="{3000: {perView: 5}, 1100: {perView: 4}, 600: {perView: 3}}"
+      :breakpoints="{3000: {perView: 6}, 1100: {perView: 4}, 600: {perView: 3}}"
     >
       <vue-glide-slide
         v-for = "(movie, idx) in favorite_movies"
@@ -129,8 +105,7 @@ import _ from 'lodash'
 import { Glide, GlideSlide } from 'vue-glide-js'
 import MovieCard2 from "@/components/MovieCard2"
 import VueJwtDecode from "vue-jwt-decode"
-// import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
-// import 'swiper/css/swiper.css'
+
 
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
 export default {
@@ -187,7 +162,7 @@ export default {
         }
       })
       .catch( (err) => {
-        console.log(err)
+        //console.log(err)
       })
     },
     
@@ -220,15 +195,15 @@ export default {
             this.age_movies = res.data[2]
           })
           .catch( (err) => {
-            console.log(err)
+            //console.log(err)
           })
         })
         .catch( (err) => {
-          console.log(err)
+         // console.log(err)
         })
       })
       .catch( (err) => {
-        console.log(err)
+        //console.log(err)
       })
      },
     getMyName: function () {
@@ -241,7 +216,7 @@ export default {
         this.getRecommend()
       })
       .catch( (err) => {
-        console.log(err)
+        //console.log(err)
       })
     },    
   },
@@ -254,76 +229,6 @@ export default {
 </script>
 
 <style>
-/* .swiper { 
-  height: 100%; 
-  width: 100%;
-}
-.swiper-slide { 
-  
-  justify-content: center;
-  align-items: center;
-  
-}
-
-
-  .main {
-    width: 90%;
-    height: 50%;
-    object-fit: cover;
-  }
-    .banner {
-        -moz-align-items: center;
-        -webkit-align-items: center;
-        -ms-align-items: center;
-    width: 80%;
-    height: 50%;    
-    object-fit: cover;
-        align-items: center;
-        display: -moz-flex;
-        display: -webkit-flex;
-        display: -ms-flex;
-        display: flex;
-        -moz-justify-content: center;
-        -webkit-justify-content: center;
-        -ms-justify-content: center;
-        justify-content: center;
-       
-        background-position: center;
-        background-size: cover;
-        background-repeat: no-repeat;
-        border-top: 0;
-        position: relative;
-        text-align: center;
-        overflow: hidden;
-    }
-  .inner {
-    text-align: center;
-    position: relative;
-    z-index: 2;
-  }
-  .more {
-    background-position: center 1.35em;
-    background-repeat: no-repeat;
-    background-size: auto;
-    border: 1px solid #fff;
-    border-radius: 100%;
-    color: rgba(255, 255, 255, 0.75);
-    display: block;
-    height: 4em;
-    text-indent: 4em;
-    overflow: hidden;
-    white-space: nowrap;
-    width: 4em;
-    z-index: 2;
-    margin: 0 auto 2em auto;
-  }
-
-.swiper-slide {
-	height:100%;
-	display:flex; 
-	align-items:center;
-	justify-content:center;
-} */
 
   
 </style>

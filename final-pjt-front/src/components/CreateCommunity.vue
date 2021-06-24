@@ -76,7 +76,7 @@ export default {
             this.content = ""
           })
           .catch((err) => {
-            console.log(err)
+            //console.log(err)
           })
       } 
     }

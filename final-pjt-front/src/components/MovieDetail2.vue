@@ -164,7 +164,7 @@ export default {
         }
       })
       .catch( (err) => {
-        console.log(err)
+        //(err)
       })
     },
     like: function () {
@@ -248,8 +248,8 @@ export default {
       })
       .then((res) => {
         this.videoId = res.data.items[0].id.videoId
-        console.log(this.videoId)
-        console.log(`https://www.youtube.com/embed/${this.videoId}?autoplay=1&mute=1`)
+        //console.log(this.videoId)
+        // console.log(`https://www.youtube.com/embed/${this.videoId}?autoplay=1&mute=1`)
         
         this.src = `https://www.youtube.com/embed/${this.videoId}?autoplay=1&mute=1`
         // console.log(res.data.items)

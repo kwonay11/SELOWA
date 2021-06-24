@@ -51,7 +51,7 @@ export default {
         this.movies = res.data
       })
       .catch((err) => {
-        console.log(err)
+        //console.log(err)
       })
     
 

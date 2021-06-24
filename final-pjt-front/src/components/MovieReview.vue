@@ -54,7 +54,7 @@ export default {
         this.reviews = res.data
       })
       .catch((err) => {
-        console.log(err)
+        //console.log(err)
       })
     },
     deleteReview: function (review_id) {
@@ -63,7 +63,7 @@ export default {
       // console.log(config)
       axios.delete(`${SERVER_URL}/movies/review/${review_id}/`, config)
         .then((res) => {
-          console.log(res.data.id)
+          // console.log(res.data.id)
           // 리뷰 리스트 중에 삭제할 인덱스값을 넣어서 삭제해주기
           const targetReviewId = this.reviews.findIndex((rv)=>{
             return rv.id === res.data.id

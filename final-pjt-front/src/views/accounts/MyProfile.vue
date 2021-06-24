@@ -139,7 +139,7 @@ export default {
         })
       })
       .catch( (err) => {
-        console.log(err)
+        //console.log(err)
       })
     },
     getMovieDatas: function () {
@@ -157,7 +157,7 @@ export default {
 
       })
       .catch( (err) => {
-        console.log(err)
+        //console.log(err)
       })
     },
      getCommunity: function () {
@@ -179,7 +179,7 @@ export default {
         })
       })
       .catch( (err) => {
-        console.log(err)
+        //(err)
       })
     },
      

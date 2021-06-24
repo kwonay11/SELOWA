@@ -67,7 +67,7 @@ export default {
             this.community = res.data
             })
             .catch((err) => {
-            console.log(err)
+           // console.log(err)
             })    
         },
         communityDetailUpdate: function (community) {
@@ -87,7 +87,7 @@ export default {
                 }
             })
             .catch((err) => {
-                console.log(err)
+                //console.log(err)
             })
         },        
     },
