@@ -95,9 +95,9 @@ getMovieDatas: function () {
             this.movies.push(res.data[sampleNums[key]])
         }
     })
-        .catch( (err) => {
-        console.log(err)
-    })
+    //     .catch( (err) => {
+    //     console.log(err)
+    // })
 }
 ```
 
