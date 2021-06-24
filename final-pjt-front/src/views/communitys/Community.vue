@@ -42,9 +42,9 @@ export default {
           //console.log(res)
           this.communities = res.data
         })
-        .catch((err) => {
-          //console.log(err)
-        })
+        // .catch((err) => {
+        //   //console.log(err)
+        // })
     },
     communitiesUpdated: function () {
       this.getCommunities()

@@ -6,7 +6,7 @@
       <div class="col-lg-8 col-md-10 mx-auto">
         <div style="cursor:pointer;" v-for="(community, idx) in communities" :key="idx">
           <br>
-            <h3 @click="DetailCommunity(community)">{{community.id}}번 글</h3>
+            <!-- <h3 @click="DetailCommunity(community)">{{community.id}}번 글</h3> -->
             <h2>{{community.title}}</h2>
             <button @click="DetailCommunity(community)" class ="btn btn-outline-danger">Detail</button>
             <h4>{{community.content}}</h4>

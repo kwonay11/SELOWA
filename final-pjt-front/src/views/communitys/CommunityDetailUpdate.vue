@@ -66,9 +66,9 @@ export default {
             // console.log(res)
             this.community = res.data
             })
-            .catch((err) => {
-           // console.log(err)
-            })    
+        //     .catch((err) => {
+        //    // console.log(err)
+        //     })    
         },
         communityDetailUpdate: function (community) {
         const config = this.getToken()
@@ -86,9 +86,9 @@ export default {
                     this.$router.push({ name: 'CommunityDetail', params: { community_pk: `${community.id}` }})
                 }
             })
-            .catch((err) => {
-                //console.log(err)
-            })
+            // .catch((err) => {
+            //     //console.log(err)
+            // })
         },        
     },
     created: function () {

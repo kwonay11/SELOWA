@@ -138,9 +138,9 @@ export default {
         
         })
       })
-      .catch( (err) => {
-        //console.log(err)
-      })
+      // .catch( (err) => {
+      //   //console.log(err)
+      // })
     },
     getMovieDatas: function () {
       axios.get(`${SERVER_URL}/movies/`)
@@ -156,9 +156,9 @@ export default {
         }
 
       })
-      .catch( (err) => {
-        //console.log(err)
-      })
+      // .catch( (err) => {
+      //   //console.log(err)
+      // })
     },
      getCommunity: function () {
       const config = this.getToken()
@@ -178,9 +178,9 @@ export default {
         
         })
       })
-      .catch( (err) => {
-        //(err)
-      })
+      // .catch( (err) => {
+      //   //(err)
+      // })
     },
      
    },

@@ -109,9 +109,9 @@ export default {
       .then( (res) => {
         this.name = res.data
       })
-      .catch( (err) => {
-        //console.log(err)
-      })
+      // .catch( (err) => {
+      //   //console.log(err)
+      // })
     },
     changeIdx: function (e){
       this.myMovieRate2 = e.target.value
@@ -134,14 +134,14 @@ export default {
           movie: review.movie,
         }
         axios.put(`${SERVER_URL}/movies/review/${review.id}/`, reviewItem, config)
-        .then((res) => {
+        .then(() => {
           //console.log(res)
           this.content = null
           this.$emit("reviews-updated")
         })
-        .catch(err => {
-          //console.log(err)
-        })
+        // .catch(err => {
+        //   //console.log(err)
+        // })
         this.reviewupdate = false
       }
     },
