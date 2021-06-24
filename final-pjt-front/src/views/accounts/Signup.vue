@@ -62,7 +62,7 @@ export default {
         // console.log(res)
         this.$router.push({ name: 'Login'})
       })
-      .catch((err) => {
+      .catch(() => {
         //console.log(err)
         alert('회원가입 실패!')
       })

@@ -89,7 +89,7 @@ export default {
       }
       if (reviewItem.content) {
         axios.post(`${SERVER_URL}/movies/${this.movie.id}/reviews/`, reviewItem, config)
-          .then((res) => {
+          .then(() => {
             //console.log(res)
             this.$emit('reviews-updated')
             // this.title = ""
@@ -97,9 +97,9 @@ export default {
             this.rank = 0
             this.MyMovieRate= ''
           })
-          .catch((err) => {
-            //console.log(err)
-          })
+          // .catch((err) => {
+          //   //console.log(err)
+          // })
       }
       else{
         alert("내용을 입력해주세요!")

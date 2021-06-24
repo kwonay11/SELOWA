@@ -161,9 +161,9 @@ export default {
           // console.log(this.movies)
         }
       })
-      .catch( (err) => {
-        //console.log(err)
-      })
+      // .catch( (err) => {
+      //   //console.log(err)
+      // })
     },
     
     getRecommend: function () {
@@ -194,17 +194,17 @@ export default {
             this.my_users_like_movies = res.data[1]
             this.age_movies = res.data[2]
           })
-          .catch( (err) => {
-            //console.log(err)
-          })
+          // .catch( (err) => {
+          //   //console.log(err)
+          // })
         })
-        .catch( (err) => {
-         // console.log(err)
-        })
+        // .catch( (err) => {
+        //  // console.log(err)
+        // })
       })
-      .catch( (err) => {
-        //console.log(err)
-      })
+      // .catch( (err) => {
+      //   //console.log(err)
+      // })
      },
     getMyName: function () {
       const config = this.getToken()
@@ -215,9 +215,9 @@ export default {
         this.user = res.data
         this.getRecommend()
       })
-      .catch( (err) => {
-        //console.log(err)
-      })
+      // .catch( (err) => {
+      //   //console.log(err)
+      // })
     },    
   },
   created: function () {

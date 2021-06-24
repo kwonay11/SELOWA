@@ -53,9 +53,9 @@ export default {
       .then((res) => {
         this.reviews = res.data
       })
-      .catch((err) => {
-        //console.log(err)
-      })
+      // .catch((err) => {
+      //   //console.log(err)
+      // })
     },
     deleteReview: function (review_id) {
 

@@ -75,9 +75,9 @@ export default {
             this.title = "" // 사용자경험 향상을 위해 작성한 제목과 내용은 초기화.
             this.content = ""
           })
-          .catch((err) => {
-            //console.log(err)
-          })
+          // .catch((err) => {
+          //   //console.log(err)
+          // })
       } 
     }
   },
