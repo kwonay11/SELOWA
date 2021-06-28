@@ -25,7 +25,7 @@
     </div>
 
     <div v-else>
-          작성자 : {{ name.username }}
+          작성자 : {{ review.userName }}
           <div v-if="review.rank==5"> 
             <i class="fas fa-star" style="color:yellow"></i>
             <i class="fas fa-star" style="color:yellow"></i>
@@ -57,8 +57,9 @@
           </div>
           {{ review.content }}
     </div>
-      <button class="btn btn-secondary m-1" @click="reviewModify(review)">수정</button>
-      <button class="btn btn-secondary m-1" @click="reviewDelete(review)">삭제 </button>
+    <!-- 리뷰작성자가 아니면 수정,삭제 버튼 안나옴 -->
+      <button v-if="name.username === review.userName" class="btn btn-secondary m-1" @click="reviewModify(review)">수정</button>
+      <button v-if="name.username === review.userName" class="btn btn-secondary m-1" @click="reviewDelete(review)">삭제 </button>
   </div>
 </template>
 
