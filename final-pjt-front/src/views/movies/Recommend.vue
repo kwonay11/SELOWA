@@ -39,7 +39,7 @@
       data-glide-el="track"
       ref="slider"
       type="carousel"
-      :breakpoints="{3000: {perView: my_users_like_movies.length}, 1100: {perView: 5}, 600: {perView: 3}}"
+      :breakpoints="{3000: {perView: 5}, 1100: {perView: 5}, 600: {perView: 3}}"
     >
       <vue-glide-slide
         v-for = "(movie, idx) in my_users_like_movies"
