@@ -31,6 +31,7 @@
       <div>
         <h2 style="font-weight: bold;">{{ movie.title }} </h2>
         <hr>
+        
         <div class="video-container">
           <iframe :src="src" frameborder="0" allow="fullscreen"></iframe>
         </div>
