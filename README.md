@@ -269,6 +269,10 @@ Django는 AWS로 Vue.js는 Netlify를 이용하여 배포하였습니다.
 
 ![로그아웃](README.assets/로그아웃.gif)
 
+### 서비스 아키텍처
+
+![image-20210905003517173](README.assets/image-20210905003517173.png)
+
 ## 문제가 있었던 점 :fist_oncoming:
 
 1. .env.local파일에 /를 같이 넣고 vue에서 주소를 넘겨줄때 /를 안하면 잘 받아지는데, .env.local파일에 /를 안넣고 일반적인 형태로 하면 에러가 떴다.
